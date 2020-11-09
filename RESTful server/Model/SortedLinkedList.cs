@@ -28,9 +28,11 @@ namespace Model
                 bool foundSpot = false;
                 while (!foundSpot && current != null)
                 {
-                    if (current.Value.CompareTo(item) <= 0 || !current.HasNext)
+                    int compareResult = current.Value.CompareTo(item);
+
+                    if (compareResult <= 0)
                     {
-                        var nodeToBeAdded = new Node<T>(item); //To-do: Fix
+                        var nodeToBeAdded = new Node<T>(item);
                         if (previous != null)
                         {
                             previous.Next = nodeToBeAdded;
@@ -42,6 +44,14 @@ namespace Model
 
                         nodeToBeAdded.Next = current;
                         foundSpot = true;
+                    }
+                    else
+                    {
+                        if (!current.HasNext)
+                        {
+                            current.Next = new Node<T>(item);
+                            foundSpot = true;
+                        }
                     }
 
                     previous = current;
@@ -183,7 +193,7 @@ namespace Model
 
         public void Reset()
         {
-            _current = _head;
+            _current = null;//_head;
         }
     }
 }
