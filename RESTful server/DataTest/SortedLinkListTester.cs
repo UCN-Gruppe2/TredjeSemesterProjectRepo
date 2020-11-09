@@ -55,7 +55,7 @@ namespace DataTest
         [TestMethod]
         public void CopyToTest()
         {
-            var localInstance = new SortedLinkedList<string>();
+            var localInstance = new SortedLinkedList<string>(); //Skift til global instans
             int numberOfValuesToAdd = 50;
 
             localInstance.Clear();
