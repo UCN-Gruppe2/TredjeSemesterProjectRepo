@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,16 @@ namespace DataAccess.DatabaseAccess
 {
     public class DbTreatment : ITreatment
     {
+        private string _connectionString;
+
+
+        public DbTreatment()
+        {
+            _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+        }
+
+
+
         public bool DeleteTreatment()
         {
             throw new NotImplementedException();

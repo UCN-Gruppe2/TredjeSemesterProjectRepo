@@ -27,11 +27,11 @@ namespace Model
             StartTime = startTime;
         }
 
-        public DateTime GetEndTime()
-        {
-            //Get duration on treatment
-            //Get StartTime of reservation
-            //Calculate EndTime
-        }
+        //public DateTime GetEndTime()
+        //{
+        //    //Get duration on treatment
+        //    //Get StartTime of reservation
+        //    //Calculate EndTime
+        //}
     }
 }
