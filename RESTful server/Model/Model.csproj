@@ -50,7 +50,6 @@
     <Compile Include="Reservation.cs" />
     <Compile Include="SortedLinkedList.cs" />
     <Compile Include="Treatment.cs" />
-    <Compile Include="TreatmentCalender.cs" />
     <Compile Include="TreatmentCategory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
