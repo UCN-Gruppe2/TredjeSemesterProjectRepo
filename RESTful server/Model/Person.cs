@@ -24,7 +24,6 @@ namespace Model
             Address = address;
             PostalCode = postalCode;
             City = city;
-           
         }
 
         public Person(string firstName, string lastName, string phone, string address, string postalCode, string city, int id)
@@ -37,8 +36,7 @@ namespace Model
             City = city;
             ID = id;
         }
-
-
+        
         public override string ToString()
         {
             return $"{FirstName} {LastName}, Tlf.: {Phone}, Address: {Address}, {PostalCode} {City}";

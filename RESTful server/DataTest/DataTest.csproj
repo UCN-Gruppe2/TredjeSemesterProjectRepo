@@ -52,15 +52,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TreatmentCalenderTest.cs" />
     <Compile Include="TreatmentTest.cs" />
+    <Compile Include="SortedLinkListTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data\DataAccess.csproj">
-      <Project>{7fb6235d-2de8-407a-afca-c1f69c5aec37}</Project>
-      <Name>DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{ff53144b-8458-47ef-bcd0-471277c28db0}</Project>
       <Name>Model</Name>

@@ -1,7 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DataAccess.Interfaces;
-using DataAccess.DatabaseAccess;
 using RESTfulService;
 
 namespace DataTest
@@ -9,28 +7,104 @@ namespace DataTest
     [TestClass]
     public class TreatmentTest
     {
-        ITreatment _treatmentDb;
-
-
-        [TestInitialize]
-        public void InitializeBeforeEachMethod()
+        [TestMethod]
+        public void TestCreateTreatment_Valid()
         {
-            _treatmentDb = new DbTreatment();
+            //Arrange
+
+            //Act
+
+            //Assert
         }
 
         [TestMethod]
-        public void TestCreateTreatmentValid()
+        public void TestCreateTreatment_IDAlreadyExists()
         {
+            //Arrange
+
+            //Act
+
+            //Assert
         }
 
         [TestMethod]
-        public void TestCreateTreatmentInvalid()
+        public void TestCreateTreatment_AlreadyExists()
         {
+            //Arrange
+
+            //Act
+
+            //Assert
         }
 
         [TestMethod]
-        public void TestCreateTreatmentAlreadyExists()
+        public void TestFindTreatmentByID_Valid()
         {
+            //Arrange
+
+            //Act
+
+            //Assert
+        }
+
+        [TestMethod]
+        public void TestFindTreatmentByID_UnknownID()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+        }
+
+        [TestMethod]
+        public void TestFindEmployeesOfTreatment_Valid()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+        }
+
+        [TestMethod]
+        public void TestFindEmployeesOfTreatment_NoEmployees()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+        }
+
+        [TestMethod]
+        public void TestFindEmployeesOfTreatment_UnknownID()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+        }
+
+        [TestMethod]
+        public void TestFindAvailableTreatments_Valid()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+        }
+
+        [TestMethod]
+        public void TestFindAvailableTreatments_NonIsValid()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
         }
     }
 }
