@@ -65,6 +65,10 @@
       <Project>{ff53144b-8458-47ef-bcd0-471277c28db0}</Project>
       <Name>Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RESTfulService\RESTfulService.csproj">
+      <Project>{107c5291-c393-46c5-adfd-992f9d49b45f}</Project>
+      <Name>RESTfulService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
