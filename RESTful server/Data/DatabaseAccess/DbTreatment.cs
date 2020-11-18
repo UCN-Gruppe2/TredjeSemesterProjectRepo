@@ -19,8 +19,6 @@ namespace DataAccess.DatabaseAccess
             _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
         }
 
-
-
         public bool DeleteTreatment()
         {
             throw new NotImplementedException();
