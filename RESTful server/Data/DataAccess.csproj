@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseAccess\DbConnection.cs" />
     <Compile Include="DatabaseAccess\DbTreatment.cs" />
     <Compile Include="Interfaces\ITreatment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

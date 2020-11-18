@@ -16,7 +16,7 @@ namespace DataTest
         public void InitialiseBeforeEachMethods()
         {
       //      string connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
-            string connectionString = "server = hildur.ucn.dk; User Id=dmaa0919_1072100;Password=Password1!; Database = dmaa0919_1072100";
+            string connectionString = "server = hildur.ucn.dk; User Id=dmaa0919_1072100; Password=Password1!; Database = dmaa0919_1072100";
             connection = new SqlConnection(connectionString);
             connection.Open();
         }

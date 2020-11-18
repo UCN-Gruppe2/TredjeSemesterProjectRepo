@@ -5,7 +5,8 @@ using System.Web;
 
 namespace RESTfulService.Controllers
 {
-    public class TreatmentController
+    public class TreatmentController : Controller
     {
+
     }
 }
