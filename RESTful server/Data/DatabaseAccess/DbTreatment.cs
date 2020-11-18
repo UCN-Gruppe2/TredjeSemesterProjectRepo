@@ -13,7 +13,6 @@ namespace DataAccess.DatabaseAccess
     {
         private string _connectionString;
 
-
         public DbTreatment()
         {
             _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
@@ -34,7 +33,7 @@ namespace DataAccess.DatabaseAccess
             throw new NotImplementedException();
         }
 
-        public void InsertTreatment(Treatment treatment)
+        public void InsertTreatmentToDatabase(Treatment treatment)
         {
             throw new NotImplementedException();
         }

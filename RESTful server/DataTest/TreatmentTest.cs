@@ -7,12 +7,20 @@ namespace DataTest
     [TestClass]
     public class TreatmentTest
     {
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            TreatmentController TreatmentCtrl = new TreatmentController();
+        }
+
         [TestMethod]
         public void TestCreateTreatment_Valid()
         {
             //Arrange
 
             //Act
+            TreatmentCtrl.Post(); //Parametre?
 
             //Assert
         }

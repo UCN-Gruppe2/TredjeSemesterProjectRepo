@@ -9,7 +9,7 @@ namespace DataAccess.Interfaces
 {
     public interface ITreatment
     {
-        void InsertTreatment(Treatment treatment);
+        void InsertTreatmentToDatabase(Treatment treatment);
         Treatment GetTreatmentByID(int id);
         void SaveTreatment();
         bool DeleteTreatment();

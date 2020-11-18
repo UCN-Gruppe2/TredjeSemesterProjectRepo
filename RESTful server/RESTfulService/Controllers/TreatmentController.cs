@@ -1,5 +1,9 @@
-﻿using System;
+﻿using DataAccess.DatabaseAccess;
+using Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -9,8 +13,10 @@ namespace RESTfulService.Controllers
 {
     public class TreatmentController : ApiController
     {
+        private DbTreatment _dbTreatment = new DbTreatment();
+
         // GET: api/Treatment
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetAll()
         {
             return new string[] { "value1", "value2" };
         }
@@ -24,6 +30,9 @@ namespace RESTfulService.Controllers
         // POST: api/Treatment
         public void Post([FromBody]string value)
         {
+            value.
+            Treatment treatmentToAdd = new Treatment(name, description, duration, price);
+            _dbTreatment.InsertTreatmentToDatabase(treatmentToAdd);
         }
 
         // PUT: api/Treatment/5
