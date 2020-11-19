@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Interfaces;
 using Model;
+using Dapper;
 
 namespace DataAccess.DatabaseAccess
 {
-    public class DbTreatment : ITreatment
+    public class DbTreatment : IDbTreatment
     {
         private string _connectionString;
 
@@ -33,9 +35,27 @@ namespace DataAccess.DatabaseAccess
             throw new NotImplementedException();
         }
 
-        public void InsertTreatmentToDatabase(Treatment treatment)
+        public Treatment InsertTreatmentToDatabase(Treatment treatment)
         {
-            throw new NotImplementedException();
+            string name = treatment.Name;
+            string description = treatment.Description;
+            int duration = treatment.Duration;
+            double price = treatment.Price;
+
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                string queryString = "INSERT INTO Treatment (name, description, duration, price) VALUES (@name, @description, @duration, @price); " +
+                    "SELECT SCOPE_IDENTITY();";
+                
+                var id = conn.ExecuteScalar<int>(queryString);
+                return conn.Query<Treatment>("SELECT * FROM Treatment WHERE Id = @id").FirstOrDefault();
+
+                //using (sqlcommand command = new sqlcommand(querystring, conn))
+                //{
+                //    int rowsaffected = command.executenonquery();
+                //}
+
+            }
         }
 
         public void SaveTreatment()
@@ -48,14 +68,16 @@ namespace DataAccess.DatabaseAccess
             throw new NotImplementedException();
         }
 
-        List<Employee> ITreatment.GetCapableEmployees()
+        List<Employee> IDbTreatment.GetCapableEmployees()
         {
             throw new NotImplementedException();
         }
 
-        Treatment ITreatment.GetTreatmentByID(int id)
+        Treatment IDbTreatment.GetTreatmentByID(int id)
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

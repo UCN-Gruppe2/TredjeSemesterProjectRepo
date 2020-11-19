@@ -1,17 +1,19 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RESTfulService;
+using RESTfulService.Controllers;
 
 namespace DataTest
 {
     [TestClass]
     public class TreatmentTest
     {
+        TreatmentController TreatmentCtrl;
 
         [TestInitialize]
         public void SetUp()
         {
-            TreatmentController TreatmentCtrl = new TreatmentController();
+            TreatmentCtrl = new TreatmentController();
         }
 
         [TestMethod]
@@ -20,7 +22,7 @@ namespace DataTest
             //Arrange
 
             //Act
-            TreatmentCtrl.Post(); //Parametre?
+            TreatmentCtrl.Post("hejsa"); //Parametre?
 
             //Assert
         }

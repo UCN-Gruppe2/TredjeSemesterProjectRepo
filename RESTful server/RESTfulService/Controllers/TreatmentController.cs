@@ -30,14 +30,19 @@ namespace RESTfulService.Controllers
         // POST: api/Treatment
         public void Post([FromBody]string value)
         {
-            value.
-            Treatment treatmentToAdd = new Treatment(name, description, duration, price);
-            _dbTreatment.InsertTreatmentToDatabase(treatmentToAdd);
+            Debugger.Break();
+            //System.Web.HttpRequest httpRequest = System.Web.HttpContext.Current.Request;
+            //System.Collections.Specialized.NameValueCollection formData = httpRequest.Form;
+
+            //value.
+            //Treatment treatmentToAdd = new Treatment(name, description, duration, price);
+            //_dbTreatment.InsertTreatmentToDatabase(treatmentToAdd);
         }
 
         // PUT: api/Treatment/5
         public void Put(int id, [FromBody]string value)
         {
+
         }
 
         // DELETE: api/Treatment/5
