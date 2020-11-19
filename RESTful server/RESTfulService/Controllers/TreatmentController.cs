@@ -28,15 +28,16 @@ namespace RESTfulService.Controllers
         }
 
         // POST: api/Treatment
-        public void Post([FromBody]string value)
+        public Treatment Post([FromBody] Treatment value)
         {
-            Debugger.Break();
+            //Debugger.Break();
             //System.Web.HttpRequest httpRequest = System.Web.HttpContext.Current.Request;
             //System.Collections.Specialized.NameValueCollection formData = httpRequest.Form;
 
             //value.
             //Treatment treatmentToAdd = new Treatment(name, description, duration, price);
-            //_dbTreatment.InsertTreatmentToDatabase(treatmentToAdd);
+            Treatment treatmentAdded = _dbTreatment.InsertTreatmentToDatabase(value);
+            return treatmentAdded;
         }
 
         // PUT: api/Treatment/5

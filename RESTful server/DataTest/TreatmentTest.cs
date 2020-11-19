@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Model;
 using RESTfulService;
 using RESTfulService.Controllers;
 
@@ -8,7 +9,7 @@ namespace DataTest
     [TestClass]
     public class TreatmentTest
     {
-        TreatmentController TreatmentCtrl;
+        public TreatmentController TreatmentCtrl;
 
         [TestInitialize]
         public void SetUp()
@@ -20,11 +21,16 @@ namespace DataTest
         public void TestCreateTreatment_Valid()
         {
             //Arrange
+            Treatment treatment = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 599.99);
 
             //Act
-            TreatmentCtrl.Post("hejsa"); //Parametre?
+            Treatment addedTreatment = TreatmentCtrl.Post(treatment);
 
             //Assert
+            Assert.AreEqual(treatment.Name, addedTreatment.Name);
+            Assert.AreEqual(treatment.Description, addedTreatment.Description);
+            Assert.AreEqual(treatment.Duration, addedTreatment.Duration);
+            Assert.AreEqual(treatment.Price, addedTreatment.Price);
         }
 
         [TestMethod]

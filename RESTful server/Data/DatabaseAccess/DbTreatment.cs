@@ -17,7 +17,8 @@ namespace DataAccess.DatabaseAccess
 
         public DbTreatment()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+          //  _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+            _connectionString = "server = hildur.ucn.dk; User Id=dmaa0919_1072100; Password=Password1!; Database = dmaa0919_1072100";
         }
 
         public bool DeleteTreatment()
@@ -46,9 +47,12 @@ namespace DataAccess.DatabaseAccess
             {
                 string queryString = "INSERT INTO Treatment (name, description, duration, price) VALUES (@name, @description, @duration, @price); " +
                     "SELECT SCOPE_IDENTITY();";
-                
-                var id = conn.ExecuteScalar<int>(queryString);
-                return conn.Query<Treatment>("SELECT * FROM Treatment WHERE Id = @id").FirstOrDefault();
+
+                var id = conn.ExecuteScalar<int>(queryString, new
+                {
+                    name, description, duration, price
+                });
+                return conn.Query<Treatment>("SELECT * FROM Treatment WHERE Id = @id", new { id=id }).FirstOrDefault();
 
                 //using (sqlcommand command = new sqlcommand(querystring, conn))
                 //{
