@@ -53,12 +53,6 @@ namespace DataAccess.DatabaseAccess
                     name, description, duration, price
                 });
                 return conn.Query<Treatment>("SELECT * FROM Treatment WHERE Id = @id", new { id=id }).FirstOrDefault();
-
-                //using (sqlcommand command = new sqlcommand(querystring, conn))
-                //{
-                //    int rowsaffected = command.executenonquery();
-                //}
-
             }
         }
 
