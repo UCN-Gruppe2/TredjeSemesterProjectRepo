@@ -17,8 +17,8 @@ namespace DataAccess.DatabaseAccess
 
         public DbTreatment()
         {
-          //  _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
-            _connectionString = "server = hildur.ucn.dk; User Id=dmaa0919_1072100; Password=Password1!; Database = dmaa0919_1072100";
+            _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+            //_connectionString = "server = hildur.ucn.dk; User Id=dmaa0919_1072100; Password=Password1!; Database = dmaa0919_1072100";
         }
 
         public bool DeleteTreatment()
