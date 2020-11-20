@@ -41,7 +41,7 @@ namespace DataAccess.DatabaseAccess
             string name = treatment.Name;
             string description = treatment.Description;
             int duration = treatment.Duration;
-            double price = treatment.Price;
+            decimal price = treatment.Price;
 
             using (var conn = new SqlConnection(_connectionString))
             {

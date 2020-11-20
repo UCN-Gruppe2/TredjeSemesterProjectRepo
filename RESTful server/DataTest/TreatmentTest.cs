@@ -21,7 +21,7 @@ namespace DataTest
         public void TestCreateTreatment_Valid()
         {
             //Arrange
-            Treatment treatment = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 599.99);
+            Treatment treatment = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.1m);
 
             //Act
             Treatment addedTreatment = TreatmentCtrl.Post(treatment);

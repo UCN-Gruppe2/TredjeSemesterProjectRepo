@@ -10,13 +10,13 @@ namespace Model
         public string Name { get; set; }
         public string Description { get; set; }
         public int Duration { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public int ID { get; set; }
 
         private List<Employee> _employees;
 
         // to create new Treatment object.
-        public Treatment(string name, string description, int duration, double price)
+        public Treatment(string name, string description, int duration, decimal price)
         {
             Name = name;
             Description = description;
@@ -25,18 +25,19 @@ namespace Model
             _employees = new List<Employee>();
         }
 
-        public Treatment(System.Int32 id, System.String name, System.String description, System.Int32 duration, System.Decimal price)
+        //To create a new Treatment object from database without any employees.
+        public Treatment(int id, string name, string description, int duration, decimal price)
         {
             ID = id;
             Name = name;
             Description = description;
             Duration = duration;
-            Price = Convert.ToDouble(price);
+            Price = Math.Round(price, 2);
             _employees = new List<Employee>();
         }
 
-        // to create object of already existing Object.
-        public Treatment(int id, string name, string description, int duration, double price, List<Employee> employees)
+        // to create object of Treatment which already exists in database.
+        public Treatment(int id, string name, string description, int duration, decimal price, List<Employee> employees)
         {
             ID = id;
             Name = name;
