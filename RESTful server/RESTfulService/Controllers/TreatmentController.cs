@@ -30,11 +30,23 @@ namespace RESTfulService.Controllers
         // POST: api/Treatment
         public Treatment Post([FromBody] Treatment value)
         {
-            Treatment treatmentAdded = _dbTreatment.InsertTreatmentToDatabase(value);
+            Treatment treatmentAdded = null;
+            if (value.Duration > 0 && value.Price > 0)
+            {
+                try
+                {
+                    treatmentAdded = _dbTreatment.InsertTreatmentToDatabase(value);
+                }
+                catch (ArgumentException e)
+                {
+                    throw e;
+                }
+            }
+            else throw new ArgumentException();
             return treatmentAdded;
         }
 
-        // PUT: api/Treatment/5
+            // PUT: api/Treatment/5
         public void Put(int id, [FromBody]string value)
         {
 

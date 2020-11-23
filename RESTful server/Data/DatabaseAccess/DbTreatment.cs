@@ -18,7 +18,6 @@ namespace DataAccess.DatabaseAccess
         public DbTreatment()
         {
             _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
-            //_connectionString = "server = hildur.ucn.dk; User Id=dmaa0919_1072100; Password=Password1!; Database = dmaa0919_1072100";
         }
 
         public bool DeleteTreatment()
@@ -45,14 +44,23 @@ namespace DataAccess.DatabaseAccess
 
             using (var conn = new SqlConnection(_connectionString))
             {
-                string queryString = "INSERT INTO Treatment (name, description, duration, price) VALUES (@name, @description, @duration, @price); " +
-                    "SELECT SCOPE_IDENTITY();";
+                string checkString = "SELECT name, description, duration, price FROM Treatment WHERE (name = @name AND description = @description AND " +
+                    "duration = @duration AND price = @price)";
+                Treatment existingTreatment = conn.Query<Treatment>(checkString, new { name = name, description = description, duration = duration, price = price }).FirstOrDefault();
+                if(existingTreatment == null) { 
+                    string queryString = "INSERT INTO Treatment (name, description, duration, price) VALUES (@name, @description, @duration, @price); " +
+                        "SELECT SCOPE_IDENTITY()";
 
-                var id = conn.ExecuteScalar<int>(queryString, new
+                    var id = conn.ExecuteScalar<int>(queryString, new
+                    {
+                        name, description, duration, price
+                    });
+                    return conn.Query<Treatment>("SELECT * FROM Treatment WHERE Id = @id", new { id=id }).FirstOrDefault();
+                }
+                else
                 {
-                    name, description, duration, price
-                });
-                return conn.Query<Treatment>("SELECT * FROM Treatment WHERE Id = @id", new { id=id }).FirstOrDefault();
+                    throw new ArgumentException("A treatment with the specified values already exists in the database.");
+                }
             }
         }
 
@@ -75,7 +83,5 @@ namespace DataAccess.DatabaseAccess
         {
             throw new NotImplementedException();
         }
-
-       
     }
 }
