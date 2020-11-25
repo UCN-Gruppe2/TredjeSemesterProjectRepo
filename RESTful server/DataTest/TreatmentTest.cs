@@ -11,11 +11,13 @@ namespace DataTest
     public class TreatmentTest
     {
         public TreatmentController TreatmentCtrl;
+        public Stopwatch watch;
 
         [TestInitialize]
         public void SetUp()
         {
             TreatmentCtrl = new TreatmentController();
+            watch = new Stopwatch();
         }
 
         [TestCleanup]
@@ -28,7 +30,6 @@ namespace DataTest
         public void TestCreateTreatment1_Valid()
         {
             //Arrange
-            Stopwatch watch = new Stopwatch();
             Treatment treatment = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m); //m = decimal 
 
             //Act
@@ -49,7 +50,6 @@ namespace DataTest
         public void TestCreateTreatment2_AlreadyExists()
         {
             //Arrange
-            Stopwatch watch = new Stopwatch();
             Treatment treatment = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
             Treatment treatmentDouble = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
 
@@ -64,7 +64,39 @@ namespace DataTest
             Assert.AreEqual(treatment.Description, addedTreatment.Description);
             Assert.AreEqual(treatment.Duration, addedTreatment.Duration);
             Assert.AreEqual(treatment.Price, addedTreatment.Price);
-            Assert.IsTrue(watch.ElapsedMilliseconds < 5000);
+            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestCreateTreatment3_IllegalDuration()
+        {
+            //Arrange
+            Treatment treatment = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", -30, 499.95m);
+
+            //Act
+            watch.Start();
+            Treatment addedTreatment = TreatmentCtrl.Post(treatment);
+            watch.Stop();
+
+            //Assert
+            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestCreateTreatment4_IllegalPrice()
+        {
+            //Arrange
+            Treatment treatment = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", 30, -499.95m);
+
+            //Act
+            watch.Start();
+            Treatment addedTreatment = TreatmentCtrl.Post(treatment);
+            watch.Stop();
+
+            //Assert
+            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
