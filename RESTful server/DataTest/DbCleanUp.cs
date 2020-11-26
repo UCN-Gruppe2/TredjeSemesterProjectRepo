@@ -11,7 +11,9 @@ namespace DataTest
     static class DbCleanUp
     {
         private static readonly string[] cleanupCommands = {
+         "delete from Reservation;",
          "delete from Treatment;",
+         "DBCC CHECKIDENT ('Reservation', RESEED, 0);",
          "DBCC CHECKIDENT ('Treatment', RESEED, 0);"
         };
 

@@ -46,8 +46,13 @@ namespace DataAccess.DatabaseAccess
             {
                 string checkString = "SELECT name, description, duration, price FROM Treatment WHERE (name = @name AND description = @description AND " +
                     "duration = @duration AND price = @price)";
-                Treatment existingTreatment = conn.Query<Treatment>(checkString, new { name = name, description = description, duration = duration, price = price }).FirstOrDefault();
-                if(existingTreatment == null) { 
+                //Treatment existingTreatment = conn.Query<Treatment>(checkString, new { name = name, description = description, duration = duration, price = price }).FirstOrDefault();
+
+                var sqlSelectReader = conn.ExecuteReader(checkString, new { name, description, duration, price });
+
+                if (!sqlSelectReader.Read())
+                {
+                    sqlSelectReader.Close();
                     string queryString = "INSERT INTO Treatment (name, description, duration, price) VALUES (@name, @description, @duration, @price); " +
                         "SELECT SCOPE_IDENTITY()";
 

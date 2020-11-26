@@ -10,28 +10,49 @@ namespace Model
         public int ID { get; set; }
         public int TreatmentID { get; set; }
         public int CustomerID { get; set; }
+        public int EmployeeID { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
-        public Reservation(int treatmentID, int customerID, DateTime startTime)
+        /// <summary>
+        /// Constructor for a new object
+        /// </summary>
+        /// <param name="treatment"></param>
+        /// <param name="customerID"></param>
+        /// <param name="employeeID"></param>
+        /// <param name="startTime"></param>
+        public Reservation(Treatment treatment, int customerID, int employeeID, DateTime startTime)
         {
-            TreatmentID = treatmentID;
+            TreatmentID = treatment.ID;
             CustomerID = customerID;
+            EmployeeID = employeeID;
             StartTime = startTime;
+            EndTime = GetEndTime(treatment.Duration);
         }
-        public Reservation(int id, int treatmentID, int customerID, DateTime startTime)
+
+        /// <summary>
+        /// Constructs an existing Reservation
+        /// </summary>
+        /// <param name="id">ReservationID</param>
+        /// <param name="treatmentID"></param>
+        /// <param name="customerID"></param>
+        /// <param name="employeeID"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        public Reservation(int id, System.Int32 treatmentID, System.Int32 customerID, System.Int32 employeeID, System.DateTime startTime, System.DateTime endTime)
         {
             ID = id;
             TreatmentID = treatmentID;
             CustomerID = customerID;
+            EmployeeID = employeeID;
             StartTime = startTime;
+            EndTime = endTime;
         }
 
-        //public DateTime GetEndTime()
-        //{
-        //    //Get duration on treatment
-        //    //Get StartTime of reservation
-        //    //Calculate EndTime
-        //}
+        public DateTime GetEndTime(int duration)
+        {
+            DateTime endTimeCalc = StartTime.AddMinutes(duration);
+            return endTimeCalc;
+        }
     }
 }

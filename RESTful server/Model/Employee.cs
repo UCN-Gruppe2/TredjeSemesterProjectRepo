@@ -7,6 +7,7 @@ namespace Model
 {
     public class Employee : Person
     {
+        public int EmployeeID { get; set; }
         //New Customer
         public Employee(string firstName, string lastName, string phone, string address, string postalCode, string city) : base(firstName, lastName, phone, address, postalCode, city)
         {
@@ -14,9 +15,9 @@ namespace Model
         }
 
         //Existing customer
-        public Employee(int employeeID, string firstName, string lastName, string phone, string address, string postalCode, string city, int id) : base(firstName, lastName, phone, address, postalCode, city, id)
+        public Employee(int employeeID, string firstName, string lastName, string phone, string address, string postalCode, string city) : base(firstName, lastName, phone, address, postalCode, city)
         {
-            ID = id;
+            EmployeeID = employeeID;
         }
 
     }

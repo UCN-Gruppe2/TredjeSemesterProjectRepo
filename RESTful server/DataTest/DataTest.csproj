@@ -67,6 +67,7 @@
     <Compile Include="TreatmentTest.cs" />
     <Compile Include="SortedLinkListTester.cs" />
     <Compile Include="ConnectionTest.cs" />
+    <Compile Include="ReservationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
