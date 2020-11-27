@@ -37,6 +37,7 @@ namespace DataAccess.DatabaseAccess
 
         public Treatment InsertTreatmentToDatabase(Treatment treatment)
         {
+            int companyID = treatment.CompanyID;
             string name = treatment.Name;
             string description = treatment.Description;
             int duration = treatment.Duration;
@@ -44,21 +45,21 @@ namespace DataAccess.DatabaseAccess
 
             using (var conn = new SqlConnection(_connectionString))
             {
-                string checkString = "SELECT name, description, duration, price FROM Treatment WHERE (name = @name AND description = @description AND " +
+                string checkString = "SELECT companyID, name, description, duration, price FROM Treatment WHERE (companyId = @companyID AND name = @name AND description = @description AND " +
                     "duration = @duration AND price = @price)";
                 //Treatment existingTreatment = conn.Query<Treatment>(checkString, new { name = name, description = description, duration = duration, price = price }).FirstOrDefault();
 
-                var sqlSelectReader = conn.ExecuteReader(checkString, new { name, description, duration, price });
+                var sqlSelectReader = conn.ExecuteReader(checkString, new { companyID, name, description, duration, price });
 
                 if (!sqlSelectReader.Read())
                 {
                     sqlSelectReader.Close();
-                    string queryString = "INSERT INTO Treatment (name, description, duration, price) VALUES (@name, @description, @duration, @price); " +
+                    string queryString = "INSERT INTO Treatment (companyID, name, description, duration, price) VALUES (@companyID, @name, @description, @duration, @price); " +
                         "SELECT SCOPE_IDENTITY()";
 
                     var id = conn.ExecuteScalar<int>(queryString, new
                     {
-                        name, description, duration, price
+                        companyID, name, description, duration, price
                     });
                     return conn.Query<Treatment>("SELECT * FROM Treatment WHERE Id = @id", new { id=id }).FirstOrDefault();
                 }

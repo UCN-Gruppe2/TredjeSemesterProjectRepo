@@ -64,6 +64,7 @@ namespace DataAccess.DatabaseAccess
             DateTime startTime = reservation.StartTime;
             DateTime endTime = reservation.EndTime;
 
+            //Implicit transaction med IsolationLevel
             var options = new TransactionOptions
             {
                 IsolationLevel = IsolationLevel.Serializable

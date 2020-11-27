@@ -7,6 +7,7 @@ namespace Model
 {
     public class Treatment
     {
+        public int CompanyID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Duration { get; set; }
@@ -16,8 +17,9 @@ namespace Model
         private List<Employee> _employees;
 
         // to create new Treatment object.
-        public Treatment(string name, string description, int duration, decimal price)
+        public Treatment(int companyID, string name, string description, int duration, decimal price)
         {
+            CompanyID = companyID;
             Name = name;
             Description = description;
             Duration = duration;
@@ -26,9 +28,10 @@ namespace Model
         }
 
         //To create a new Treatment object from database without any employees.
-        public Treatment(int id, string name, string description, int duration, decimal price)
+        public Treatment(int id, int companyID, string name, string description, int duration, decimal price)
         {
             ID = id;
+            CompanyID = companyID;
             Name = name;
             Description = description;
             Duration = duration;
@@ -37,9 +40,10 @@ namespace Model
         }
 
         // to create object of Treatment which already exists in database.
-        public Treatment(int id, string name, string description, int duration, decimal price, List<Employee> employees)
+        public Treatment(int id, int companyID, string name, string description, int duration, decimal price, List<Employee> employees)
         {
             ID = id;
+            CompanyID = companyID;
             Name = name;
             Description = description;
             Duration = duration;

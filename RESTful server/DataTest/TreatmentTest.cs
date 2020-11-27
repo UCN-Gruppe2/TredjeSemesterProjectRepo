@@ -30,7 +30,7 @@ namespace DataTest
         public void TestCreateTreatment1_Valid()
         {
             //Arrange
-            Treatment treatment = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m); //m = decimal 
+            Treatment treatment = new Treatment(3, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m); //m = decimal 
 
             //Act
             watch.Start();
@@ -50,8 +50,8 @@ namespace DataTest
         public void TestCreateTreatment2_AlreadyExists()
         {
             //Arrange
-            Treatment treatment = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
-            Treatment treatmentDouble = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
+            Treatment treatment = new Treatment(3, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
+            Treatment treatmentDouble = new Treatment(3, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
 
             //Act
             watch.Start();
@@ -72,7 +72,7 @@ namespace DataTest
         public void TestCreateTreatment3_IllegalDuration()
         {
             //Arrange
-            Treatment treatment = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", -30, 499.95m);
+            Treatment treatment = new Treatment(3, "Dameklip, lang hår", "Vi klipper langt hår på damer", -30, 499.95m);
 
             //Act
             watch.Start();
@@ -88,7 +88,7 @@ namespace DataTest
         public void TestCreateTreatment4_IllegalPrice()
         {
             //Arrange
-            Treatment treatment = new Treatment("Dameklip, lang hår", "Vi klipper langt hår på damer", 30, -499.95m);
+            Treatment treatment = new Treatment(3, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, -499.95m);
 
             //Act
             watch.Start();
