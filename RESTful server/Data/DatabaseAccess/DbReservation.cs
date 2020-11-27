@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Transactions;
 
 namespace DataAccess.DatabaseAccess
 {
@@ -63,45 +64,48 @@ namespace DataAccess.DatabaseAccess
             DateTime startTime = reservation.StartTime;
             DateTime endTime = reservation.EndTime;
 
-            using (var conn = new SqlConnection(_connectionString))
+            var options = new TransactionOptions
             {
-                //string checkStringStartTime = "SELECT treatmentID, customerID, employeeID, startTime, endTime "
-                    //+ "FROM Reservation WHERE (employeeID = @employeeID AND startTime = @startTime AND endTime = @endTime)"; 
-                                                                                                                                //startTime = 13:30 | endTime = 14:00
-                                                                                                                               //@startTime = 13:45 | @endTime = 13:55
-                                                                                                                               //Result = DEN MÅ IKKE! >:(
-                //Det her er strengt forbudt!
-                string findExistingReservation = "SELECT COUNT(1) FROM Reservation WHERE (employeeID = @employeeID AND ("+
-                    "(startTime >= @startTime AND endTime < @startTime)" + 
-                    "OR (startTime <= @startTime AND startTime < @endTime)" +
-                    "OR endTime >= @endTime AND endTime > @startTime))";
+                IsolationLevel = IsolationLevel.Serializable
+            };
 
-                //Det her må den gerne :::-----))))))
-                //"(startTime < @startTime AND endTime > @startTime)" + //Hvis startTime sker før @startTime, så skal den eksisterende endTime ske før @startTime. 
-                //    "OR (startTime > @startTime AND startTime >= @endTime)" + //
-                //    "OR endTime < @endTime AND endTime <= @startTime))"; //
-
-                //var sqlSelectReader = conn.ExecuteReader(checkStringStartTime, new { employeeID, startTime, endTime });
-                var queryResult = conn.Query<int>(findExistingReservation, new { employeeID, startTime, endTime });
-                bool hasExisting = queryResult.First<int>() > 0;
-
-                if (!hasExisting)
+            using (var scope = new TransactionScope(TransactionScopeOption.Required, options))
+            {
+                using (var conn = new SqlConnection(_connectionString))
                 {
-                    //sqlSelectReader.Close();
-                    string queryString = "INSERT INTO Reservation (treatmentID, customerID, employeeID, startTime, endTime) VALUES (@treatmentID, @customerID, @employeeID, @startTime, @endTime); " +
-                        "SELECT SCOPE_IDENTITY()";
 
-                    var id = conn.ExecuteScalar<int>(queryString, new {
-                        treatmentID, customerID, employeeID, startTime, endTime
-                    });
-                    return conn.Query<Reservation>("SELECT * FROM Reservation WHERE id = @id", new { id = id }).FirstOrDefault();
+                    //Det her er strengt forbudt at kunne gøre i systemet!
+                    string findExistingReservation = "SELECT COUNT(1) FROM Reservation WHERE (employeeID = @employeeID AND (" +
+                        "(startTime >= @startTime AND endTime < @startTime)" +
+                        "OR (startTime <= @startTime AND startTime < @endTime)" +
+                        "OR endTime >= @endTime AND endTime > @startTime))";
+
+                    var queryResult = conn.Query<int>(findExistingReservation, new { employeeID, startTime, endTime });
+                    bool hasExisting = queryResult.First<int>() > 0;
+
+                    if (!hasExisting)
+                    {
+                        string queryString = "INSERT INTO Reservation (treatmentID, customerID, employeeID, startTime, endTime) VALUES (@treatmentID, @customerID, @employeeID, @startTime, @endTime); " +
+                            "SELECT SCOPE_IDENTITY()";
+
+                        var id = conn.ExecuteScalar<int>(queryString, new
+                        {
+                            treatmentID,
+                            customerID,
+                            employeeID,
+                            startTime,
+                            endTime
+                        });
+                        scope.Complete();
+                        return conn.Query<Reservation>("SELECT * FROM Reservation WHERE id = @id", new { id = id }).FirstOrDefault();
+                    }
+                    else
+                    {
+                        throw new ArgumentException("The reservation could not be inserted.");
+                    }
                 }
-                else
-                {
-                    throw new ArgumentException("The reservation could not be inserted.");
-                }
+
             }
-
         }
     }
 }

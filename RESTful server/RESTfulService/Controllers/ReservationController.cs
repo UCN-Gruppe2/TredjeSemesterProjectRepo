@@ -31,7 +31,22 @@ namespace RESTfulService.Controllers
             Reservation reservationAdded = null;
             //try
             //{
-            reservationAdded = _dbReservation.InsertReservationToDatabase(value);
+            if(value.CustomerID < 0)
+            {
+                throw new ArgumentException("The CustomerID doesn't  exist.");
+            }
+            else if(value.EmployeeID < 0)
+            {
+                throw new ArgumentException("The EmployeeID doesn't  exist.");
+            }
+            else if(value.TreatmentID < 0)
+            {
+                throw new ArgumentException("The TreatmentID doesn't  exist.");
+            }
+            else
+            {
+                reservationAdded = _dbReservation.InsertReservationToDatabase(value);
+            }
             //}
             //catch (ArgumentException e)
             //{
