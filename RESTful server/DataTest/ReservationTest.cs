@@ -33,7 +33,7 @@ namespace DataTest
 
             customer = new Customer("Hans", "Larsen", "12345678", "Banegårdsgade 3", "9000", "Aalborg");
             customer2 = new Customer(4, "William", "Jensen", "43215678", "Banegårdsgade 12", "9000", "Aalborg");
-            employee = new Employee("Sanne", "Liane", "87654321", "Bygade 32", "9000", "Aalborg");
+            employee = new Employee("Sanne", "Liane", "87654321", 1, "Bygade 32", "9000", "Aalborg");
 
             //Not for database
             //Just for not repeating to often
