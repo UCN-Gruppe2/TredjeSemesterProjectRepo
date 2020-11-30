@@ -97,8 +97,10 @@ namespace DataAccess.DatabaseAccess
                             startTime,
                             endTime
                         });
+                        
+                        var result = conn.Query<Reservation>("SELECT * FROM Reservation WHERE id = @id", new { id = id }).FirstOrDefault();
                         scope.Complete();
-                        return conn.Query<Reservation>("SELECT * FROM Reservation WHERE id = @id", new { id = id }).FirstOrDefault();
+                        return result;
                     }
                     else
                     {

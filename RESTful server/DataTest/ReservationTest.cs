@@ -69,7 +69,7 @@ namespace DataTest
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment, Categories);
 
-            Treatment treatment2 = new Treatment(25, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 30, 399.95m);
+            Treatment treatment2 = new Treatment(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 30, 399.95m);
             Treatment addedTreatment2 = TreatmentCtrl.Post(treatment2, Categories);
 
             Reservation newReservation = new Reservation(addedTreatment, 1, 1, DateTime.Parse("26-11-2020 13:30"));
@@ -97,7 +97,7 @@ namespace DataTest
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment, Categories);
 
-            Treatment treatment2 = new Treatment(25, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 60, 399.95m);
+            Treatment treatment2 = new Treatment(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 60, 399.95m);
             Treatment addedTreatment2 = TreatmentCtrl.Post(treatment2, Categories);
 
             Reservation newReservation = new Reservation(addedTreatment, 1, 1, DateTime.Parse("26-11-2020 13:30"));

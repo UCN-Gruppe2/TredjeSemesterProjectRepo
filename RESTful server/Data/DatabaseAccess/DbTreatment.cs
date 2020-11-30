@@ -125,12 +125,12 @@ namespace DataAccess.DatabaseAccess
                     if (!sqlSelectReader.Read())
                     {
                         sqlSelectReader.Close();
-                        string queryString = "INSERT INTO CategoryOfTreatments (categoryID, treatmentID) VALUES (@categoryID, @treatmentID);";
-
+                        string queryString = "INSERT INTO CategoryOfTreatments (treatmentID, categoryID) VALUES (@treatmentID, @categoryID);";
+                        Console.WriteLine("INSERT INTO CategoryOfTreatments (treatmentID, categoryID) VALUES ({0}, {1})", treatmentID, categoryID);
                         conn.ExecuteReader(queryString, new
                         {
-                            categoryID,
-                            treatmentID
+                            treatmentID,
+                            categoryID
                         });
                     }
                 }
