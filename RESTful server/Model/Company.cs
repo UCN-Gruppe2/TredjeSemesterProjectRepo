@@ -15,8 +15,10 @@ namespace Model
         public int PostalCode { get; set; }
         public string City { get; set; }
         public string Webpage { get; set; }
+        public TimeSpan OpeningTime { get; set; }
+        public TimeSpan ClosingTime { get; set; }
 
-        public Company(string name, int cvr, string phone, string address, int postalcode, string city, string webpage)
+        public Company(string name, int cvr, string phone, string address, int postalcode, string city, string webpage, string openingTime, string closingTime)
         {
             Name = name;
             CVR = cvr;
@@ -25,6 +27,8 @@ namespace Model
             PostalCode = postalcode;
             City = city;
             Webpage = webpage;
+            OpeningTime = TimeSpan.Parse(openingTime);
+            ClosingTime = TimeSpan.Parse(closingTime);
         }
     }
 }

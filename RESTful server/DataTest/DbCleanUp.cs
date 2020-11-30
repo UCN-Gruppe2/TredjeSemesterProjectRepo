@@ -12,9 +12,18 @@ namespace DataTest
     {
         private static readonly string[] cleanupCommands = {
          "delete from Reservation;",
+         "delete from Employee;",
+         "delete from Customer;",
+         "delete from CategoryOfTreatments;",
          "delete from Treatment;",
+         "delete from TreatmentCategory;",
+         "delete from Company;",
          "DBCC CHECKIDENT ('Reservation', RESEED, 0);",
-         "DBCC CHECKIDENT ('Treatment', RESEED, 0);"
+         "DBCC CHECKIDENT ('Treatment', RESEED, 0);",
+         "DBCC CHECKIDENT ('Company', RESEED, 0);",
+         "DBCC CHECKIDENT ('Employee', RESEED, 0);",
+         "DBCC CHECKIDENT ('Customer', RESEED, 0);",
+         "DBCC CHECKIDENT ('TreatmentCategory', RESEED, 0);"
         };
 
         public static void CleanDB()
@@ -28,6 +37,7 @@ namespace DataTest
         private static void ExecuteCommand(string commandString)
         {
             string _connString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+            Console.Write($"Running command: '{commandString}'... ");
             using (SqlConnection connection = new SqlConnection(_connString))
             {
                 connection.Open();
@@ -38,6 +48,7 @@ namespace DataTest
                     command.ExecuteNonQuery();
                 }
             }
+            Console.Write($"Finished command!\r\n");
         }
     }
 }

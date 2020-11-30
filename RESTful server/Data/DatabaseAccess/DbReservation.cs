@@ -67,7 +67,7 @@ namespace DataAccess.DatabaseAccess
             //Implicit transaction med IsolationLevel
             var options = new TransactionOptions
             {
-                IsolationLevel = IsolationLevel.Serializable
+                IsolationLevel = IsolationLevel.RepeatableRead
             };
 
             using (var scope = new TransactionScope(TransactionScopeOption.Required, options))
@@ -75,7 +75,7 @@ namespace DataAccess.DatabaseAccess
                 using (var conn = new SqlConnection(_connectionString))
                 {
 
-                    //Det her er strengt forbudt at kunne gøre i systemet!
+                    //SQL statement, hvis der returneres >0 findes der allerede reservation(er) i det ønskede tidsrum.
                     string findExistingReservation = "SELECT COUNT(1) FROM Reservation WHERE (employeeID = @employeeID AND (" +
                         "(startTime >= @startTime AND endTime < @startTime)" +
                         "OR (startTime <= @startTime AND startTime < @endTime)" +

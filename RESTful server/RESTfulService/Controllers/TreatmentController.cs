@@ -28,7 +28,7 @@ namespace RESTfulService.Controllers
         }
 
         // POST: api/Treatment
-        public Treatment Post([FromBody] Treatment value)
+        public Treatment Post([FromBody] Treatment value, List<TreatmentCategory> categories)
         {
             Treatment treatmentAdded = null;
             if (value.Duration > 0 && value.Price > 0)
@@ -42,7 +42,19 @@ namespace RESTfulService.Controllers
                     throw e;
                 }
             }
-            else throw new ArgumentException();
+            else
+            {
+                throw new ArgumentException();
+            }
+
+            if(treatmentAdded != null)
+            {
+                foreach(TreatmentCategory element in categories)
+                {
+                    element.AddTreatment(treatmentAdded);
+                    _dbTreatment.UpdateTreatmentsInCategory(element);
+                }
+            }
             return treatmentAdded;
         }
 

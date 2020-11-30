@@ -47,7 +47,6 @@
     <Compile Include="Company.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Employee.cs" />
-    <Compile Include="HourSpan.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation.cs" />
