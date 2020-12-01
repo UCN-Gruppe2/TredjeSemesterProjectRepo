@@ -107,6 +107,13 @@ namespace DataTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(TimeoutException))]
+        public void TestCreateTreatment5_TimeOutOccurred()
+        {
+
+        }
+
+        [TestMethod]
         public void TestFindTreatmentByID_Valid()
         {
             //Arrange

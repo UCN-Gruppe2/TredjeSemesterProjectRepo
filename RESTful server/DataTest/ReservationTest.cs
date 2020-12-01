@@ -186,5 +186,12 @@ namespace DataTest
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
 
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(TimeoutException))]
+        public void TestCreateReservation7_TimeOutOccurred()
+        {
+
+        }
     }
 }
