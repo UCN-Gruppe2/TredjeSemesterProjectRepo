@@ -67,7 +67,8 @@ namespace DataAccess.DatabaseAccess
             //Implicit transaction med IsolationLevel
             var options = new TransactionOptions
             {
-                IsolationLevel = IsolationLevel.RepeatableRead
+                IsolationLevel = IsolationLevel.RepeatableRead,
+                Timeout = TimeSpan.FromSeconds(15) //<-- Timeout to prevent gridlocks, or any other type of blockage.
             };
 
             using (var scope = new TransactionScope(TransactionScopeOption.Required, options))
