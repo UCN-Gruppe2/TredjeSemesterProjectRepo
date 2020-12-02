@@ -67,7 +67,7 @@ namespace DataAccess.DatabaseAccess
             //Implicit transaction med IsolationLevel
             var options = new TransactionOptions
             {
-                IsolationLevel = IsolationLevel.RepeatableRead,
+                IsolationLevel = IsolationLevel.Serializable,
                 Timeout = TimeSpan.FromSeconds(15) //<-- Timeout to prevent gridlocks, or any other type of blockage.
             };
 
@@ -77,13 +77,13 @@ namespace DataAccess.DatabaseAccess
                 {
 
                     //SQL statement, hvis der returneres >0 findes der allerede reservation(er) i det ønskede tidsrum.
-                    string findExistingReservation = "SELECT COUNT(1) FROM Reservation WHERE (employeeID = @employeeID AND (" +
+                    string findExistingReservation = "SELECT * FROM Reservation WHERE (employeeID = @employeeID AND (" +
                         "(startTime >= @startTime AND endTime < @startTime)" +
                         "OR (startTime <= @startTime AND startTime < @endTime)" +
-                        "OR endTime >= @endTime AND endTime > @startTime))";
+                        "OR endTime >= @endTime AND endTime > @startTime));";
 
                     var queryResult = conn.Query<int>(findExistingReservation, new { employeeID, startTime, endTime });
-                    bool hasExisting = queryResult.First<int>() > 0;
+                    bool hasExisting = queryResult.Any();
 
                     if (!hasExisting)
                     {
@@ -98,7 +98,7 @@ namespace DataAccess.DatabaseAccess
                             startTime,
                             endTime
                         });
-                        
+
                         var result = conn.Query<Reservation>("SELECT * FROM Reservation WHERE id = @id", new { id = id }).FirstOrDefault();
                         scope.Complete();
                         return result;
@@ -109,6 +109,61 @@ namespace DataAccess.DatabaseAccess
                     }
                 }
 
+            }
+        }
+
+        //Not for use!
+        public Reservation _InsertReservationToDatabase(Reservation reservation)
+        {
+            int treatmentID = reservation.TreatmentID;
+            int customerID = reservation.CustomerID;
+            int employeeID = reservation.EmployeeID;
+            DateTime startTime = reservation.StartTime;
+            DateTime endTime = reservation.EndTime;
+
+            //Implicit transaction med IsolationLevel
+            var options = new TransactionOptions
+            {
+                IsolationLevel = IsolationLevel.Serializable,
+                Timeout = TimeSpan.FromSeconds(15) //<-- Timeout to prevent gridlocks, or any other type of blockage.
+            };
+
+            using (var scope = new TransactionScope(TransactionScopeOption.Required, options))
+            {
+                using (var conn = new SqlConnection(_connectionString))
+                {
+
+                    //SQL statement, hvis der returneres >0 findes der allerede reservation(er) i det ønskede tidsrum.
+                    string betterString = "INSERT INTO Reservation (treatmentID, customerID, employeeID, startTime, endTime) " +
+                        "VALUES (@treatmentID, @customerID, @employeeID, @startTime, @endTime) " +
+                        "IF(SELECT COUNT(1) FROM Reservation WHERE(employeeID = @employeeID AND(" +
+                        "(startTime >= @startTime AND endTime < @startTime)" +
+                        "OR (startTime <= @startTime AND startTime < @endTime)" +
+                        "OR (endTime >= @endTime AND endTime > @startTime)))) = 0" +
+                        "SELECT SCOPE_IDENTITY()";
+
+                    string bestString = "IF EXISTS(SELECT * FROM Reservation WHERE(employeeID = @employeeID AND(" +
+                        "(startTime >= @startTime AND endTime < @startTime)" +
+                        "OR (startTime <= @startTime AND startTime < @endTime)" +
+                        "OR (endTime >= @endTime AND endTime > @startTime)))) = 0 " +
+                        "BEGIN INSERT INTO Reservation (treatmentID, customerID, employeeID, startTime, endTime) " +
+                        "VALUES (@treatmentID, @customerID, @employeeID, @startTime, @endTime)" +
+                        "SELECT SCOPE_IDENTITY()";
+
+
+                    var id = conn.ExecuteScalar<int>(betterString, new
+                        {
+                            treatmentID,
+                            customerID,
+                            employeeID,
+                            startTime,
+                            endTime
+                        });
+
+                        var result = conn.Query<Reservation>("SELECT * FROM Reservation WHERE id = @id", new { id = id }).FirstOrDefault();
+                        scope.Complete();
+                        return result;
+                }
             }
         }
     }
