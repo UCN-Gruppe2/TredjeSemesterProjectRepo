@@ -222,7 +222,7 @@ namespace DataTest
             int id = 1;
 
             //Act
-            List<Reservation> founds = ReservationCtrl.GetReservationByCustomerID(id);
+            List<Reservation> founds = ReservationCtrl.GetReservationsByCustomerID(id);
 
             //Assert
             foreach (Reservation element in founds)
@@ -235,13 +235,70 @@ namespace DataTest
         public void TestFindReservationByCustomerID2_NonFound()
         {
             //Arrange
+            int id = 2;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationsByCustomerID(id);
+
+            //Assert
+            Assert.IsTrue(founds.Count == 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestFindReservationByCustomerID3_UnknownCustomer()
+        {
+            //Arrange
             int id = 35;
 
             //Act
-            List<Reservation> founds = ReservationCtrl.GetReservationByCustomerID(id);
+            List<Reservation> founds = ReservationCtrl.GetReservationsByCustomerID(id);
 
             //Assert
-            Assert.IsNull(founds);
+            Assert.IsTrue(founds.Count == 0);
+        }
+
+        [TestMethod]
+        public void TestFindReservationByEmployeeID1_Valid()
+        {
+            //Arrange
+            int id = 1;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+
+            //Assert
+            foreach (Reservation element in founds)
+            {
+                Assert.AreEqual(id, element.EmployeeID);
+            }
+        }
+
+        [TestMethod]
+        public void TestFindReservationByEmployeeID2_NonFound()
+        {
+            //Arrange
+            int id = 2;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+
+            //Assert
+            Assert.IsTrue(founds.Count == 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestFindReservationByEmployeeID3_UnknownEmployee()
+        {
+            //Arrange
+            int id = 35;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+
+            //Assert
+            Assert.IsTrue(founds.Count == 0);
         }
     }
 }

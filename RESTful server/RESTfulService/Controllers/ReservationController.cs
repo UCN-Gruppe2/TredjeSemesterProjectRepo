@@ -26,18 +26,19 @@ namespace RESTfulService.Controllers
             return found;
         }
 
-        public List<Reservation> GetReservationByCustomerID(int id)
+        public List<Reservation> GetReservationsByCustomerID(int id)
         {
             List<Reservation> reservations = new List<Reservation>();
-            reservations = _dbReservation.GetReservationByCustomerID(id);
-            if (reservations.Count > 0)
-            {
-                return reservations;
-            }
-            else
-            {
-                return reservations = null;
-            }
+            reservations = _dbReservation.GetReservationsByCustomerID(id);
+            return reservations;
+            
+        }
+
+        public List<Reservation> GetReservationsByEmployeeID(int id)
+        {
+            List<Reservation> reservations = new List<Reservation>();
+            reservations = _dbReservation.GetReservationsByEmployeeID(id);
+            return reservations;
         }
 
         // POST: api/Reservation

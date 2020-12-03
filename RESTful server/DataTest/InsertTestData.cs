@@ -84,12 +84,14 @@ namespace DataTest
         private static void InsertEmployee()
         {
             string employeeSQL = "INSERT INTO Employee (companyID, firstName, lastName, phone, email, address, postalCode, city) VALUES (1, 'Sanne', 'Liane', '87654321', 'hej@ucn.dk', 'Bygade 32', 9000, 'Aalborg');";
+            string employeeSQL2 = "INSERT INTO Employee (companyID, firstName, lastName, phone, email, address, postalCode, city) VALUES (1, 'Lene', 'Sorensen', '87651234', 'dav@ucn.dk', 'Bygade 32', 9000, 'Aalborg');";
+             string resultSQL = $"{employeeSQL} {employeeSQL2}";
             using (SqlConnection connection = new SqlConnection(_connString))
             {
                 connection.Open();
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = employeeSQL;
+                    command.CommandText = resultSQL;
                     command.Prepare();
                     command.ExecuteNonQuery();
                 }

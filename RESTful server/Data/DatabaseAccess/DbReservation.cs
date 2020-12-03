@@ -31,13 +31,47 @@ namespace DataAccess.DatabaseAccess
             }
         }
 
-        public List<Reservation> GetReservationByCustomerID(int id)
+        public List<Reservation> GetReservationsByCustomerID(int id)
+        {
+
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                string customerCheck = "SELECT * FROM Customer WHERE id = @id";
+                var queryResult = conn.Query<int>(customerCheck, new { id });
+                bool hasExisting = queryResult.Any();
+
+                if  (hasExisting)
+                {
+                    string sqlString = "SELECT * FROM Reservation WHERE customerID = @id";
+                    List<Reservation> results = (List<Reservation>)conn.Query<Reservation>(sqlString, new { id = id });
+                    return results;
+                }
+                else
+                {
+                    throw new ArgumentException("Customer not found.");
+                }
+            }
+        }
+
+        public List<Reservation> GetReservationsByEmployeeID(int id)
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sqlString = "SELECT * FROM Reservation WHERE customerID = @id";
-                List<Reservation> results = (List<Reservation>)conn.Query<Reservation>(sqlString, new { id = id });
-                return results;
+                string employeeCheck = "SELECT * FROM Employee WHERE id = @id";
+                var queryResult = conn.Query<int>(employeeCheck, new { id });
+                bool hasExisting = queryResult.Any();
+
+                if(hasExisting)
+                {
+                    string sqlString = "SELECT * FROM Reservation WHERE employeeID = @id";
+                    List<Reservation> results = (List<Reservation>)conn.Query<Reservation>(sqlString, new { id = id });
+                    return results;
+                }
+                else
+                {
+                    throw new ArgumentException("Employee not found.");
+                }
+                
             }
         }
 
