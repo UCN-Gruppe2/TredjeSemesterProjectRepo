@@ -33,7 +33,12 @@ namespace DataAccess.DatabaseAccess
 
         public Treatment GetTreatmentByID(int id)
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                string sqlString = "SELECT * FROM Treatment WHERE id = @id";
+                Treatment result = conn.Query<Treatment>(sqlString, new { id = id }).FirstOrDefault();
+                return result;
+            }
         }
 
         public Treatment InsertTreatmentToDatabase(Treatment treatment)
@@ -126,7 +131,7 @@ namespace DataAccess.DatabaseAccess
                     {
                         sqlSelectReader.Close();
                         string queryString = "INSERT INTO CategoryOfTreatments (treatmentID, categoryID) VALUES (@treatmentID, @categoryID);";
-                        Console.WriteLine("INSERT INTO CategoryOfTreatments (treatmentID, categoryID) VALUES ({0}, {1})", treatmentID, categoryID);
+                        //Console.WriteLine("INSERT INTO CategoryOfTreatments (treatmentID, categoryID) VALUES ({0}, {1})", treatmentID, categoryID);
                         conn.ExecuteReader(queryString, new
                         {
                             treatmentID,

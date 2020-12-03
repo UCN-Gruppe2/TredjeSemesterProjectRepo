@@ -107,23 +107,29 @@ namespace DataTest
         }
 
         [TestMethod]
-        public void TestFindTreatmentByID_Valid()
+        public void TestFindTreatmentByID1_Valid()
         {
             //Arrange
+            int id = 1;
 
             //Act
+            Treatment found = TreatmentCtrl.Get(id);
 
             //Assert
+            Assert.AreEqual(id, found.ID);
         }
 
         [TestMethod]
-        public void TestFindTreatmentByID_UnknownID()
+        public void TestFindTreatmentByID2_UnknownID()
         {
             //Arrange
+            int id = 35;
 
             //Act
+            Treatment found = TreatmentCtrl.Get(id);
 
             //Assert
+            Assert.IsNull(found);
         }
 
         [TestMethod]

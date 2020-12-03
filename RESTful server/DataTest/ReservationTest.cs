@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 
 namespace DataTest
 {
@@ -184,7 +185,120 @@ namespace DataTest
             Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
             Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
+        }
 
+        [TestMethod]
+        public void TestFindReservationByID1_Valid()
+        {
+            //Arrange
+            int id = 1;
+
+            //Act
+            Reservation found = ReservationCtrl.GetReservationByID(id);
+
+            //Assert
+            Assert.AreEqual(id, found.ID);
+        }
+
+        [TestMethod]
+        public void TestFindReservationByID2_NonExists()
+        {
+            //Arrange
+            int id = 35;
+
+            //Act
+            Reservation found = ReservationCtrl.GetReservationByID(id);
+
+            //Assert
+            Assert.IsNull(found);
+        }
+
+        //Udarbejdet med TDD
+        //Test fuldt skrevet først, dernæst controller, så DbReservation
+        [TestMethod]
+        public void TestFindReservationByCustomerID1_Valid()
+        {
+            //Arrange
+            int id = 1;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationsByCustomerID(id);
+
+            //Assert
+            foreach (Reservation element in founds)
+            {
+                Assert.AreEqual(id, element.CustomerID);
+            }
+        }
+
+        [TestMethod]
+        public void TestFindReservationByCustomerID2_NonFound()
+        {
+            //Arrange
+            int id = 2;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationsByCustomerID(id);
+
+            //Assert
+            Assert.IsTrue(founds.Count == 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestFindReservationByCustomerID3_UnknownCustomer()
+        {
+            //Arrange
+            int id = 35;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationsByCustomerID(id);
+
+            //Assert
+            Assert.IsTrue(founds.Count == 0);
+        }
+
+        [TestMethod]
+        public void TestFindReservationByEmployeeID1_Valid()
+        {
+            //Arrange
+            int id = 1;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+
+            //Assert
+            foreach (Reservation element in founds)
+            {
+                Assert.AreEqual(id, element.EmployeeID);
+            }
+        }
+
+        [TestMethod]
+        public void TestFindReservationByEmployeeID2_NonFound()
+        {
+            //Arrange
+            int id = 2;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+
+            //Assert
+            Assert.IsTrue(founds.Count == 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestFindReservationByEmployeeID3_UnknownEmployee()
+        {
+            //Arrange
+            int id = 35;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+
+            //Assert
+            Assert.IsTrue(founds.Count == 0);
         }
     }
 }
