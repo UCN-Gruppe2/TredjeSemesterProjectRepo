@@ -22,9 +22,10 @@ namespace RESTfulService.Controllers
         }
 
         // GET: api/Treatment/5
-        public string Get(int id)
+        public Treatment Get(int id)
         {
-            return "value";
+            Treatment found = _dbTreatment.GetTreatmentByID(id);
+            return found;
         }
 
         // POST: api/Treatment

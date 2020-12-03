@@ -23,7 +23,22 @@ namespace DataAccess.DatabaseAccess
 
         public Reservation GetReservationByID(int id)
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                string sqlString = "SELECT * FROM Reservation WHERE id = @id";
+                Reservation result = conn.Query<Reservation>(sqlString, new { id = id }).FirstOrDefault();
+                return result;
+            }
+        }
+
+        public List<Reservation> GetReservationByCustomerID(int id)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                string sqlString = "SELECT * FROM Reservation WHERE customerID = @id";
+                List<Reservation> results = (List<Reservation>)conn.Query<Reservation>(sqlString, new { id = id });
+                return results;
+            }
         }
 
         public void SaveReservation()
@@ -77,10 +92,12 @@ namespace DataAccess.DatabaseAccess
                 {
 
                     //SQL statement, hvis der returneres >0 findes der allerede reservation(er) i det ønskede tidsrum.
-                    string findExistingReservation = "SELECT * FROM Reservation WHERE (employeeID = @employeeID AND (" +
-                        "(startTime >= @startTime AND endTime < @startTime)" +
-                        "OR (startTime <= @startTime AND startTime < @endTime)" +
-                        "OR endTime >= @endTime AND endTime > @startTime));";
+                    string findExistingReservation = "SELECT * FROM Reservation WHERE employeeID = @employeeID AND (" +
+                        "(startTime <= @startTime AND endTime > @startTime)" +
+                        "OR (startTime >= @startTime AND startTime < @endTime)" +
+                        "OR (endTime > @startTime AND startTime < @endTime)" + 
+                        "OR (endTime >= @endTime AND startTime < @endTime)" + 
+                        "OR (endTime <= @endTime AND endTime > @startTime))";
 
                     var queryResult = conn.Query<int>(findExistingReservation, new { employeeID, startTime, endTime });
                     bool hasExisting = queryResult.Any();

@@ -20,9 +20,24 @@ namespace RESTfulService.Controllers
         }
 
         // GET: api/Reservation/5
-        public string Get(int id)
+        public Reservation GetReservationByID(int id)
         {
-            return "value";
+            Reservation found = _dbReservation.GetReservationByID(id);
+            return found;
+        }
+
+        public List<Reservation> GetReservationByCustomerID(int id)
+        {
+            List<Reservation> reservations = new List<Reservation>();
+            reservations = _dbReservation.GetReservationByCustomerID(id);
+            if (reservations.Count > 0)
+            {
+                return reservations;
+            }
+            else
+            {
+                return reservations = null;
+            }
         }
 
         // POST: api/Reservation

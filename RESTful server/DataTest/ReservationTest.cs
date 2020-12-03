@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 
 namespace DataTest
 {
@@ -184,14 +185,63 @@ namespace DataTest
             Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
             Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
-
         }
 
         [TestMethod]
-        [ExpectedException(typeof(TimeoutException))]
-        public void TestCreateReservation7_TimeOutOccurred()
+        public void TestFindReservationByID1_Valid()
         {
+            //Arrange
+            int id = 1;
 
+            //Act
+            Reservation found = ReservationCtrl.GetReservationByID(id);
+
+            //Assert
+            Assert.AreEqual(id, found.ID);
+        }
+
+        [TestMethod]
+        public void TestFindReservationByID2_NonExists()
+        {
+            //Arrange
+            int id = 35;
+
+            //Act
+            Reservation found = ReservationCtrl.GetReservationByID(id);
+
+            //Assert
+            Assert.IsNull(found);
+        }
+
+        //Udarbejdet med TDD
+        //Test fuldt skrevet først, dernæst controller, så DbReservation
+        [TestMethod]
+        public void TestFindReservationByCustomerID1_Valid()
+        {
+            //Arrange
+            int id = 1;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationByCustomerID(id);
+
+            //Assert
+            foreach (Reservation element in founds)
+            {
+                Assert.AreEqual(id, element.CustomerID);
+            }
+        }
+
+        [TestMethod]
+        public void TestFindReservationByCustomerID2_NonFound()
+        {
+            //Arrange
+            int id = 35;
+
+            //Act
+            List<Reservation> founds = ReservationCtrl.GetReservationByCustomerID(id);
+
+            //Assert
+            Assert.IsNull(founds);
         }
     }
 }
