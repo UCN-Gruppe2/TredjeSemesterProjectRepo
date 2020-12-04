@@ -59,6 +59,10 @@ namespace RESTfulService.Controllers
             {
                 throw new ArgumentException("The TreatmentID doesn't  exist.");
             }
+            else if(value.StartTime < DateTime.Now)
+            {
+                throw new ArgumentException("You can't make reservations for the past.");
+            }
             else
             {
                 reservationAdded = _dbReservation.InsertReservationToDatabase(value);

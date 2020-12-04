@@ -47,7 +47,7 @@ namespace DataTest
         {
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment, Categories);
-            Reservation newReservation = new Reservation(addedTreatment, 1, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation newReservation = new Reservation(addedTreatment, 1, 1, DateTime.Parse("30-11-2021 13:30"));
 
             //Act
             Watch.Start();
@@ -73,8 +73,8 @@ namespace DataTest
             Treatment treatment2 = new Treatment(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 30, 399.95m);
             Treatment addedTreatment2 = TreatmentCtrl.Post(treatment2, Categories);
 
-            Reservation newReservation = new Reservation(addedTreatment, 1, 1, DateTime.Parse("26-11-2020 13:30"));
-            Reservation doubleReservation = new Reservation(addedTreatment2, 2, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation newReservation = new Reservation(addedTreatment, 1, 1, DateTime.Parse("26-11-2021 13:30"));
+            Reservation doubleReservation = new Reservation(addedTreatment2, 2, 1, DateTime.Parse("26-11-2021 13:30"));
 
             //Act
             Watch.Start();
@@ -101,8 +101,8 @@ namespace DataTest
             Treatment treatment2 = new Treatment(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 60, 399.95m);
             Treatment addedTreatment2 = TreatmentCtrl.Post(treatment2, Categories);
 
-            Reservation newReservation = new Reservation(addedTreatment, 1, 1, DateTime.Parse("26-11-2020 13:30"));
-            Reservation doubleReservation = new Reservation(addedTreatment2, 2, 1, DateTime.Parse("26-11-2020 14:00"));
+            Reservation newReservation = new Reservation(addedTreatment, 1, 1, DateTime.Parse("26-11-2021 13:30"));
+            Reservation doubleReservation = new Reservation(addedTreatment2, 2, 1, DateTime.Parse("26-11-2021 14:00"));
 
             //Act
             Watch.Start();
@@ -125,7 +125,7 @@ namespace DataTest
         {
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment, Categories);
-            Reservation newReservation = new Reservation(addedTreatment, 1, -1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation newReservation = new Reservation(addedTreatment, 1, -1, DateTime.Parse("26-11-2021 13:30"));
 
             //Act
 
@@ -147,7 +147,7 @@ namespace DataTest
         public void TestCreateReservation5_NoTreatment()
         {
             //Arrange
-            Reservation newReservation = new Reservation(Treatment, 1, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation newReservation = new Reservation(Treatment, 1, 1, DateTime.Parse("30-11-2021 13:30"));
 
             //Act
 
@@ -170,7 +170,30 @@ namespace DataTest
         {
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment, Categories);
-            Reservation newReservation = new Reservation(addedTreatment, -1, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation newReservation = new Reservation(addedTreatment, -1, 1, DateTime.Parse("26-11-2021 13:30"));
+
+            //Act
+
+            Watch.Start();
+            Reservation addedReservation = ReservationCtrl.Post(newReservation);
+            Watch.Stop();
+
+            //Assert
+            Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
+            Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
+            Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
+            Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
+            Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
+            Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestCreateReservation7_DateInThePast()
+        {
+            //Arrange
+            Treatment addedTreatment = TreatmentCtrl.Post(Treatment, Categories);
+            Reservation newReservation = new Reservation(addedTreatment, 1, 1, DateTime.Parse("26-11-2020 13:30"));
 
             //Act
 

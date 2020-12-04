@@ -104,8 +104,8 @@ namespace DataTest
             TreatmentController treatmentCtrl = new TreatmentController();
 
             Treatment treatment = treatmentCtrl.Get(1);
-            Reservation reservation1 = new Reservation(treatment, 1, 1, DateTime.Parse("26-11-2010 13:30"));
-            Reservation reservation2 = new Reservation(treatment, 1, 1, DateTime.Parse("25-10-2011 17:30"));
+            Reservation reservation1 = new Reservation(treatment, 1, 1, DateTime.Parse("26-11-2021 13:30"));
+            Reservation reservation2 = new Reservation(treatment, 1, 1, DateTime.Parse("25-10-2021 17:30"));
 
             reservationCtrl.Post(reservation1);
             reservationCtrl.Post(reservation2);
