@@ -21,7 +21,7 @@ namespace WebBookingInterface.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("LoginConnection", throwIfV1Schema: false)
         {
         }
 
