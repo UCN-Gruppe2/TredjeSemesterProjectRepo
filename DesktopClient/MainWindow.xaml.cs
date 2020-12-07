@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Model;
+using RestSharp;
 
 namespace DesktopClient
 {
@@ -20,14 +22,19 @@ namespace DesktopClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        private RestClient _restClient = new RestClient("https://localhost:40388");
+        private List<Reservation> _reservations = new List<Reservation>();
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void TabItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private async Task TabItem_MouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
         {
-
+            IRestRequest request = new RestRequest("reservation/GetReservationsByEmployeeID/{id}")
+                .AddUrlSegment("id", 1);
+            _reservations = (List<Reservation>)await _restClient.ExecuteAsync<List<Reservation>>(request);
+            dataGrid.DataContext = _reservations;
         }
     }
 }

@@ -21,7 +21,7 @@
             </TabItem>
             <TabItem Header="Reservation" Padding="5,5,5,5">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid HorizontalAlignment="Left" Height="305" Margin="102,197,0,0" VerticalAlignment="Top" Width="806"/>
+                    <DataGrid Name = "dataGrid"  HorizontalAlignment="Left" Height="305" Margin="102,197,0,0" VerticalAlignment="Top" Width="806"/>
                 </Grid>
             </TabItem>
         </TabControl>
