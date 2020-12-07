@@ -24,5 +24,10 @@ namespace DesktopClient
         {
             InitializeComponent();
         }
+
+        private void TabItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

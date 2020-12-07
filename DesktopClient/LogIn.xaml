@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopClient"
         mc:Ignorable="d"
-        Title="LogIn" Height="300" Width="500"
+        Title="Booking4You - LogIn" Height="300" Width="500"
         Background ="LightGray">
     <Grid>
         <Grid.ColumnDefinitions>

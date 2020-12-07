@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Booking4You - Startside - " WindowState="Maximized" Height="700" Width="1000" Background="#303030" FontFamily="Arial, Helvetica, sans-serif">
+    <Grid Name="MainGrid" Background="#303030" Margin="10,10,10,10">
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+        <TabControl HorizontalAlignment="Left" Height="{Binding ActualHeight, ElementName=MainGrid}" Margin="0,0,0,0" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=MainGrid}" Background="#303030" FontSize="15px">
+            <TabItem Header="Behandling" Padding="5,5,5,5">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Medarbejder" Padding="5,5,5,5">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Reservation" Padding="5,5,5,5">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid HorizontalAlignment="Left" Height="305" Margin="102,197,0,0" VerticalAlignment="Top" Width="806"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>
