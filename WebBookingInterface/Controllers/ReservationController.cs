@@ -59,9 +59,9 @@ namespace WebBookingInterface.Controllers
             {
                 RestRequest reservationRequest = new RestRequest("/api/Reservation/Post", Method.POST);
                 reservationRequest.AddParameter("companyID", companyID);
-                reservationRequest.AddParameter("treatmentID", companyID);
-                reservationRequest.AddParameter("customerID", companyID);
-                reservationRequest.AddParameter("employeeID", companyID);
+                reservationRequest.AddParameter("treatmentID", treatmentID);
+                reservationRequest.AddParameter("customerID", customerID);
+                reservationRequest.AddParameter("employeeID", employeeID);
                 reservationRequest.AddParameter("appointment_dateTime", appointment_dateTime);
                 var response = _client.Execute(reservationRequest);
 
