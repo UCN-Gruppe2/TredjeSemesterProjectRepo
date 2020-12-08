@@ -57,12 +57,30 @@ namespace WebBookingInterface.Controllers
             Exception exception;
             try
             {
-                RestRequest reservationRequest = new RestRequest("/api/Reservation/Post", Method.POST);
-                reservationRequest.AddParameter("companyID", companyID);
-                reservationRequest.AddParameter("treatmentID", treatmentID);
-                reservationRequest.AddParameter("customerID", customerID);
-                reservationRequest.AddParameter("employeeID", employeeID);
-                reservationRequest.AddParameter("appointment_dateTime", appointment_dateTime);
+                RestRequest reservationRequest = new RestRequest("/api/Reservation", Method.POST);
+                reservationRequest.AddHeader("Content-type", "application/json");
+                var reservation_DTO = new Reserveration_DTO()
+                {
+                    CompanyID = companyID, 
+                    EmployeeID = employeeID,
+                    CustomerID = customerID,
+                    TreatmentID = treatmentID,
+                    Appointment_dateTime = appointment_date
+                };
+
+                //var reservationJSOnObject = JObject.FromObject(reservation_DTO);
+                reservationRequest.AddJsonBody(reservation_DTO);
+                //reservationRequest.Body = new RequestBody()
+                //{
+                //    ContentType = "application/json",
+                //    Value = reservation_DTO
+                //};
+                //reservationRequest.RequestFormat = DataFormat.Json;
+                //reservationRequest.AddParameter("companyID", companyID);
+                //reservationRequest.AddParameter("treatmentID", treatmentID);
+                //reservationRequest.AddParameter("customerID", customerID);
+                //reservationRequest.AddParameter("employeeID", employeeID);
+                //reservationRequest.AddParameter("appointment_dateTime", appointment_dateTime);
                 var response = _client.Execute(reservationRequest);
 
 
