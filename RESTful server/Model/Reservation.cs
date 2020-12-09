@@ -5,12 +5,14 @@ using System.Web;
 
 namespace Model
 {
-    public class Reservation
+    public class Reservation : Reservation_DTO
     {
         public int ID { get; set; }
-        public int TreatmentID { get; set; }
-        public int CustomerID { get; set; }
-        public int EmployeeID { get; set; }
+
+        //public int TreatmentID { get; set; }
+        //public int CustomerID { get; set; }
+        //public int EmployeeID { get; set; }
+
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
