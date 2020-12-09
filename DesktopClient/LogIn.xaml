@@ -11,13 +11,12 @@
         <Grid.ColumnDefinitions>
         </Grid.ColumnDefinitions>
         <Label Content="Velkommen" HorizontalContentAlignment="Center" Margin="100,16,100,0" VerticalAlignment="Top" Width="300" FontSize="30px" FontWeight="Bold"/>
-        <Label Content="Dit navn:" HorizontalAlignment="Left" Margin="100,80,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="200,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
         <Label Content="Din e-mail:" HorizontalAlignment="Left" Margin="100,120,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="200,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
+        <TextBox Name="mailTextBox" HorizontalAlignment="Left" Height="23" Margin="200,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
         <Label Content="Kode:" HorizontalAlignment="Left" Margin="100,160,0,0" VerticalAlignment="Top" Width="100"/>
-        <PasswordBox HorizontalAlignment="Left" Margin="200,163,0,0" VerticalAlignment="Top" Width="200" Height="23"/>
+        <PasswordBox Name="PasswordBox" HorizontalAlignment="Left" Margin="200,163,0,0" VerticalAlignment="Top" Width="200" Height="23"/>
         <Button Content="Log ind" HorizontalAlignment="Left" Margin="200,200,0,0" VerticalAlignment="Top" Width="100" FontSize="15px" FontWeight="Bold" Click="LogInButton_Click"/>
+        <Label Name="BadSignIn" Content="Label" HorizontalAlignment="Left" Margin="200,92,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.468,-0.332" Visibility="Hidden"/>
 
     </Grid>
 </Window>

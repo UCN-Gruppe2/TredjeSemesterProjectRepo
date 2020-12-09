@@ -11,17 +11,30 @@
         </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Left" Height="{Binding ActualHeight, ElementName=MainGrid}" Margin="0,0,0,0" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=MainGrid}" Background="#303030" FontSize="15px">
             <TabItem Header="Behandling" Padding="5,5,5,5">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#919191">
                     <Grid.ColumnDefinitions>
                     </Grid.ColumnDefinitions>
+                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9"/>
+                    <TextBox HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+                    <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewTreatment_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Medarbejder" Padding="5,5,5,5">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#919191">
+                    <Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9"/>
+                    <TextBox HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+                    <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="FunctionNotImplemented_Click"/>
+                </Grid>
             </TabItem>
             <TabItem Header="Reservation" Padding="5,5,5,5">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid Name = "dataGrid"  HorizontalAlignment="Left" Height="305" Margin="102,197,0,0" VerticalAlignment="Top" Width="806"/>
+                <Grid Background="#919191">
+                    <Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9"/>
+                    <TextBox HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+                    <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="FunctionNotImplemented_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

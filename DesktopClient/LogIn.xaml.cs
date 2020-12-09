@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,9 +29,26 @@ namespace DesktopClient
 
         private void LogInButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow main = new MainWindow();
-            main.Show();
-            this.Close();
+            RestClient client = new RestClient("https://localhost:44388");
+            RestRequest request = new RestRequest("/Token", Method.POST);
+            request.AddParameter("grant_type", "password");
+            request.AddParameter("userName", mailTextBox.Text);
+            request.AddParameter("password", PasswordBox.Password);
+            var response = client.Execute(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                string accessToken = JObject.Parse(response.Content)["access_token"].ToString();
+                MainWindow main = new MainWindow();
+                main.Show();
+                this.Close();
+            } 
+            else
+            {
+                mailTextBox.Text = "";
+                PasswordBox.Password = "";
+                BadSignIn.Content = "Forkert email/password kombination. Prøv igen.";
+                BadSignIn.Visibility = Visibility.Visible;
+            }
         }
     }
 }
