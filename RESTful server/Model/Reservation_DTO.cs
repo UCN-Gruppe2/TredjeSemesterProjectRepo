@@ -12,6 +12,15 @@ namespace Model
         public int TreatmentID;
         public int CustomerID;
         public int EmployeeID;
-        public DateTime Appointment_dateTime;
+        public DateTime StartTime;
+
+        public Reservation_DTO(int companyID, int treatmentID, int customerID, int employeeID, DateTime startTime)
+        {
+            CompanyID = companyID;
+            TreatmentID = treatmentID;
+            CustomerID = customerID;
+            EmployeeID = employeeID;
+            StartTime = startTime;
+        }
     }
 }

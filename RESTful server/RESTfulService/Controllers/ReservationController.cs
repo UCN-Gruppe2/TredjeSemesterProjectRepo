@@ -93,7 +93,7 @@ namespace RESTfulService.Controllers
             }
 
             Treatment treatmentToUse = _dbTreatment.GetTreatmentByID(reservation_DTO.TreatmentID);
-            Reservation reservationToAdd = new Reservation(treatmentToUse, reservation_DTO.CustomerID, reservation_DTO.EmployeeID, reservation_DTO.Appointment_dateTime);
+            Reservation reservationToAdd = new Reservation(treatmentToUse, reservation_DTO.CustomerID, reservation_DTO.EmployeeID, reservation_DTO.StartTime);
             //   _dbReservation.InsertReservationToDatabase(reservationToAdd);
             Reservation reservationAdded = _dbReservation.InsertReservationToDatabase(reservationToAdd);
 
