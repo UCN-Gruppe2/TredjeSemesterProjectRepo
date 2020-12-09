@@ -70,11 +70,6 @@ namespace WebBookingInterface.Controllers
                 reservationRequest.AddJsonBody(reservation_DTO);
                 var response = _client.Execute(reservationRequest);
 
-
-
-                //Treatment treatmentToUse = _dbTreatment.GetTreatmentByID(treatmentID);
-                //Reservation reservationToAdd = new Reservation(treatmentToUse, customerID, employeeID, appointment_dateTime);
-                //_dbReservation.InsertReservationToDatabase(reservationToAdd);
                 result = response.StatusCode == System.Net.HttpStatusCode.OK;
             }
             catch (Exception e)
