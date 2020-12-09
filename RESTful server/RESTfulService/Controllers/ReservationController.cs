@@ -41,41 +41,10 @@ namespace RESTfulService.Controllers
             reservations = _dbReservation.GetReservationsByEmployeeID(id);
             return reservations;
         }
-        /*
-        // POST: api/Reservation
-        public Reservation Post([FromBody] Reservation value)
-        {
-            Reservation reservationAdded = null;
-            //try
-            //{
-            if(value.CustomerID < 0)
-            {
-                throw new ArgumentException("The CustomerID doesn't  exist.");
-            }
-            else if(value.EmployeeID < 0)
-            {
-                throw new ArgumentException("The EmployeeID doesn't  exist.");
-            }
-            else if(value.TreatmentID < 0)
-            {
-                throw new ArgumentException("The TreatmentID doesn't  exist.");
-            }
-            else
-            {
-                reservationAdded = _dbReservation.InsertReservationToDatabase(value);
-            }
-            //}
-            //catch (ArgumentException e)
-            //{
-            //    throw e;
-            //}
-            return reservationAdded;
-        }
-        */
 
         // POST: api/Reservation
         [HttpPost]
-        public Reservation Post(Reservation_DTO reservation_DTO)
+        public Reservation Post([FromBody]Reservation_DTO reservation_DTO)
         {
             //try
             //{
