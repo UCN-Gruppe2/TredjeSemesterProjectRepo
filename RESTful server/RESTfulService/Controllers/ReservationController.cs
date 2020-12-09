@@ -32,7 +32,7 @@ namespace RESTfulService.Controllers
             List<Reservation> reservations = new List<Reservation>();
             reservations = _dbReservation.GetReservationsByCustomerID(id);
             return reservations;
-            
+
         }
 
         public List<Reservation> GetReservationsByEmployeeID(int id)
@@ -75,28 +75,28 @@ namespace RESTfulService.Controllers
 
         // POST: api/Reservation
         [HttpPost]
-        public Reservation Post(int companyID, int treatmentID, int customerID, int employeeID, DateTime appointment_dateTime)
+        public Reservation Post(Reservation_DTO reservation_DTO)
         {
             //try
             //{
-            if (customerID < 0)
+            if (reservation_DTO.CustomerID < 0)
             {
                 throw new ArgumentException("The CustomerID doesn't  exist.");
             }
-            else if (employeeID < 0)
+            else if (reservation_DTO.EmployeeID < 0)
             {
                 throw new ArgumentException("The EmployeeID doesn't  exist.");
             }
-            else if (treatmentID < 0)
+            else if (reservation_DTO.TreatmentID < 0)
             {
                 throw new ArgumentException("The TreatmentID doesn't  exist.");
             }
-            
-                Treatment treatmentToUse = _dbTreatment.GetTreatmentByID(treatmentID);
-                Reservation reservationToAdd = new Reservation(treatmentToUse, customerID, employeeID, appointment_dateTime);
-             //   _dbReservation.InsertReservationToDatabase(reservationToAdd);
-               Reservation reservationAdded = _dbReservation.InsertReservationToDatabase(reservationToAdd);
-            
+
+            Treatment treatmentToUse = _dbTreatment.GetTreatmentByID(reservation_DTO.TreatmentID);
+            Reservation reservationToAdd = new Reservation(treatmentToUse, reservation_DTO.CustomerID, reservation_DTO.EmployeeID, reservation_DTO.Appointment_dateTime);
+            //   _dbReservation.InsertReservationToDatabase(reservationToAdd);
+            Reservation reservationAdded = _dbReservation.InsertReservationToDatabase(reservationToAdd);
+
             //}
             //catch (ArgumentException e)
             //{

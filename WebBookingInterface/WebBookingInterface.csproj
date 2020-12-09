@@ -52,7 +52,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\TredjeSemesterProjectRepo\RESTful server\Model\bin\Debug\Model.dll</HintPath>
+      <HintPath>..\RESTful server\Model\bin\Debug\Model.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
