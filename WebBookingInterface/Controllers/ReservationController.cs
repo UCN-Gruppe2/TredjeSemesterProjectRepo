@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using RestSharp;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RestClientManagerNamespace;
 
 namespace WebBookingInterface.Controllers
 {
@@ -18,24 +19,25 @@ namespace WebBookingInterface.Controllers
 
         public ReservationController()
         {
-            if (_client == null)
-            {
-                _client = new RestClient("https://localhost:44388/");
-                string authToken = _getToken();
-                _client.AddDefaultHeader("Authorization", $"Bearer {authToken}");
-            }
+            _client = RestClientManager.GetInstance().RestClient;
+            //if (_client == null)
+            //{
+            //    _client = new RestClient("https://localhost:44388/");
+            //    string authToken = _getToken();
+            //    _client.AddDefaultHeader("Authorization", $"Bearer {authToken}");
+            //}
         }
 
-        private string _getToken()
-        {
-            var request = new RestRequest("/Token", Method.POST);
-            request.AddParameter("grant_type", "password");
-            request.AddParameter("userName", "mail@marcuslc.com"); //Note to self: brug Web.config i stedet for!
-            request.AddParameter("password", "Password1!"); //Samme her
-            var responseAsParsedJSON = JObject.Parse(_client.Execute(request).Content);
+        //private string _getToken()
+        //{
+        //    var request = new RestRequest("/Token", Method.POST);
+        //    request.AddParameter("grant_type", "password");
+        //    request.AddParameter("userName", "mail@marcuslc.com"); //Note to self: brug Web.config i stedet for!
+        //    request.AddParameter("password", "Password1!"); //Samme her
+        //    var responseAsParsedJSON = JObject.Parse(_client.Execute(request).Content);
 
-            return responseAsParsedJSON["access_token"].ToString();
-        }
+        //    return responseAsParsedJSON["access_token"].ToString();
+        //}
 
         // GET: Reservation
         public ActionResult Index()

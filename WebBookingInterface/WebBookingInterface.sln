@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBookingInterface", "WebBookingInterface.csproj", "{4DA36E4D-5D94-4752-AB86-52338BB23F47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestClientManager", "..\RestClientManager\RestClientManager.csproj", "{EDA39F85-D4F9-4363-B3FA-052E49764965}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4DA36E4D-5D94-4752-AB86-52338BB23F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DA36E4D-5D94-4752-AB86-52338BB23F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DA36E4D-5D94-4752-AB86-52338BB23F47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDA39F85-D4F9-4363-B3FA-052E49764965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDA39F85-D4F9-4363-B3FA-052E49764965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDA39F85-D4F9-4363-B3FA-052E49764965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDA39F85-D4F9-4363-B3FA-052E49764965}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
