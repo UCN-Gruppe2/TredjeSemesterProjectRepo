@@ -9,6 +9,7 @@ using DataAccess.DatabaseAccess;
 
 namespace RESTfulService.Controllers
 {
+    [Authorize]
     public class ReservationController : ApiController
     {
         private DbReservation _dbReservation = new DbReservation();

@@ -11,15 +11,19 @@ using Newtonsoft.Json.Linq;
 
 namespace WebBookingInterface.Controllers
 {
+    [Authorize]
     public class ReservationController : Controller
     {
-        private RestClient _client;
+        private static RestClient _client;
 
         public ReservationController()
         {
-            _client = new RestClient("https://localhost:44388/");
-            string authToken = _getToken();
-            _client.AddDefaultHeader("Authentication", $"Bearer {authToken}");
+            if (_client == null)
+            {
+                _client = new RestClient("https://localhost:44388/");
+                string authToken = _getToken();
+                _client.AddDefaultHeader("Authorization", $"Bearer {authToken}");
+            }
         }
 
         private string _getToken()
@@ -58,13 +62,12 @@ namespace WebBookingInterface.Controllers
             try
             {
                 RestRequest reservationRequest = new RestRequest("/api/Reservation", Method.POST);
-                reservationRequest.AddHeader("Content-type", "application/json");
                 var reservation_DTO = new Reservation_DTO(
                     companyID: companyID,
                     employeeID: employeeID,
                     customerID: customerID,
                     treatmentID: treatmentID,
-                    startTime: appointment_date
+                    startTime: appointment_dateTime
                 );
 
                 reservationRequest.AddJsonBody(reservation_DTO);
