@@ -22,7 +22,7 @@ namespace DesktopClient
     /// </summary>
     public partial class LogIn : Window
     {
-        private RestClient _client = new RestClient("https://localhost:44388");
+        private static RestClient _client = new RestClient("https://localhost:44388");
         public LogIn()
         {
             InitializeComponent();
@@ -39,7 +39,7 @@ namespace DesktopClient
             {
                 string accessToken = JObject.Parse(response.Content)["access_token"].ToString();
                 _client.AddDefaultHeader("Authorization", $"Bearer { accessToken }");
-                MainWindow main = new MainWindow();
+                MainWindow main = new MainWindow(_client);
                 main.Show();
                 this.Close();
             } 

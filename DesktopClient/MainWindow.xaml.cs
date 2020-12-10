@@ -22,14 +22,16 @@ namespace DesktopClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private RestClient _client;
+        public MainWindow(RestClient client)
         {
+            _client = client;
             InitializeComponent();
         }
 
         private void NewTreatment_Click(object sender, RoutedEventArgs e)
         {
-            NewTreatment newTreat = new NewTreatment();
+            NewTreatment newTreat = new NewTreatment(_client);
             newTreat.Show();
         }
 
@@ -40,7 +42,7 @@ namespace DesktopClient
 
         private void NewReservation_Click(object sender, RoutedEventArgs e)
         {
-            NewReservation newRes = new NewReservation();
+            NewReservation newRes = new NewReservation(_client);
             newRes.Show();
         }
 

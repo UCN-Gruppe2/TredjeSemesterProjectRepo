@@ -17,13 +17,15 @@ using Model;
 namespace DesktopClient
 {
     /// <summary>
-    /// Interaction logic for NewTreatment.xaml
+    /// Interaction logic for NewReservation.xaml
     /// </summary>
-    public partial class NewTreatment : Window
+    public partial class NewReservation : Window
     {
         private readonly List<string> Times;
-        public NewTreatment()
+        private RestClient _client;
+        public NewReservation(RestClient client)
         {
+            _client = client;
             InitializeComponent();
             //Making a list of possible starttimes
             Times = new List<string> { "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", 
@@ -37,10 +39,11 @@ namespace DesktopClient
             Reservation_DTO reservationToAdd = new Reservation_DTO(Int32.Parse(TreatmentIDBox.Text), 
                 Int32.Parse(CustomerIDBox.Text), Int32.Parse(EmployeeIDBox.Text), 
                 DateTime.Parse(DateSelector.SelectedDate + " " + TimeCombo.Text));
-            //RestRequest addRequest = New RestRequest("api/Reservation", Method.POST);
-            //Få fat i en RestClient indeholdene DefaultHeader til token
-            //AddJsonBody(reservationToAdd);
-            //Client.Execute(addRequest);
+
+            RestRequest addRequest = new RestRequest("api/Reservation", Method.POST);
+            addRequest.AddJsonBody(reservationToAdd);
+
+            _client.Execute(addRequest);
             this.Close();
         }
     }

@@ -11,17 +11,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using RestSharp;
 
 namespace DesktopClient
 {
     /// <summary>
-    /// Interaction logic for NewReservation.xaml
+    /// Interaction logic for NewTreatment.xaml
     /// </summary>
-    public partial class NewReservation : Window
+    public partial class NewTreatment : Window
     {
         private List<int> durations { get; }
-        public NewReservation()
+        private RestClient _client;
+
+        public NewTreatment(RestClient client)
         {
+            _client = client;
             InitializeComponent();
             durations = new List<int> { 30, 60, 90, 120, 150, 180 };
             DurationCombo.ItemsSource = durations;
