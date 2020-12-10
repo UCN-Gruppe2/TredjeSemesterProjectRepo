@@ -15,13 +15,22 @@ using System.Windows.Shapes;
 namespace DesktopClient
 {
     /// <summary>
-    /// Interaction logic for NewReservation.xaml
+    /// Interaction logic for NewTreatment.xaml
     /// </summary>
-    public partial class NewReservation : Window
+    public partial class NewTreatment : Window
     {
-        public NewReservation()
+        private readonly List<string> Times;
+        public NewTreatment()
         {
             InitializeComponent();
+            //Making a list of possible starttimes
+            Times = new List<string> { "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30" };
+            TimeCombo.ItemsSource = Times;
+        }
+
+        private void CreateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -88,11 +88,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NewReservation.xaml">
+    <Page Include="NewTreatment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewTreatment.xaml">
+    <Page Include="NewReservation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -102,11 +102,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewReservation.xaml.cs">
-      <DependentUpon>NewReservation.xaml</DependentUpon>
-    </Compile>
     <Compile Include="NewTreatment.xaml.cs">
       <DependentUpon>NewTreatment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewReservation.xaml.cs">
+      <DependentUpon>NewReservation.xaml</DependentUpon>
     </Compile>
     <Compile Include="NotImplemented.xaml.cs">
       <DependentUpon>NotImplemented.xaml</DependentUpon>

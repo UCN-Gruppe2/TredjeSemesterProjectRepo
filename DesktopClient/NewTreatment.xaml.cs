@@ -15,16 +15,21 @@ using System.Windows.Shapes;
 namespace DesktopClient
 {
     /// <summary>
-    /// Interaction logic for NewTreatment.xaml
+    /// Interaction logic for NewReservation.xaml
     /// </summary>
-    public partial class NewTreatment : Window
+    public partial class NewReservation : Window
     {
-        private List<int> durations { get; }
-        public NewTreatment()
+        private List<int> Durations { get; }
+        public NewReservation()
         {
             InitializeComponent();
-            durations = new List<int>{ 30, 60, 90, 120, 150, 180};
-            DurationCombo.ItemsSource = durations;
+            Durations = new List<int> { 30, 60, 90, 120, 150, 180 };
+            DurationCombo.ItemsSource = Durations;
+        }
+
+        private void CreateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

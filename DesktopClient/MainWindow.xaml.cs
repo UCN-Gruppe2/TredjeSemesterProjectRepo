@@ -22,19 +22,9 @@ namespace DesktopClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        private RestClient _restClient = new RestClient("https://localhost:44388");
-        private List<Reservation> _reservations = new List<Reservation>();
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private async Task TabItem_MouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
-        {
-            IRestRequest request = new RestRequest("reservation/GetReservationsByEmployeeID/{id}")
-                .AddUrlSegment("id", 1);
-            _reservations = (List<Reservation>)await _restClient.ExecuteAsync<List<Reservation>>(request);
-            dataGrid.DataContext = _reservations;
         }
 
         private void NewTreatment_Click(object sender, RoutedEventArgs e)
@@ -45,7 +35,13 @@ namespace DesktopClient
 
         private void NewEmployee_Click(object sender, RoutedEventArgs e)
         {
+            FunctionNotImplemented_Click(sender, e);
+        }
 
+        private void NewReservation_Click(object sender, RoutedEventArgs e)
+        {
+            NewReservation newRes = new NewReservation();
+            newRes.Show();
         }
 
         private void FunctionNotImplemented_Click(object sender, RoutedEventArgs e)

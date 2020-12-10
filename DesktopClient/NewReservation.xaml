@@ -1,26 +1,33 @@
-﻿<Window x:Class="DesktopClient.NewReservation"
+﻿<Window x:Class="DesktopClient.NewTreatment"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopClient"
         mc:Ignorable="d"
-        Title="Booking4You - Opret Reservation" Height="450" Width="450" Background="#919191" Left="600" Top="150">
+        Title="Booking4You - Opret Reservation" Height="400" Width="450" Background="#919191" Left="600" Top="150">
     <Grid>
         <Grid.ColumnDefinitions>
         </Grid.ColumnDefinitions>
-        <Label FontWeight="Bold" Content="Virksomhed:" HorizontalAlignment="Left" Margin="45,25,0,0" VerticalAlignment="Top" Height="30" FontSize="15px"/>
-        <TextBox HorizontalAlignment="Left" Margin="145,25,0,0" VerticalAlignment="Top" Width="250" Height="30" FontSize="15px"/>
-        <Label FontWeight="Bold" Content="Navn:" HorizontalAlignment="Left" Margin="45,70,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
-        <TextBox HorizontalAlignment="Left" Height="30" Margin="145,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="15px"/>
-        <Label FontWeight="Bold" Content="Beskrivelse:" HorizontalAlignment="Left" Margin="45,115,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
-        <TextBlock HorizontalAlignment="Left" Margin="145,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Background="White" Padding="3,3,3,3" Height="120" Width="250"/>
-        <Label FontWeight="Bold" Content="Varighed:" HorizontalAlignment="Left" Margin="45,250,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
-        <ComboBox Name="DurationCombo" HorizontalAlignment="Left" Margin="145,250,0,0" VerticalAlignment="Top" Width="170" Height="30" FontSize="15px"/>
-        <Label Content="Minutter" HorizontalAlignment="Left" Margin="325,250,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px" Width="70"/>
-        <Label FontWeight="Bold" Content="Pris:" HorizontalAlignment="Left" Margin="45,295,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
-        <TextBox HorizontalAlignment="Left" Height="30" Margin="145,295,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" FontSize="15px"/>
-        <Label Content="DKK" HorizontalAlignment="Left" Margin="325,295,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px" Width="40"/>
-        <Button Content="Opret" HorizontalAlignment="Left" Margin="179,350,0,0" VerticalAlignment="Top" Width="100" FontSize="20px" Height="45" Click="Button_Click"/>
+        <Label FontWeight="Bold" Content="Behandling:" HorizontalAlignment="Left" Margin="40,25,0,0" VerticalAlignment="Top" Height="30" FontSize="15px"/>
+        <TextBox HorizontalAlignment="Left" Margin="150,25,0,0" VerticalAlignment="Top" Width="250" Height="30" FontSize="15px"/>
+        <Label FontWeight="Bold" Content="Kunde:" HorizontalAlignment="Left" Margin="40,70,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
+        <TextBox HorizontalAlignment="Left" Height="30" Margin="150,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="15px"/>
+        <Label FontWeight="Bold" Content="Medarbejder:" HorizontalAlignment="Left" Margin="40,115,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
+        <TextBox HorizontalAlignment="Left" Height="30" Margin="150,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="15px"/>
+        <Label FontWeight="Bold" Content="Dato:" HorizontalAlignment="Left" Margin="40,160,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
+        <DatePicker HorizontalAlignment="Left" Margin="150,160,0,0" VerticalAlignment="Top" Height="30" Width="250 " RenderTransformOrigin="0.5,0.5" FontSize="15px">
+            <DatePicker.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-1.295"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-0.339"/>
+                </TransformGroup>
+            </DatePicker.RenderTransform>
+        </DatePicker>
+        <Label FontWeight="Bold" Content="Tid:" HorizontalAlignment="Left" Margin="40,205,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
+        <ComboBox Name="TimeCombo" HorizontalAlignment="Left" Margin="150,205,0,0" VerticalAlignment="Top" Width="250" Height="30"/>
+        <Button Content="Opret" HorizontalAlignment="Left" Margin="179,280,0,0" VerticalAlignment="Top" Width="100" FontSize="20px" Height="45" Click="CreateBtn_Click"/>
     </Grid>
 </Window>
