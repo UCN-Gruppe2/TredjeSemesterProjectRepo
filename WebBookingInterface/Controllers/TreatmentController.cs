@@ -29,6 +29,7 @@ namespace WebBookingInterface.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult Create(Treatment_DTO treatment_DTO)
         {
             return Json(_client);
