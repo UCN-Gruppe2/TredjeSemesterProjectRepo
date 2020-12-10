@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using RestSharp;
 using Model;
 
 namespace DesktopClient
@@ -33,9 +34,13 @@ namespace DesktopClient
 
         private void CreateBtn_Click(object sender, RoutedEventArgs e)
         {
-            Reservation_DTO reservationToAdd = new Reservation_DTO(
-                
-                )
+            Reservation_DTO reservationToAdd = new Reservation_DTO(Int32.Parse(TreatmentIDBox.Text), 
+                Int32.Parse(CustomerIDBox.Text), Int32.Parse(EmployeeIDBox.Text), 
+                DateTime.Parse(DateSelector.SelectedDate + " " + TimeCombo.Text));
+            //RestRequest addRequest = New RestRequest("api/Reservation", Method.POST);
+            //Få fat i en RestClient indeholdene DefaultHeader til token
+            //AddJsonBody(reservationToAdd);
+            //Client.Execute(addRequest);
             this.Close();
         }
     }
