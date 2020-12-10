@@ -105,7 +105,6 @@ namespace DataTest
 
             Treatment treatment = treatmentCtrl.Get(1);
             Reservation_DTO reservation1 = new Reservation_DTO(
-                companyID: treatment.CompanyID,
                 startTime: DateTime.Parse("31-12-2020 23:59"),
                 employeeID: 1,
                 customerID: 1,
@@ -114,7 +113,6 @@ namespace DataTest
             );
 
             Reservation_DTO reservation2 = new Reservation_DTO(
-                companyID: treatment.CompanyID,
                 startTime: DateTime.Parse("25-10-2021 17:30"),
                 employeeID: 1,
                 customerID: 1,
