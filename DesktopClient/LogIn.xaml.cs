@@ -22,6 +22,7 @@ namespace DesktopClient
     /// </summary>
     public partial class LogIn : Window
     {
+        private RestClient _client = new RestClient("https://localhost:44388");
         public LogIn()
         {
             InitializeComponent();
@@ -29,15 +30,15 @@ namespace DesktopClient
 
         private void LogInButton_Click(object sender, RoutedEventArgs e)
         {
-            RestClient client = new RestClient("https://localhost:44388");
             RestRequest request = new RestRequest("/Token", Method.POST);
             request.AddParameter("grant_type", "password");
             request.AddParameter("userName", mailTextBox.Text);
             request.AddParameter("password", PasswordBox.Password);
-            var response = client.Execute(request);
+            var response = _client.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 string accessToken = JObject.Parse(response.Content)["access_token"].ToString();
+                _client.AddDefaultHeader("Authorization", $"Bearer { accessToken }");
                 MainWindow main = new MainWindow();
                 main.Show();
                 this.Close();

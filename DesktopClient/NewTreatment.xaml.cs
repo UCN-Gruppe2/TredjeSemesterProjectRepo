@@ -19,12 +19,12 @@ namespace DesktopClient
     /// </summary>
     public partial class NewReservation : Window
     {
-        private List<int> Durations { get; }
+        private List<int> durations { get; }
         public NewReservation()
         {
             InitializeComponent();
-            Durations = new List<int> { 30, 60, 90, 120, 150, 180 };
-            DurationCombo.ItemsSource = Durations;
+            durations = new List<int> { 30, 60, 90, 120, 150, 180 };
+            DurationCombo.ItemsSource = durations;
         }
 
         private void CreateBtn_Click(object sender, RoutedEventArgs e)
