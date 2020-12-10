@@ -54,6 +54,7 @@
     <Compile Include="SortedLinkedList.cs" />
     <Compile Include="Treatment.cs" />
     <Compile Include="TreatmentCategory.cs" />
+    <Compile Include="Treatment_DTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
