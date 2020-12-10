@@ -9,9 +9,11 @@ using DataAccess.DatabaseAccess;
 
 namespace RESTfulService.Controllers
 {
+    [Authorize]
     public class ReservationController : ApiController
     {
         private DbReservation _dbReservation = new DbReservation();
+        private DbTreatment _dbTreatment = new DbTreatment();
 
         // GET: api/Reservation
         public IEnumerable<string> Get()
@@ -31,7 +33,7 @@ namespace RESTfulService.Controllers
             List<Reservation> reservations = new List<Reservation>();
             reservations = _dbReservation.GetReservationsByCustomerID(id);
             return reservations;
-            
+
         }
 
         public List<Reservation> GetReservationsByEmployeeID(int id)
@@ -42,36 +44,28 @@ namespace RESTfulService.Controllers
         }
 
         // POST: api/Reservation
-        public Reservation Post([FromBody] Reservation value)
+        [HttpPost]
+        public Reservation Post([FromBody]Reservation_DTO reservation_DTO)
         {
-            Reservation reservationAdded = null;
             //try
             //{
-            if(value.CustomerID < 0)
+            if (reservation_DTO.CustomerID < 0)
             {
                 throw new ArgumentException("The CustomerID doesn't  exist.");
             }
-            else if(value.EmployeeID < 0)
+            else if (reservation_DTO.EmployeeID < 0)
             {
                 throw new ArgumentException("The EmployeeID doesn't  exist.");
             }
-            else if(value.TreatmentID < 0)
+            else if (reservation_DTO.TreatmentID < 0)
             {
                 throw new ArgumentException("The TreatmentID doesn't  exist.");
             }
-            else if(value.StartTime < DateTime.Now)
-            {
-                throw new ArgumentException("You can't make reservations for the past.");
-            }
-            else
-            {
-                reservationAdded = _dbReservation.InsertReservationToDatabase(value);
-            }
-            //}
-            //catch (ArgumentException e)
-            //{
-            //    throw e;
-            //}
+
+            Treatment treatmentToUse = _dbTreatment.GetTreatmentByID(reservation_DTO.TreatmentID);
+            Reservation reservationToAdd = new Reservation(treatmentToUse, reservation_DTO.CustomerID, reservation_DTO.EmployeeID, reservation_DTO.StartTime);
+            Reservation reservationAdded = _dbReservation.InsertReservationToDatabase(reservationToAdd);
+
             return reservationAdded;
         }
 
