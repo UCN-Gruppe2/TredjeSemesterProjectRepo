@@ -13,7 +13,6 @@ namespace RestClientManagerNamespace
         private static RestClientManager s_instance;
         private RestClient _client;
 
-
         public RestClient RestClient
         {
             get => _client;
