@@ -30,9 +30,9 @@
                     <Label Name="EmployeeIDLbl" Content="Unknown" HorizontalAlignment="Left" Margin="39,160,0,0" VerticalAlignment="Top" FontSize="20"/>
                     <DataGrid Name = "dataGrid" AlternatingRowBackground = "LightBlue" Margin="370,40,0,0" AlternationCount = "2" AutoGenerateColumns = "False" Width="500" Height="400" FontSize="15px" CanUserResizeColumns="False" ColumnWidth="125">
                         <DataGrid.Columns >
-                            <DataGridTextColumn Header = "Tidspunkt" Binding = "{Binding StartTime}" Width="120"/>
-                            <DataGridTextColumn Header = "Behandling" Binding = "{Binding TreatmentID}" Width="190"/>
-                            <DataGridTextColumn Header = "Kunde" Binding = "{Binding CustomerID}" Width="190"/>
+                            <DataGridTextColumn Header = "Tidspunkt" Binding = "{Binding StartTime}" Width="auto"/>
+                            <DataGridTextColumn Header = "Behandling" Binding = "{Binding TreatmentID}" Width="auto"/>
+                            <DataGridTextColumn Header = "Kunde" Binding = "{Binding CustomerID}" Width="auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label Content="Reservationer:" HorizontalAlignment="Left" Margin="420,90,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" />
