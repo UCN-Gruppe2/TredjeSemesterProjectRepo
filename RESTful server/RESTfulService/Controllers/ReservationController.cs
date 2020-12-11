@@ -22,7 +22,7 @@ namespace RESTfulService.Controllers
         }
 
         // GET: api/Reservation/5
-        public Reservation GetReservationByID(int id)
+        public Reservation Get(int id)
         {
             Reservation found = _dbReservation.GetReservationByID(id);
             return found;
@@ -36,6 +36,8 @@ namespace RESTfulService.Controllers
 
         }
 
+        [Authorize]
+        [HttpGet]
         public List<Reservation> GetReservationsByEmployeeID(int id)
         {
             List<Reservation> reservations = new List<Reservation>();
@@ -44,6 +46,7 @@ namespace RESTfulService.Controllers
         }
 
         // POST: api/Reservation
+        [Authorize]
         [HttpPost]
         public Reservation Post([FromBody]Reservation_DTO reservation_DTO)
         {
