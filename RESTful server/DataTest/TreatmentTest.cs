@@ -14,7 +14,7 @@ namespace DataTest
     {
         public TreatmentController TreatmentCtrl;
         public Stopwatch watch;
-        public List<TreatmentCategory> Categories;
+        public List<int> Categories;
 
         [TestInitialize]
         public void SetUp()
@@ -22,8 +22,8 @@ namespace DataTest
             TreatmentCtrl = new TreatmentController();
             watch = new Stopwatch();
 
-            Categories = new List<TreatmentCategory>();
-            Categories.Add(new TreatmentCategory(1, "Klip"));
+            Categories = new List<int>() { 1 };
+            //Categories.Add(new TreatmentCategory(1, "Klip"));
         }
 
         [TestCleanup]
@@ -37,11 +37,10 @@ namespace DataTest
         public void TestCreateTreatment1_Valid()
         {
             //Arrange
-            Treatment treatment = new Treatment(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m); //m = decimal 
-
+            Treatment_DTO treatment = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m, Categories); //m = decimal 
             //Act
             watch.Start();
-            Treatment addedTreatment = TreatmentCtrl.Post(treatment, Categories);
+            Treatment addedTreatment = TreatmentCtrl.Post(treatment);
             watch.Stop();
 
             //Assert
@@ -57,13 +56,13 @@ namespace DataTest
         public void TestCreateTreatment2_AlreadyExists()
         {
             //Arrange
-            Treatment treatment = new Treatment(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
-            Treatment treatmentDouble = new Treatment(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
+            Treatment_DTO treatment = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
+            Treatment_DTO treatmentDouble = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
 
             //Act
             watch.Start();
-            Treatment addedTreatment = TreatmentCtrl.Post(treatment, Categories); //Hvad returnerer den??
-            Treatment addedTreatmentDouble = TreatmentCtrl.Post(treatmentDouble, Categories);
+            Treatment addedTreatment = TreatmentCtrl.Post(treatment); //Hvad returnerer den??
+            Treatment addedTreatmentDouble = TreatmentCtrl.Post(treatmentDouble);
             watch.Stop();
 
             //Assert
@@ -79,11 +78,11 @@ namespace DataTest
         public void TestCreateTreatment3_IllegalDuration()
         {
             //Arrange
-            Treatment treatment = new Treatment(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", -30, 499.95m);
+            Treatment_DTO treatment = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", -30, 499.95m);
 
             //Act
             watch.Start();
-            Treatment addedTreatment = TreatmentCtrl.Post(treatment, Categories);
+            Treatment addedTreatment = TreatmentCtrl.Post(treatment);
             watch.Stop();
 
             //Assert
@@ -95,11 +94,11 @@ namespace DataTest
         public void TestCreateTreatment4_IllegalPrice()
         {
             //Arrange
-            Treatment treatment = new Treatment(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, -499.95m);
+            Treatment_DTO treatment = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, -499.95m);
 
             //Act
             watch.Start();
-            Treatment addedTreatment = TreatmentCtrl.Post(treatment, Categories);
+            Treatment addedTreatment = TreatmentCtrl.Post(treatment);
             watch.Stop();
 
             //Assert

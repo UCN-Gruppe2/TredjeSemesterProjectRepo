@@ -61,7 +61,7 @@ namespace WebBookingInterface.Controllers
             }
             catch (Exception e)
             {
-                exception = e;
+                exception = e; // exception skulle logges, det kommer senere :))
                 result = false;
             }
             return Json(result);
