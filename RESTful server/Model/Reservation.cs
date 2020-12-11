@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -41,6 +42,7 @@ namespace Model
         /// <param name="employeeID"></param>
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
+        [JsonConstructor]
         public Reservation(int id, System.Int32 treatmentID, System.Int32 customerID, System.Int32 employeeID, System.DateTime startTime, System.DateTime endTime)
         {
             ID = id;

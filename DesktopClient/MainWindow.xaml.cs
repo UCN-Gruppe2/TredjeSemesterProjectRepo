@@ -52,24 +52,42 @@ namespace DesktopClient
 
         private void SearchEmployee_Click(object sender, RoutedEventArgs e)
         {
-
+            bool state = UpdateDataGridEmployeeReservation();
+            if (state)
+            {
+                EmployeeIDLbl.Content = SearchEmployee.Text;
+            }
+            else
+            {
+                EmployeeIDLbl.Content = "Der var ingenting i listen";
+            }
+            SearchEmployee.Text = "";
         }
 
-        private void UpdateDataGridEmployeeReservation()
+        private bool UpdateDataGridEmployeeReservation()
         {
-            List<Reservation> reservationsOfEmployee = getReservations();
-            dataGrid.DataContext = reservationsOfEmployee;
+            bool state = false;
+            ObservableCollection<Reservation> reservationsOfEmployee = new ObservableCollection<Reservation>(getReservations());
+            if (reservationsOfEmployee.Count > 0)
+            {
+                state = true;
+            }
+            //dataGrid.DataContext = reservationsOfEmployee;
+            dataGrid.ItemsSource = reservationsOfEmployee;
+            return state;
         }
 
         private List<Reservation> getReservations()
         {
-            RestRequest addRequest = new RestRequest("api/Reservation", Method.GET);
-            addRequest.AddJsonBody(Int32.Parse(SearchEmployee.Text));
+            RestRequest addRequest = new RestRequest("api/Reservation/GetReservationsByEmployeeID", Method.GET);
+            addRequest.AddParameter("id", Int32.Parse(SearchEmployee.Text));
 
             var response = _client.Execute(addRequest);
 
-            JObject anObject = new JObject(response);
-            List<Reservation> reservations = anObject.ToObject<List<Reservation>>();
+            string theJson = response.Content;
+            List<Reservation> reservations = JsonConvert.DeserializeObject<List<Reservation>>(theJson);
+            //JObject anObject = JObject.Parse(response.Content);
+            //List<Reservation> reservations = anObject.ToObject<List<Reservation>>();
             return reservations;
         }
 
@@ -79,6 +97,6 @@ namespace DesktopClient
             notImplemented.Show();
         }
 
-        
+
     }
 }

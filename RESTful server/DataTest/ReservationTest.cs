@@ -194,10 +194,10 @@ namespace DataTest
             int id = 1;
 
             //Act
-            Reservation found = ReservationCtrl.Get(id);
+            List<Reservation> found = ReservationCtrl.Get(id);
 
             //Assert
-            Assert.AreEqual(id, found.ID);
+            Assert.IsTrue(found.Count > 0);
         }
 
         [TestMethod]
@@ -207,10 +207,10 @@ namespace DataTest
             int id = 35;
 
             //Act
-            Reservation found = ReservationCtrl.Get(id);
+            List<Reservation> found = ReservationCtrl.Get(id);
 
             //Assert
-            Assert.IsNull(found);
+            Assert.IsTrue(found.Count == 0);
         }
 
         //Udarbejdet med TDD
@@ -265,7 +265,7 @@ namespace DataTest
             int id = 1;
 
             //Act
-            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+            List<Reservation> founds = ReservationCtrl.Get(id);
 
             //Assert
             foreach (Reservation element in founds)
@@ -281,7 +281,7 @@ namespace DataTest
             int id = 2;
 
             //Act
-            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+            List<Reservation> founds = ReservationCtrl.Get(id);
 
             //Assert
             Assert.IsTrue(founds.Count == 0);
@@ -295,7 +295,7 @@ namespace DataTest
             int id = 35;
 
             //Act
-            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+            List<Reservation> founds = ReservationCtrl.Get(id);
 
             //Assert
             Assert.IsTrue(founds.Count == 0);
