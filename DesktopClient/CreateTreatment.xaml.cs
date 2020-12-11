@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,19 +12,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using RestSharp;
 
 namespace DesktopClient
 {
     /// <summary>
-    /// Interaction logic for NewTreatment.xaml
+    /// Interaction logic for CreateTreatment.xaml
     /// </summary>
-    public partial class NewTreatment : Window
+    public partial class CreateTreatment : Window
     {
         private List<int> durations { get; }
         private RestClient _client;
-
-        public NewTreatment(RestClient client)
+        public CreateTreatment(RestClient client)
         {
             _client = client;
             InitializeComponent();
