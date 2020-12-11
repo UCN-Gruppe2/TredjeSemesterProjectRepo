@@ -194,7 +194,7 @@ namespace DataTest
             int id = 1;
 
             //Act
-            Reservation found = ReservationCtrl.GetReservationByID(id);
+            Reservation found = ReservationCtrl.Get(id);
 
             //Assert
             Assert.AreEqual(id, found.ID);
@@ -207,7 +207,7 @@ namespace DataTest
             int id = 35;
 
             //Act
-            Reservation found = ReservationCtrl.GetReservationByID(id);
+            Reservation found = ReservationCtrl.Get(id);
 
             //Assert
             Assert.IsNull(found);
