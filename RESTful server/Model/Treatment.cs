@@ -7,11 +7,6 @@ namespace Model
 {
     public class Treatment : Treatment_DTO
     {
-        //public int CompanyID { get; set; }
-        //public string Name { get; set; }
-        //public string Description { get; set; }
-        //public int Duration { get; set; }
-        //public decimal Price { get; set; }
         public int ID { get; set; }
 
         private List<Employee> _employees;
