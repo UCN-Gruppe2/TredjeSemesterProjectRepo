@@ -1,4 +1,5 @@
 ﻿using Model;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,14 @@ namespace DesktopClient
             RestRequest addRequest = new RestRequest("api/Reservation", Method.POST);
             addRequest.AddJsonBody(reservationToAdd);
 
-            _client.Execute(addRequest);
+            var response = _client.Execute(addRequest);
+
+            string theJson = response.Content;
+            Reservation reservation = JsonConvert.DeserializeObject<Reservation>(theJson);
+
+            MainWindow main = (MainWindow)Application.Current.MainWindow;
+            main.ShowCreatedReservation(reservation);
+
             this.Close();
         }
     }

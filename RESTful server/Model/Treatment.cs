@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,6 +18,7 @@ namespace Model
         private List<Employee> _employees;
 
         // to create new Treatment object.
+        [JsonConstructor]
         public Treatment(int companyID, string name, string description, int duration, decimal price)
         {
             CompanyID = companyID;

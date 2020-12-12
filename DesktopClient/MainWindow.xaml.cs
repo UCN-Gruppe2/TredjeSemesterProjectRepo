@@ -31,23 +31,51 @@ namespace DesktopClient
         {
             _client = client;
             InitializeComponent();
+            StartUp();
         }
 
+        private void StartUp()
+        {
+            TreatmentStartUp();
+            EmployeeStartUp();
+            ReservationStartUp();
+        }
+
+        //Treatment Tab
         private void NewTreatment_Click(object sender, RoutedEventArgs e)
         {
-            CreateTreatment newTreat = new CreateTreatment(_client);
+            CreateTreatment newTreat = new CreateTreatment(this, _client);
             newTreat.Show();
         }
 
+        private void TreatmentStartUp()
+        {
+            TreatmentCompanyLbl.Content = "";
+            TreatmentNameLbl.Content = "";
+            TreatmentDescriptionLbl.Text = "";
+            TreatmentDurationLbl.Content = "";
+            TreatmentPriceLbl.Content = "";
+        }
+
+        public void ShowCreatedTreatment(Treatment treatment)
+        {
+            TreatmentCompanyLbl.Content = treatment.CompanyID;
+            TreatmentNameLbl.Content = treatment.Name;
+            TreatmentDescriptionLbl.Text = treatment.Description;
+            TreatmentDurationLbl.Content = treatment.Duration + " Minutter";
+            TreatmentPriceLbl.Content = treatment.Price + " DKK";
+        }
+
+
+        //Employee Tab
         private void NewEmployee_Click(object sender, RoutedEventArgs e)
         {
             FunctionNotImplemented_Click(sender, e);
         }
 
-        private void NewReservation_Click(object sender, RoutedEventArgs e)
+        private void EmployeeStartUp()
         {
-            CreateReservation newRes = new CreateReservation(_client);
-            newRes.Show();
+
         }
 
         private void SearchEmployee_Click(object sender, RoutedEventArgs e)
@@ -91,6 +119,32 @@ namespace DesktopClient
             return reservations;
         }
 
+        
+        //Reservation Tab
+        private void NewReservation_Click(object sender, RoutedEventArgs e)
+        {
+            CreateReservation newRes = new CreateReservation(_client);
+            newRes.Show();
+        }
+
+        private void ReservationStartUp()
+        {
+            ReservationDateLbl.Content = "";
+            ReservationTreatmentLbl.Content = "";
+            ReservationEmployeeLbl.Content = "";
+            ReservationCustomerLbl.Content = "";
+        }
+
+        public void ShowCreatedReservation(Reservation reservation)
+        {
+            ReservationDateLbl.Content = reservation.StartTime;
+            ReservationTreatmentLbl.Content = reservation.TreatmentID;
+            ReservationEmployeeLbl.Content = reservation.EmployeeID;
+            ReservationCustomerLbl.Content = reservation.CustomerID;
+        }
+
+
+        //Not Implementet function
         private void FunctionNotImplemented_Click(object sender, RoutedEventArgs e)
         {
             NotImplemented notImplemented = new NotImplemented();

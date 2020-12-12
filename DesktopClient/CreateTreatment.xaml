@@ -10,16 +10,16 @@
         <Grid.ColumnDefinitions>
         </Grid.ColumnDefinitions>
         <Label FontWeight="Bold" Content="Virksomhed:" HorizontalAlignment="Left" Margin="45,25,0,0" VerticalAlignment="Top" Height="30" FontSize="15px"/>
-        <TextBox HorizontalAlignment="Left" Margin="145,25,0,0" VerticalAlignment="Top" Width="250" Height="30" FontSize="15px"/>
+        <TextBox Name="CompanyIDBox" HorizontalAlignment="Left" Margin="145,25,0,0" VerticalAlignment="Top" Width="250" Height="30" FontSize="15px"/>
         <Label FontWeight="Bold" Content="Navn:" HorizontalAlignment="Left" Margin="45,70,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
-        <TextBox HorizontalAlignment="Left" Height="30" Margin="145,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="15px"/>
+        <TextBox Name="NameBox" HorizontalAlignment="Left" Height="30" Margin="145,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="15px"/>
         <Label FontWeight="Bold" Content="Beskrivelse:" HorizontalAlignment="Left" Margin="45,115,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
-        <TextBlock HorizontalAlignment="Left" Margin="145,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Background="White" Padding="3,3,3,3" Height="120" Width="250"/>
+        <TextBlock Name="DescriptionBox" HorizontalAlignment="Left" Margin="145,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Background="White" Padding="3,3,3,3" Height="120" Width="250"/>
         <Label FontWeight="Bold" Content="Varighed:" HorizontalAlignment="Left" Margin="45,250,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
         <ComboBox Name="DurationCombo" HorizontalAlignment="Left" Margin="145,250,0,0" VerticalAlignment="Top" Width="170" Height="30" FontSize="15px"/>
         <Label Content="Minutter" HorizontalAlignment="Left" Margin="325,250,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px" Width="70"/>
         <Label FontWeight="Bold" Content="Pris:" HorizontalAlignment="Left" Margin="45,295,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
-        <TextBox HorizontalAlignment="Left" Height="30" Margin="145,295,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" FontSize="15px"/>
+        <TextBox Name="PriceBox" HorizontalAlignment="Left" Height="30" Margin="145,295,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" FontSize="15px"/>
         <Label Content="DKK" HorizontalAlignment="Left" Margin="325,295,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px" Width="40"/>
         <Button Content="Opret" HorizontalAlignment="Left" Margin="179,350,0,0" VerticalAlignment="Top" Width="100" FontSize="20px" Height="45" Click="CreateBtn_Click"/>
     </Grid>

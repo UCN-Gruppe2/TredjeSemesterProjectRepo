@@ -17,6 +17,19 @@
                     <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9"/>
                     <TextBox Name="SearchTreatment" HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
                     <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewTreatment_Click"/>
+                    <Grid Name="InformationGridTreatment" HorizontalAlignment="Left" Height="468" Margin="20,96,0,0" VerticalAlignment="Top" Width="480">
+                        <Label Content="Virksomhed" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="TreatmentCompanyLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,10,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Navn" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="TreatmentNameLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,50,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Beskrivelse" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <TextBox Name="TreatmentDescriptionLbl" Text="Unknown" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="180,90,0,0" VerticalAlignment="Top" Width="300" FontSize="20px" Height="150" Background="Transparent" BorderBrush="Transparent"/>
+                        <Label Content="Varighed" HorizontalAlignment="Left" Margin="10,250,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="TreatmentDurationLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,2500,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Pris" HorizontalAlignment="Left" Margin="10,290,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="TreatmentPriceLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,290,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                    </Grid>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Medarbejder" Padding="5,5,5,5">
@@ -45,6 +58,16 @@
                     <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9"/>
                     <TextBox Name="SearchReservation" HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
                     <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewReservation_Click"/>
+                    <Grid Name="InformationGridReservation" HorizontalAlignment="Left" Height="468" Margin="20,96,0,0" VerticalAlignment="Top" Width="480">
+                        <Label Content="Tidspunkt" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="ReservationDateLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,10,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Behandling" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="ReservationTreatmentLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,50,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Medarbejder" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="ReservationEmployeeLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,90,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Kunde" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="ReservationCustomerLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,130,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>
