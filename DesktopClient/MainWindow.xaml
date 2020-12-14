@@ -5,8 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Booking4You - Startside - " WindowState="Maximized" Height="700" Width="1000" Background="#303030" FontFamily="Arial, Helvetica, sans-serif">
+    <Grid Name="MainGrid" Background="#303030" Margin="10,10,10,10">
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+        <TabControl HorizontalAlignment="Left" Height="{Binding ActualHeight, ElementName=MainGrid}" Margin="0,0,0,0" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=MainGrid}" Background="#303030" FontSize="15px">
+            <TabItem Header="Behandling" Padding="5,5,5,5">
+                <Grid Background="#919191">
+                    <Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9"/>
+                    <TextBox Name="SearchTreatment" HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+                    <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewTreatment_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Medarbejder" Padding="5,5,5,5">
+                <Grid Background="#919191">
+                    <Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="SearchEmployee_Click"/>
+                    <TextBox Name="SearchEmployee" HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+                    <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewEmployee_Click"/>
+                    <Label Content="Medarbejder ID:" HorizontalAlignment="Left" Margin="39,130,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+                    <Label Name="EmployeeIDLbl" Content="Unknown" HorizontalAlignment="Left" Margin="39,160,0,0" VerticalAlignment="Top" FontSize="20"/>
+                    <DataGrid Name = "dataGrid" AlternatingRowBackground = "LightBlue" Margin="370,40,0,0" AlternationCount = "2" AutoGenerateColumns = "False" Width="500" Height="400" FontSize="15px" CanUserResizeColumns="False" ColumnWidth="125">
+                        <DataGrid.Columns >
+                            <DataGridTextColumn Header = "Tidspunkt" Binding = "{Binding StartTime}" Width="auto"/>
+                            <DataGridTextColumn Header = "Behandling" Binding = "{Binding TreatmentID}" Width="auto"/>
+                            <DataGridTextColumn Header = "Kunde" Binding = "{Binding CustomerID}" Width="auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label Content="Reservationer:" HorizontalAlignment="Left" Margin="420,90,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Reservation" Padding="5,5,5,5">
+                <Grid Background="#919191">
+                    <Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9"/>
+                    <TextBox Name="SearchReservation" HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+                    <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewReservation_Click"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>

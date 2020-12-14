@@ -17,34 +17,27 @@ namespace RESTfulService.Controllers
         private DbTreatment _dbTreatment = new DbTreatment();
 
         // GET: api/Reservation
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET: api/Reservation/5
-        public Reservation GetReservationByID(int id)
-        {
-            Reservation found = _dbReservation.GetReservationByID(id);
-            return found;
-        }
+        //public Reservation Get(int id)
+        //{
+        //    Reservation found = _dbReservation.GetReservationByID(id);
+        //    return found;
+        //}
 
-        public List<Reservation> GetReservationsByCustomerID(int id)
-        {
-            List<Reservation> reservations = new List<Reservation>();
-            reservations = _dbReservation.GetReservationsByCustomerID(id);
-            return reservations;
-
-        }
-
-        public List<Reservation> GetReservationsByEmployeeID(int id)
-        {
-            List<Reservation> reservations = new List<Reservation>();
-            reservations = _dbReservation.GetReservationsByEmployeeID(id);
-            return reservations;
-        }
+        //public List<Reservation> GetReservationsByCustomerID(int id)
+        //{
+        //    List<Reservation> reservations = new List<Reservation>();
+        //    reservations = _dbReservation.GetReservationsByCustomerID(id);
+        //    return reservations;
+        //}
 
         // POST: api/Reservation
+        [Authorize]
         [HttpPost]
         public Reservation Post([FromBody]Reservation_DTO reservation_DTO)
         {
