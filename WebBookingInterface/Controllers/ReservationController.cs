@@ -38,12 +38,16 @@ namespace WebBookingInterface.Controllers
             return View();
         }
 
-        public ActionResult FindReservationsForEmployee(int employeeID)
-        {
-            RestRequest request = new RestRequest("api/Reservation/GetReservationsByEmployeeID");
 
-            List<Reservation> reservations = null;
-            return View("EmployeeReservationsResult", reservations);
+        public ActionResult EmployeeReservationsResult(int employeeID)
+        {
+            RestRequest request = new RestRequest("api/Employee/", Method.GET);
+            request.AddParameter("employeeID", employeeID);
+            RestResponse response = (RestResponse)_client.Execute(request);
+
+            ViewBag.EmployeeID = employeeID;
+            ViewBag.Reservations = JsonConvert.DeserializeObject<List<Reservation>>(response.Content);
+            return View();
         }
 
         [HttpPost]

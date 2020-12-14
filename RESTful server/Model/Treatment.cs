@@ -14,11 +14,6 @@ namespace Model
         // to create new Treatment object.
         public Treatment(int companyID, string name, string description, int duration, decimal price, List<int> treatmentCategoryID) : base (companyID, name, description, duration, price, treatmentCategoryID)
         {
-            //CompanyID = companyID;
-            //Name = name;
-            //Description = description;
-            //Duration = duration;
-            //Price = price;
             _employees = new List<Employee>();
         }
 
