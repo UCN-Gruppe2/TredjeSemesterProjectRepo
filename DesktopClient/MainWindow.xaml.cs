@@ -80,7 +80,7 @@ namespace DesktopClient
 
         private void EmployeeStartUp()
         {
-
+            EmployeeIDLbl.Content = "";
         }
 
         private void SearchEmployee_Click(object sender, RoutedEventArgs e)
@@ -140,7 +140,7 @@ namespace DesktopClient
 
         public void ShowCreatedReservation(Reservation reservation)
         {
-            ReservationDateLbl.Content = reservation.StartTime.ToLocalTime();
+            ReservationDateLbl.Content = reservation.StartTime.ToLocalTime().ToString("dd/MM/yyyy HH:mm");
             ReservationTreatmentLbl.Content = reservation.TreatmentID;
             ReservationEmployeeLbl.Content = reservation.EmployeeID;
             ReservationCustomerLbl.Content = reservation.CustomerID;

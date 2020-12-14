@@ -30,6 +30,7 @@ namespace DesktopClient
         {
             _client = client;
             this.main = main;
+            FailLbl.Opacity = 0;
             InitializeComponent();
             //Making a list of possible starttimes
             Times = new List<string> { "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00",

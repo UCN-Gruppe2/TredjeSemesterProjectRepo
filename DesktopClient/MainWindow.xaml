@@ -14,7 +14,7 @@
                 <Grid Background="#919191">
                     <Grid.ColumnDefinitions>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9"/>
+                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="FunctionNotImplemented_Click"/>
                     <TextBox Name="SearchTreatment" HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
                     <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewTreatment_Click"/>
                     <Grid Name="InformationGridTreatment" HorizontalAlignment="Left" Height="468" Margin="20,96,0,0" VerticalAlignment="Top" Width="480">
@@ -55,7 +55,7 @@
                 <Grid Background="#919191">
                     <Grid.ColumnDefinitions>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9"/>
+                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="FunctionNotImplemented_Click"/>
                     <TextBox Name="SearchReservation" HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
                     <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewReservation_Click"/>
                     <Grid Name="InformationGridReservation" HorizontalAlignment="Left" Height="468" Margin="20,96,0,0" VerticalAlignment="Top" Width="480">
