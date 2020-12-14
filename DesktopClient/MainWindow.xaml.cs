@@ -35,6 +35,8 @@ namespace DesktopClient
             Thread.CurrentThread.CurrentCulture = new CultureInfo("da-DK");
             InitializeComponent();
             StartUp();
+
+            //dataGrid.Columns[0].CellStyle
         }
 
         private void StartUp()
@@ -83,7 +85,7 @@ namespace DesktopClient
 
         private void SearchEmployee_Click(object sender, RoutedEventArgs e)
         {
-            bool state = UpdateDataGridEmployeeReservations();
+            bool state = UpdateDataGridEmployeeReservation();
             if (state)
             {
                 EmployeeIDLbl.Content = SearchEmployee.Text;
@@ -95,30 +97,28 @@ namespace DesktopClient
             SearchEmployee.Text = "";
         }
 
-        private bool UpdateDataGridEmployeeReservations()
+        private bool UpdateDataGridEmployeeReservation()
         {
             bool state = false;
-            ObservableCollection<Reservation> reservationsOfEmployee = new ObservableCollection<Reservation>(getReservations());
+            reservationsOfEmployee = new ObservableCollection<Reservation>(GetReservations());
             if (reservationsOfEmployee.Count > 0)
             {
                 state = true;
             }
-            //dataGrid.DataContext = reservationsOfEmployee;
             dataGrid.ItemsSource = reservationsOfEmployee;
             return state;
         }
 
-        private List<Reservation> getReservations()
+        private List<Reservation> GetReservations()
         {
-            RestRequest addRequest = new RestRequest("api/Employee/GetReservations", Method.GET);
-            addRequest.AddParameter("employeeID", Int32.Parse(SearchEmployee.Text));
+            RestRequest addRequest = new RestRequest("/api/Employee/Reservations", Method.GET);
+            addRequest.AddParameter("employeeID", Int32.Parse(SearchEmployee.Text.Trim()));
 
             var response = _client.Execute(addRequest);
 
             string theJson = response.Content;
             List<Reservation> reservations = JsonConvert.DeserializeObject<List<Reservation>>(theJson);
-            //JObject anObject = JObject.Parse(response.Content);
-            //List<Reservation> reservations = anObject.ToObject<List<Reservation>>();
+
             return reservations;
         }
 
@@ -140,7 +140,7 @@ namespace DesktopClient
 
         public void ShowCreatedReservation(Reservation reservation)
         {
-            ReservationDateLbl.Content = reservation.StartTime;
+            ReservationDateLbl.Content = reservation.StartTime.ToLocalTime();
             ReservationTreatmentLbl.Content = reservation.TreatmentID;
             ReservationEmployeeLbl.Content = reservation.EmployeeID;
             ReservationCustomerLbl.Content = reservation.CustomerID;

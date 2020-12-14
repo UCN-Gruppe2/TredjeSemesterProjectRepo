@@ -18,6 +18,7 @@ namespace DataTest
     {
         public ReservationController ReservationCtrl;
         public TreatmentController TreatmentCtrl;
+        public EmployeeController EmployeeCtrl;
         public Stopwatch Watch;
         public Customer Customer;
         public Customer Customer2;
@@ -194,7 +195,7 @@ namespace DataTest
             int id = 1;
 
             //Act
-            List<Reservation> found = ReservationCtrl.GetReservationsByEmployeeID(id);
+            List<Reservation> found = EmployeeCtrl.Reservations(id);
 
             //Assert
             Assert.IsTrue(found.Count > 0);
@@ -208,7 +209,7 @@ namespace DataTest
             int id = 35;
 
             //Act
-            List<Reservation> found = ReservationCtrl.GetReservationsByEmployeeID(id);
+            List<Reservation> found = EmployeeCtrl.Reservations(id);
 
             //Assert
             Assert.IsTrue(found.Count == 0);
@@ -223,7 +224,7 @@ namespace DataTest
             int id = 1;
 
             //Act
-            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+            List<Reservation> founds = EmployeeCtrl.Reservations(id);
 
             //Assert
             foreach (Reservation element in founds)
@@ -266,7 +267,7 @@ namespace DataTest
             int id = 1;
 
             //Act
-            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+            List<Reservation> founds = EmployeeCtrl.Reservations(id);
 
             //Assert
             foreach (Reservation element in founds)
@@ -282,7 +283,7 @@ namespace DataTest
             int id = 2;
 
             //Act
-            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+            List<Reservation> founds = EmployeeCtrl.Reservations(id);
 
             //Assert
             Assert.IsTrue(founds.Count == 0);
@@ -296,7 +297,7 @@ namespace DataTest
             int id = 35;
 
             //Act
-            List<Reservation> founds = ReservationCtrl.GetReservationsByEmployeeID(id);
+            List<Reservation> founds = EmployeeCtrl.Reservations(id);
 
             //Assert
             Assert.IsTrue(founds.Count == 0);
