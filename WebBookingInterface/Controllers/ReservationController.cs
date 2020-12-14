@@ -33,9 +33,17 @@ namespace WebBookingInterface.Controllers
             return View();
         }
 
-        public ActionResult FindPersonalReservations()
+        public ActionResult FindReservationsForEmployee()
         {
             return View();
+        }
+
+        public ActionResult FindReservationsForEmployee(int employeeID)
+        {
+            RestRequest request = new RestRequest("api/Reservation/GetReservationsByEmployeeID");
+
+            List<Reservation> reservations = null;
+            return View("EmployeeReservationsResult", reservations);
         }
 
         [HttpPost]
