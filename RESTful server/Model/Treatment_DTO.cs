@@ -13,14 +13,19 @@ namespace Model
         public string Description;
         public int Duration;
         public decimal Price;
+        public List<int> TreatmentCategoryID;
 
-        public Treatment_DTO(int companyID, string name, string description, int duration, decimal price)
+        //Vi skal bruge categoryID fra CategoryOfTreatments, hvor treatmentID (CategoryOfTreatments) = @id (Treatment)
+        //SELECT categoryID FROM CategoryOfTreatments INNER JOIN Treatment ON CategoryOfTreatments.treatmentID = Treatment.id;
+
+        public Treatment_DTO(int companyID, string name, string description, int duration, decimal price, List<int> treatmentCategoryID = null)
         {
             CompanyID = companyID;
             Name = name;
             Description = description;
             Duration = duration;
-            Price = price;
+            Price = Math.Round(price, 2);
+            TreatmentCategoryID = treatmentCategoryID;
         }
     }
 }

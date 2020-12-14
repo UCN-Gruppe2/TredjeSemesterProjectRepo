@@ -15,10 +15,12 @@ namespace DataAccess.DatabaseAccess
     public class DbTreatment : IDbTreatment
     {
         private string _connectionString;
+        private DBTreatmentCategory _dBTreatmentCategory;
 
         public DbTreatment()
         {
             _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+            _dBTreatmentCategory = new DBTreatmentCategory();
         }
 
         public bool DeleteTreatment()
@@ -35,10 +37,20 @@ namespace DataAccess.DatabaseAccess
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                string sqlString = "SELECT * FROM Treatment WHERE id = @id";
-                Treatment result = conn.Query<Treatment>(sqlString, new { id = id }).FirstOrDefault();
-                return result;
+                return GetTreatmentByID(id, conn);
             }
+        }
+
+        public Treatment GetTreatmentByID(int id, SqlConnection connection)
+        {
+            string sqlString = "SELECT * FROM Treatment WHERE id = @id";
+            List<int> categoryIDs = _dBTreatmentCategory.GetCategoryIDByTreatmentID(id, connection);
+            Treatment result = connection.Query<Treatment>(sqlString, new { id = id }).FirstOrDefault();
+            if (result != null)
+            {
+                result.TreatmentCategoryID = categoryIDs;
+            }
+            return result;
         }
 
         public Treatment InsertTreatmentToDatabase(Treatment treatment)
@@ -80,7 +92,7 @@ namespace DataAccess.DatabaseAccess
                         });
 
                         //scope.Complete();
-                        var result = conn.Query<Treatment>("SELECT * FROM Treatment WHERE id = @id", new { id = id }).FirstOrDefault();
+                        var result = this.GetTreatmentByID(id, conn);//conn.Query<Treatment>("SELECT * FROM Treatment WHERE id = @id", new { id = id }).FirstOrDefault();
                         scope.Complete();
                         return result;
                     }

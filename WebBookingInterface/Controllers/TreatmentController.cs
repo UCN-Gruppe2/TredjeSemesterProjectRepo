@@ -13,6 +13,7 @@ namespace WebBookingInterface.Controllers
     {
         RestClient _client;
 
+
         public TreatmentController()
         {
             _client = RestClientManager.GetInstance().RestClient;
@@ -30,9 +31,33 @@ namespace WebBookingInterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Treatment_DTO treatment_DTO)
+        public ActionResult Create(int companyID, string name, string description, int duration, int price, string treatmentCategoryID)
         {
-            return Json(_client);
+            List<int> categoriesID = new List<int>();
+            foreach (string part in treatmentCategoryID.Trim().Split(','))
+            {
+                int parsedValue = -1;
+                if (int.TryParse(part, out parsedValue))
+                {
+                    categoriesID.Add(parsedValue);
+                }
+            }
+
+            RestRequest treatmentRequest = new RestRequest("/api/Treatment", Method.POST);
+
+            Treatment_DTO treatmentTransferObj = new Treatment_DTO(
+                companyID: companyID,
+                name: name,
+                description: description,
+                duration: duration,
+                price: price,
+                treatmentCategoryID: categoriesID
+            );
+
+            treatmentRequest.AddJsonBody(treatmentTransferObj);
+            var response = _client.Execute(treatmentRequest);
+
+            return Json(response.StatusCode == System.Net.HttpStatusCode.OK);
         }
     }
 }

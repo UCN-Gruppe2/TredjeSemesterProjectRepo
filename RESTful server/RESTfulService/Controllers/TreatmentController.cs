@@ -14,6 +14,7 @@ namespace RESTfulService.Controllers
     public class TreatmentController : ApiController
     {
         private DbTreatment _dbTreatment = new DbTreatment();
+        private DBTreatmentCategory _dbTreatmentCategory = new DBTreatmentCategory();
 
         // GET: api/Treatment
         public IEnumerable<string> GetAll()
@@ -29,14 +30,15 @@ namespace RESTfulService.Controllers
         }
 
         // POST: api/Treatment
-        public Treatment Post([FromBody] Treatment value, List<TreatmentCategory> categories)
+        public Treatment Post([FromBody] Treatment_DTO value)
         {
             Treatment treatmentAdded = null;
             if (value.Duration > 0 && value.Price > 0)
             {
                 try
                 {
-                    treatmentAdded = _dbTreatment.InsertTreatmentToDatabase(value);
+                    var treatmentToAddObj = new Treatment(value.CompanyID, value.Name, value.Description, value.Duration, value.Price, value.TreatmentCategoryID);
+                    treatmentAdded = _dbTreatment.InsertTreatmentToDatabase(treatmentToAddObj);
                 }
                 catch (ArgumentException e)
                 {
@@ -48,19 +50,19 @@ namespace RESTfulService.Controllers
                 throw new ArgumentException();
             }
 
-            if(treatmentAdded != null)
+            if (treatmentAdded != null && value.TreatmentCategoryID != null)
             {
-                foreach(TreatmentCategory element in categories)
+                foreach (int categoryID in value.TreatmentCategoryID)
                 {
-                    element.AddTreatment(treatmentAdded);
-                    _dbTreatment.UpdateTreatmentsInCategory(element);
+                    _dbTreatmentCategory.AddCategoryToTreatment(treatmentAdded.ID, categoryID);
                 }
+                treatmentAdded.TreatmentCategoryID = value.TreatmentCategoryID;
             }
             return treatmentAdded;
         }
 
-            // PUT: api/Treatment/5
-        public void Put(int id, [FromBody]string value)
+        // PUT: api/Treatment/5
+        public void Put(int id, [FromBody] string value)
         {
 
         }
