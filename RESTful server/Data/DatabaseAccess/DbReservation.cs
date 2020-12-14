@@ -40,7 +40,7 @@ namespace DataAccess.DatabaseAccess
                 var queryResult = conn.Query<int>(customerCheck, new { id });
                 bool hasExisting = queryResult.Any();
 
-                if  (hasExisting)
+                if (hasExisting)
                 {
                     string sqlString = "SELECT * FROM Reservation WHERE customerID = @id";
                     List<Reservation> results = (List<Reservation>)conn.Query<Reservation>(sqlString, new { id = id });
@@ -53,7 +53,7 @@ namespace DataAccess.DatabaseAccess
             }
         }
 
-        
+
         public List<Reservation> GetReservationsByEmployeeID(int id)
         {
             using (var conn = new SqlConnection(_connectionString))
@@ -63,7 +63,7 @@ namespace DataAccess.DatabaseAccess
                 var queryResult = conn.Query<int>(employeeCheck, new { id });
                 bool hasExisting = queryResult.Any();
 
-                if(hasExisting)
+                if (hasExisting)
                 {
                     string sqlString = "SELECT * FROM Reservation WHERE employeeID = @id AND " +
                         "@currentDate <= startTime";
@@ -131,8 +131,8 @@ namespace DataAccess.DatabaseAccess
                     string findExistingReservation = "SELECT * FROM Reservation WHERE employeeID = @employeeID AND (" +
                         "(startTime <= @startTime AND endTime > @startTime)" +
                         "OR (startTime >= @startTime AND startTime < @endTime)" +
-                        "OR (endTime > @startTime AND startTime < @endTime)" + 
-                        "OR (endTime >= @endTime AND startTime < @endTime)" + 
+                        "OR (endTime > @startTime AND startTime < @endTime)" +
+                        "OR (endTime >= @endTime AND startTime < @endTime)" +
                         "OR (endTime <= @endTime AND endTime > @startTime))";
 
                     var queryResult = conn.Query<int>(findExistingReservation, new { employeeID, startTime, endTime });
@@ -161,7 +161,6 @@ namespace DataAccess.DatabaseAccess
                         throw new ArgumentException("The reservation could not be inserted.");
                     }
                 }
-
             }
         }
     }
