@@ -5,22 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopClient"
         mc:Ignorable="d"
-        Title="Booking4You - Opret Behandling" Height="450" Width="450" Background="#919191" Left="600" Top="150">
-    <Grid>
+        Title="Booking4You - Opret Behandling" Height="487.382" Width="450" Background="#919191" Left="600" Top="150">
+    <Grid Margin="0,0,0.333,-29.333">
         <Grid.ColumnDefinitions>
         </Grid.ColumnDefinitions>
         <Label FontWeight="Bold" Content="Virksomhed:" HorizontalAlignment="Left" Margin="45,25,0,0" VerticalAlignment="Top" Height="30" FontSize="15px"/>
         <TextBox Name="CompanyIDBox" HorizontalAlignment="Left" Margin="145,25,0,0" VerticalAlignment="Top" Width="250" Height="30" FontSize="15px"/>
         <Label FontWeight="Bold" Content="Navn:" HorizontalAlignment="Left" Margin="45,70,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
         <TextBox Name="NameBox" HorizontalAlignment="Left" Height="30" Margin="145,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="15px"/>
-        <Label FontWeight="Bold" Content="Beskrivelse:" HorizontalAlignment="Left" Margin="45,115,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
-        <TextBlock Name="DescriptionBox" HorizontalAlignment="Left" Margin="145,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Background="White" Padding="3,3,3,3" Height="120" Width="250"/>
-        <Label FontWeight="Bold" Content="Varighed:" HorizontalAlignment="Left" Margin="45,250,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
-        <ComboBox Name="DurationCombo" HorizontalAlignment="Left" Margin="145,250,0,0" VerticalAlignment="Top" Width="170" Height="30" FontSize="15px"/>
-        <Label Content="Minutter" HorizontalAlignment="Left" Margin="325,250,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px" Width="70"/>
-        <Label FontWeight="Bold" Content="Pris:" HorizontalAlignment="Left" Margin="45,295,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
-        <TextBox Name="PriceBox" HorizontalAlignment="Left" Height="30" Margin="145,295,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" FontSize="15px"/>
-        <Label Content="DKK" HorizontalAlignment="Left" Margin="325,295,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px" Width="40"/>
-        <Button Content="Opret" HorizontalAlignment="Left" Margin="179,350,0,0" VerticalAlignment="Top" Width="100" FontSize="20px" Height="45" Click="CreateBtn_Click"/>
+        <Label FontWeight="Bold" Content="Beskrivelse:" HorizontalAlignment="Left" Margin="45,161,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
+        <TextBox Name="DescriptionBox" HorizontalAlignment="Left" Margin="145,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Background="White" Padding="3,3,3,3" Height="120" Width="250"/>
+        <Label FontWeight="Bold" Content="Varighed:" HorizontalAlignment="Left" Margin="45,296,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
+        <ComboBox Name="DurationCombo" HorizontalAlignment="Left" Margin="145,296,0,0" VerticalAlignment="Top" Width="170" Height="30" FontSize="15px"/>
+        <Label Content="Minutter" HorizontalAlignment="Left" Margin="325,296,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px" Width="70"/>
+        <Label FontWeight="Bold" Content="Pris:" HorizontalAlignment="Left" Margin="45,341,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
+        <TextBox Name="PriceBox" HorizontalAlignment="Left" Height="30" Margin="145,341,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" FontSize="15px"/>
+        <Label Content="DKK" HorizontalAlignment="Left" Margin="325,341,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px" Width="40"/>
+        <Button Content="Opret" HorizontalAlignment="Left" Margin="179,396,0,0" VerticalAlignment="Top" Width="100" FontSize="20px" Height="45" Click="CreateBtn_Click"/>
+        <Label Content="Behandlingskategori(er):" HorizontalAlignment="Left" Margin="45,114,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.269,0.2" FontSize="15px" FontWeight="Bold"/>
+        <TextBox Name="TreatmentCategoryBox" HorizontalAlignment="Left" Height="30" Margin="239,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
     </Grid>
 </Window>

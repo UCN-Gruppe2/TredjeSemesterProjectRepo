@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,6 +32,7 @@ namespace DesktopClient
         public MainWindow(RestClient client)
         {
             _client = client;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("da-DK");
             InitializeComponent();
             StartUp();
         }
@@ -123,7 +126,7 @@ namespace DesktopClient
         //Reservation Tab
         private void NewReservation_Click(object sender, RoutedEventArgs e)
         {
-            CreateReservation newRes = new CreateReservation(_client);
+            CreateReservation newRes = new CreateReservation(this, _client);
             newRes.Show();
         }
 

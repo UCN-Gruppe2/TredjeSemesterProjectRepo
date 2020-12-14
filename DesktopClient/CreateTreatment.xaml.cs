@@ -37,8 +37,19 @@ namespace DesktopClient
         private void CreateBtn_Click(object sender, RoutedEventArgs e)
         {
             Int32 duration = (int)DurationCombo.SelectedItem;
+            string treatmentCategories = TreatmentCategoryBox.Text;
+            string[] tempTreatmentCategory = treatmentCategories.Split(',');
+            int index = 0;
+            List<int> treatmentCategoryList = new List<int>();
+            while(index < tempTreatmentCategory.Length)
+            {
+                treatmentCategoryList.Add(Int32.Parse(tempTreatmentCategory[index].Trim()));
+                index++;
+            }
+
             Treatment_DTO treatmentToAdd = new Treatment_DTO(Int32.Parse(CompanyIDBox.Text),
                 NameBox.Text, DescriptionBox.Text, duration, Decimal.Parse(PriceBox.Text));
+            treatmentToAdd.TreatmentCategoryID = treatmentCategoryList;
 
             RestRequest addRequest = new RestRequest("api/Treatment", Method.POST);
             addRequest.AddJsonBody(treatmentToAdd);

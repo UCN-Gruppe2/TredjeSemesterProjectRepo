@@ -22,19 +22,19 @@ namespace RESTfulService.Controllers
         //    return new string[] { "value1", "value2" };
         //}
 
-        // GET: api/Reservation/5
-        //public Reservation Get(int id)
-        //{
-        //    Reservation found = _dbReservation.GetReservationByID(id);
-        //    return found;
-        //}
+        //GET: api/Reservation/5
+        public Reservation Get(int id)
+        {
+            Reservation found = _dbReservation.GetReservationByID(id);
+            return found;
+        }
 
-        //public List<Reservation> GetReservationsByCustomerID(int id)
-        //{
-        //    List<Reservation> reservations = new List<Reservation>();
-        //    reservations = _dbReservation.GetReservationsByCustomerID(id);
-        //    return reservations;
-        //}
+        public List<Reservation> GetReservationsByCustomerID(int id)
+        {
+            List<Reservation> reservations = new List<Reservation>();
+            reservations = _dbReservation.GetReservationsByCustomerID(id);
+            return reservations;
+        }
 
         [Authorize]
         [HttpGet]

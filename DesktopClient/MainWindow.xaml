@@ -25,7 +25,7 @@
                         <Label Content="Beskrivelse" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
                         <TextBox Name="TreatmentDescriptionLbl" Text="Unknown" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="180,90,0,0" VerticalAlignment="Top" Width="300" FontSize="20px" Height="150" Background="Transparent" BorderBrush="Transparent"/>
                         <Label Content="Varighed" HorizontalAlignment="Left" Margin="10,250,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
-                        <Label Name="TreatmentDurationLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,2500,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Name="TreatmentDurationLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,250,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
                         <Label Content="Pris" HorizontalAlignment="Left" Margin="10,290,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
                         <Label Name="TreatmentPriceLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,290,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
                     </Grid>
