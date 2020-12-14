@@ -52,7 +52,7 @@ namespace DesktopClient
 
         private void SearchEmployee_Click(object sender, RoutedEventArgs e)
         {
-            bool state = UpdateDataGridEmployeeReservation();
+            bool state = UpdateDataGridEmployeeReservations();
             if (state)
             {
                 EmployeeIDLbl.Content = SearchEmployee.Text;
@@ -64,7 +64,7 @@ namespace DesktopClient
             SearchEmployee.Text = "";
         }
 
-        private bool UpdateDataGridEmployeeReservation()
+        private bool UpdateDataGridEmployeeReservations()
         {
             bool state = false;
             ObservableCollection<Reservation> reservationsOfEmployee = new ObservableCollection<Reservation>(getReservations());
@@ -79,8 +79,8 @@ namespace DesktopClient
 
         private List<Reservation> getReservations()
         {
-            RestRequest addRequest = new RestRequest("api/Reservation/GetReservationsByEmployeeID", Method.GET);
-            addRequest.AddParameter("id", Int32.Parse(SearchEmployee.Text));
+            RestRequest addRequest = new RestRequest("api/Employee/GetReservations", Method.GET);
+            addRequest.AddParameter("employeeID", Int32.Parse(SearchEmployee.Text));
 
             var response = _client.Execute(addRequest);
 

@@ -36,15 +36,6 @@ namespace RESTfulService.Controllers
         //    return reservations;
         //}
 
-        [Authorize]
-        [HttpGet]
-        public List<Reservation> GetReservationsByEmployeeID(int id)
-        {
-            List<Reservation> reservations = new List<Reservation>();
-            reservations = _dbReservation.GetReservationsByEmployeeID(id);
-            return reservations;
-        }
-
         // POST: api/Reservation
         [Authorize]
         [HttpPost]
