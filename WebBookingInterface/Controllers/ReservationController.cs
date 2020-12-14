@@ -20,24 +20,7 @@ namespace WebBookingInterface.Controllers
         public ReservationController()
         {
             _client = RestClientManager.GetInstance().RestClient;
-            //if (_client == null)
-            //{
-            //    _client = new RestClient("https://localhost:44388/");
-            //    string authToken = _getToken();
-            //    _client.AddDefaultHeader("Authorization", $"Bearer {authToken}");
-            //}
         }
-
-        //private string _getToken()
-        //{
-        //    var request = new RestRequest("/Token", Method.POST);
-        //    request.AddParameter("grant_type", "password");
-        //    request.AddParameter("userName", "mail@marcuslc.com"); //Note to self: brug Web.config i stedet for!
-        //    request.AddParameter("password", "Password1!"); //Samme her
-        //    var responseAsParsedJSON = JObject.Parse(_client.Execute(request).Content);
-
-        //    return responseAsParsedJSON["access_token"].ToString();
-        //}
 
         // GET: Reservation
         public ActionResult Index()
@@ -56,7 +39,7 @@ namespace WebBookingInterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(int companyID, int treatmentID, int customerID, int employeeID, DateTime appointment_date, DateTime appointment_time)
+        public ActionResult Create(int treatmentID, int customerID, int employeeID, DateTime appointment_date, DateTime appointment_time)
         {
             DateTime appointment_dateTime = new DateTime(appointment_date.Year, appointment_date.Month, appointment_date.Day, appointment_time.Hour, appointment_time.Minute, 00);
             bool result;
@@ -65,7 +48,6 @@ namespace WebBookingInterface.Controllers
             {
                 RestRequest reservationRequest = new RestRequest("/api/Reservation", Method.POST);
                 var reservation_DTO = new Reservation_DTO(
-                    companyID: companyID,
                     employeeID: employeeID,
                     customerID: customerID,
                     treatmentID: treatmentID,
@@ -79,7 +61,7 @@ namespace WebBookingInterface.Controllers
             }
             catch (Exception e)
             {
-                exception = e;
+                exception = e; // exception skulle logges, det kommer senere :))
                 result = false;
             }
             return Json(result);

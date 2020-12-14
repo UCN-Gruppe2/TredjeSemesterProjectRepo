@@ -13,14 +13,6 @@ namespace RestClientManagerNamespace
         private static RestClientManager s_instance;
         private RestClient _client;
 
-        private static string _username;
-        private static string _password;
-
-        public static void SetCred(string username, string password) {
-            _username = username;
-            _password = password;
-        }
-
         public RestClient RestClient
         {
             get => _client;

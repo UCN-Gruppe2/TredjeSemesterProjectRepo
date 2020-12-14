@@ -57,10 +57,12 @@ namespace DataTest
         private static void InsertTreatment()
         {
             TreatmentController treatmentCtrl = new TreatmentController();
-            Treatment treatment = new Treatment(1, "Stor fed klip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
-            List<TreatmentCategory> Categories = new List<TreatmentCategory>();
-            Categories.Add(new TreatmentCategory(1, "Klip"));
-            treatmentCtrl.Post(treatment, Categories);
+            //List<int> Categories = new List<TreatmentCategory>();
+            //Categories.Add(new TreatmentCategory(1));
+            Treatment_DTO treatment = new Treatment_DTO(1, "Stor fed klip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m, new List<int> { 1 });
+
+
+            treatmentCtrl.Post(treatment);
         }
 
         private static void InsertCustomer()
@@ -85,7 +87,7 @@ namespace DataTest
         {
             string employeeSQL = "INSERT INTO Employee (companyID, firstName, lastName, phone, email, address, postalCode, city) VALUES (1, 'Sanne', 'Liane', '87654321', 'hej@ucn.dk', 'Bygade 32', 9000, 'Aalborg');";
             string employeeSQL2 = "INSERT INTO Employee (companyID, firstName, lastName, phone, email, address, postalCode, city) VALUES (1, 'Lene', 'Sorensen', '87651234', 'dav@ucn.dk', 'Bygade 32', 9000, 'Aalborg');";
-             string resultSQL = $"{employeeSQL} {employeeSQL2}";
+            string resultSQL = $"{employeeSQL} {employeeSQL2}";
             using (SqlConnection connection = new SqlConnection(_connString))
             {
                 connection.Open();
@@ -109,7 +111,7 @@ namespace DataTest
                 employeeID: 1,
                 customerID: 1,
                 treatmentID: treatment.ID
-                //(treatment, 1, 1, DateTime.Parse("26-11-2010 13:30")
+            //(treatment, 1, 1, DateTime.Parse("26-11-2010 13:30")
             );
 
             Reservation_DTO reservation2 = new Reservation_DTO(
@@ -143,6 +145,6 @@ namespace DataTest
             }
         }
 
-        
+
     }
 }
