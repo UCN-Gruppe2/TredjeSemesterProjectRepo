@@ -51,6 +51,7 @@
                         </DataGrid>
                         <Label Content="Reservationer:" HorizontalAlignment="Left" Margin="75,20,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" />
                     </Grid>
+                    <Label Name="FailLbl" Content="Fejlmeddelelse" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Width="385" Foreground="Red"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Reservation" Padding="5,5,5,5">

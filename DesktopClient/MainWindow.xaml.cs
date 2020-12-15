@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -81,6 +82,7 @@ namespace DesktopClient
         private void EmployeeStartUp()
         {
             EmployeeIDLbl.Content = "";
+            FailLbl.Content = "";
         }
 
         private void SearchEmployee_Click(object sender, RoutedEventArgs e)
@@ -115,6 +117,10 @@ namespace DesktopClient
             addRequest.AddParameter("employeeID", Int32.Parse(SearchEmployee.Text.Trim()));
 
             var response = _client.Execute(addRequest);
+            if(response.StatusCode == HttpStatusCode.NotFound)
+            {
+                FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + response.ErrorException.Message;
+            }
 
             string theJson = response.Content;
             List<Reservation> reservations = JsonConvert.DeserializeObject<List<Reservation>>(theJson);

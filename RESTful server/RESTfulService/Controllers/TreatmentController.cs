@@ -59,7 +59,8 @@ namespace RESTfulService.Controllers
             catch (SqlException sqlE)
             {
                 //Company does not exist
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "The data could not be added to the Database.", sqlE));
+                var exceptionToThrow = new SqlException("Could not add the data to the datebase.");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, exceptionToThrow));
             }
             catch (ArgumentException ae)
             {

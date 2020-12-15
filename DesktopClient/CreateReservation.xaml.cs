@@ -4,6 +4,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -58,15 +59,55 @@ namespace DesktopClient
             addRequest.AddJsonBody(reservationToAdd);
 
             var response = _client.Execute(addRequest);
+            if (response.StatusCode == HttpStatusCode.Conflict)
+            {
+                FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.ErrorException.Message;
+                FailLbl.Opacity = 100;
+                string message = response.ErrorException.Message;
+                if (message.Contains("TreatmentID"))
+                {
+                    TreatmentIDBox.BorderBrush = Brushes.Red;
+                    TreatmentIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
+                }
+                if (message.Contains("CustomerID"))
+                {
+                    CustomerIDBox.BorderBrush = Brushes.Red;
+                    CustomerIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
+                }
+                if (message.Contains("EmployeeID"))
+                {
+                    EmployeeIDBox.BorderBrush = Brushes.Red;
+                    EmployeeIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
+                }
+                if(message.Contains("occurrred a conflict"))
+                {
+                    FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.ErrorException.Message;
+                    FailLbl.Opacity = 100;
+                    TimeCombo.BorderBrush = Brushes.Red;
+                    TimeCombo.BorderThickness = new Thickness(1, 1, 1, 1);
+                }
+            }
+            else if(response.StatusCode == HttpStatusCode.NotFound)
+            {
+                TreatmentIDBox.BorderBrush = Brushes.Red;
+                TreatmentIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
+            }
+            else if (response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                CreateButton.BorderBrush = Brushes.Red;
+                CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
+            }
+            else
+            {
+                string theJson = response.Content;
+                Reservation reservation = JsonConvert.DeserializeObject<Reservation>(theJson);
+                reservation.StartTime = reservation.StartTime.ToLocalTime();
+                reservation.EndTime = reservation.EndTime.ToLocalTime();
 
-            string theJson = response.Content;
-            Reservation reservation = JsonConvert.DeserializeObject<Reservation>(theJson);
-            reservation.StartTime = reservation.StartTime.ToLocalTime();
-            reservation.EndTime = reservation.EndTime.ToLocalTime();
+                main.ShowCreatedReservation(reservation);
 
-            main.ShowCreatedReservation(reservation);
-
-            this.Close();
+                this.Close();
+            }
         }
     }
 }

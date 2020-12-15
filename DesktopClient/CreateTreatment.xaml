@@ -23,7 +23,7 @@
         <Label FontWeight="Bold" Content="Pris:" HorizontalAlignment="Left" Margin="45,341,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
         <TextBox Name="PriceBox" HorizontalAlignment="Left" Height="30" Margin="145,341,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" FontSize="15px"/>
         <Label Content="DKK" HorizontalAlignment="Left" Margin="325,341,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px" Width="40"/>
-        <Button Content="Opret" HorizontalAlignment="Left" Margin="175,424,0,0" VerticalAlignment="Top" Width="100" FontSize="20px" Height="45" Click="CreateBtn_Click"/>
-        <Label Name="FailLbl" Content="Der skete en fejl." HorizontalContentAlignment="Center" Margin="145,393,147,0" VerticalAlignment="Top" Width="150"/>
+        <Button Name="CreateButton" Content="Opret" HorizontalAlignment="Left" Margin="175,432,0,0" VerticalAlignment="Top" Width="100" FontSize="20px" Height="45" Click="CreateBtn_Click"/>
+        <Label Name="FailLbl" Content="Der skete en fejl." HorizontalContentAlignment="Center" Margin="50,376,150,0" VerticalAlignment="Top" Width="350" Height="auto"/>
     </Grid>
 </Window>
