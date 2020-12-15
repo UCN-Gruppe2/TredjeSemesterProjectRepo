@@ -33,8 +33,20 @@ namespace WebBookingInterface.Controllers
             return View();
         }
 
-        public ActionResult FindPersonalReservations()
+        public ActionResult FindReservationsForEmployee()
         {
+            return View();
+        }
+
+
+        public ActionResult EmployeeReservationsResult(int employeeID)
+        {
+            RestRequest request = new RestRequest("api/Employee/", Method.GET);
+            request.AddParameter("employeeID", employeeID);
+            RestResponse response = (RestResponse)_client.Execute(request);
+
+            ViewBag.EmployeeID = employeeID;
+            ViewBag.Reservations = JsonConvert.DeserializeObject<List<Reservation>>(response.Content);
             return View();
         }
 

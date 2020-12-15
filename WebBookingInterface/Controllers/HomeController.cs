@@ -22,7 +22,7 @@ namespace WebBookingInterface.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Din kontaktside.";
 
             return View();
         }
