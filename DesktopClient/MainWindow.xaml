@@ -41,14 +41,16 @@
                     <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewEmployee_Click"/>
                     <Label Content="Medarbejder ID:" HorizontalAlignment="Left" Margin="39,130,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
                     <Label Name="EmployeeIDLbl" Content="Unknown" HorizontalAlignment="Left" Margin="39,160,0,0" VerticalAlignment="Top" FontSize="20"/>
-                    <DataGrid Name = "dataGrid" AlternatingRowBackground = "LightBlue" Margin="370,40,0,0" AlternationCount = "2" AutoGenerateColumns = "False" Width="500" Height="400" FontSize="15px" CanUserResizeColumns="False" ColumnWidth="125">
-                        <DataGrid.Columns >
-                            <DataGridTextColumn Header = "Tidspunkt" Binding = "{Binding StartTime, StringFormat={}{0:dd/MM/yyyy HH:mm}}" Width="auto" />
-                            <DataGridTextColumn Header = "Behandling" Binding = "{Binding TreatmentID}" Width="auto"/>
-                            <DataGridTextColumn Header = "Kunde" Binding = "{Binding CustomerID}" Width="auto"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Label Content="Reservationer:" HorizontalAlignment="Left" Margin="420,90,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" />
+                    <Grid Margin="300,70,0,0" Width="600" Height="500">
+                        <DataGrid Name = "dataGrid" AlternatingRowBackground = "LightBlue" Margin="50,40,0,0" AlternationCount = "2" AutoGenerateColumns = "False" Width="500" Height="400" FontSize="15px" CanUserResizeColumns="False" ColumnWidth="125">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Header = "Tidspunkt" Binding = "{Binding StartTime, StringFormat={}{0:dd/MM/yyyy HH:mm}}" Width="auto" />
+                                <DataGridTextColumn Header = "Behandling" Binding = "{Binding TreatmentID}" Width="auto"/>
+                                <DataGridTextColumn Header = "Kunde" Binding = "{Binding CustomerID}" Width="auto"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Label Content="Reservationer:" HorizontalAlignment="Left" Margin="75,20,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" />
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Reservation" Padding="5,5,5,5">
