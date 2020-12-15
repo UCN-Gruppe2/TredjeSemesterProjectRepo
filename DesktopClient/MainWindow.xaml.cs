@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Http;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -116,19 +117,25 @@ namespace DesktopClient
             RestRequest addRequest = new RestRequest("/api/Employee/Reservations", Method.GET);
             addRequest.AddParameter("employeeID", Int32.Parse(SearchEmployee.Text.Trim()));
 
+            List<Reservation> reservations = new List<Reservation>();
+            
             var response = _client.Execute(addRequest);
             string theJson = response.Content;
+                    
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
                 JObject exceptionAsJsonObj = JObject.Parse(theJson);
-                FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + exceptionAsJsonObj["Message"].ToString();
+                //FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + exceptionAsJsonObj["Message"].ToString();
+                FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + response.ErrorException.Message;
             }
-
-
-            List<Reservation> reservations = JsonConvert.DeserializeObject<List<Reservation>>(theJson);
+            else
+            {
+                reservations = JsonConvert.DeserializeObject<List<Reservation>>(theJson);
+            }
 
             return reservations;
         }
+
 
 
         //Reservation Tab

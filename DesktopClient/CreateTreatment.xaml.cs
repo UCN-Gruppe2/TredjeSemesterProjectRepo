@@ -30,8 +30,8 @@ namespace DesktopClient
         {
             _client = client;
             this.main = main;
-            FailLbl.Opacity = 0;
             InitializeComponent();
+            FailLbl.Opacity = 0;
             durations = new List<int> { 30, 60, 90, 120, 150, 180 };
             DurationCombo.ItemsSource = durations;
         }

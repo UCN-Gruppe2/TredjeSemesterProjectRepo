@@ -52,8 +52,7 @@ namespace RESTfulService.Controllers
             }
             catch (SqlException sqlE)
             {
-                var exceptionToThrow = new SqlException("Could not add the data to the datebase.");
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, exceptionToThrow));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not insert data into database.", sqlE));
             }
             catch (NullReferenceException)
             {

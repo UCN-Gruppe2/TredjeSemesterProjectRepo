@@ -45,8 +45,15 @@ namespace WebBookingInterface.Controllers
             request.AddParameter("employeeID", employeeID);
             RestResponse response = (RestResponse)_client.Execute(request);
 
-            ViewBag.EmployeeID = employeeID;
-            ViewBag.Reservations = JsonConvert.DeserializeObject<List<Reservation>>(response.Content);
+            ActionResult viewToReturn;
+
+            //GUTTER, I SKAL FANDME FÅ FIXET DET HER, VI ER FOR DUMME TIL DET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                ViewBag.EmployeeID = employeeID;
+                ViewBag.Reservations = JsonConvert.DeserializeObject<List<Reservation>>(response.Content);
+                viewToReturn = View();
+            }
             return View();
         }
 
