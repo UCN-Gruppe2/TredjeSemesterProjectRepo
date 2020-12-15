@@ -187,31 +187,31 @@ namespace DataTest
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
 
-        [TestMethod]
-        public void TestFindReservationByID1_Valid()
-        {
-            //Arrange
-            int id = 1;
+        //[TestMethod]
+        //public void TestFindReservationByID1_Valid()
+        //{
+        //    //Arrange
+        //    int id = 1;
 
-            //Act
-            List<Reservation> found = ReservationCtrl.Get(id);
+        //    //Act
+        //    List<Reservation> found = ReservationCtrl.Get(id);
 
-            //Assert
-            Assert.IsTrue(found.Count > 0);
-        }
+        //    //Assert
+        //    Assert.IsTrue(found.Count > 0);
+        //}
 
-        [TestMethod]
-        public void TestFindReservationByID2_NonExists()
-        {
-            //Arrange
-            int id = 35;
+        //[TestMethod]
+        //public void TestFindReservationByID2_NonExists()
+        //{
+        //    //Arrange
+        //    int id = 35;
 
-            //Act
-            List<Reservation> found = ReservationCtrl.Get(id);
+        //    //Act
+        //    List<Reservation> found = ReservationCtrl.Get(id);
 
-            //Assert
-            Assert.IsTrue(found.Count == 0);
-        }
+        //    //Assert
+        //    Assert.IsTrue(found.Count == 0);
+        //}
 
         //Udarbejdet med TDD
         //Test fuldt skrevet først, dernæst controller, så DbReservation
