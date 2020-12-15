@@ -1,4 +1,5 @@
 ﻿using Model;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,13 @@ namespace DesktopClient
     {
         private readonly List<string> Times;
         private RestClient _client;
-        public CreateReservation(RestClient client)
+        private MainWindow main;
+
+        public CreateReservation(MainWindow main, RestClient client)
         {
             _client = client;
+            this.main = main;
+            FailLbl.Opacity = 0;
             InitializeComponent();
             //Making a list of possible starttimes
             Times = new List<string> { "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00",
@@ -36,14 +41,31 @@ namespace DesktopClient
 
         private void CreateBtn_Click(object sender, RoutedEventArgs e)
         {
+            string time = TimeCombo.Text;
+
+            string[] clock = time.Split(':');
+            int hour = Int32.Parse(clock[0]);
+            int minutes = Int32.Parse(clock[1]);
+            TimeSpan timeSpan = new TimeSpan(hour, minutes, 0);
+            DateTime startTime = (DateTime)DateSelector.SelectedDate;
+            startTime = startTime.Add(timeSpan);
+
             Reservation_DTO reservationToAdd = new Reservation_DTO(Int32.Parse(TreatmentIDBox.Text),
                 Int32.Parse(CustomerIDBox.Text), Int32.Parse(EmployeeIDBox.Text),
-                DateTime.Parse(DateSelector.SelectedDate + " " + TimeCombo.Text));
+                startTime);
 
             RestRequest addRequest = new RestRequest("api/Reservation", Method.POST);
             addRequest.AddJsonBody(reservationToAdd);
 
-            _client.Execute(addRequest);
+            var response = _client.Execute(addRequest);
+
+            string theJson = response.Content;
+            Reservation reservation = JsonConvert.DeserializeObject<Reservation>(theJson);
+            reservation.StartTime = reservation.StartTime.ToLocalTime();
+            reservation.EndTime = reservation.EndTime.ToLocalTime();
+
+            main.ShowCreatedReservation(reservation);
+
             this.Close();
         }
     }

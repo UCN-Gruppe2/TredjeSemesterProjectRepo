@@ -12,6 +12,7 @@ namespace RestClientManagerNamespace
     {
         private static RestClientManager s_instance;
         private RestClient _client;
+        public static string authToken;
 
         public RestClient RestClient
         {
@@ -31,7 +32,7 @@ namespace RestClientManagerNamespace
         private RestClientManager()
         {
             _client = new RestClient("https://localhost:44388/");
-            string authToken = _getToken();
+            authToken = _getToken();
             _client.AddDefaultHeader("Authorization", $"Bearer {authToken}");
         }
 

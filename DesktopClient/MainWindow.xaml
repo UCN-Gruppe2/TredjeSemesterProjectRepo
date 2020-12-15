@@ -14,9 +14,22 @@
                 <Grid Background="#919191">
                     <Grid.ColumnDefinitions>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9"/>
+                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="FunctionNotImplemented_Click"/>
                     <TextBox Name="SearchTreatment" HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
                     <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewTreatment_Click"/>
+                    <Grid Name="InformationGridTreatment" HorizontalAlignment="Left" Height="468" Margin="20,96,0,0" VerticalAlignment="Top" Width="480">
+                        <Label Content="Virksomhed" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="TreatmentCompanyLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,10,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Navn" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="TreatmentNameLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,50,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Beskrivelse" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <TextBox Name="TreatmentDescriptionLbl" Text="Unknown" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="180,90,0,0" VerticalAlignment="Top" Width="300" FontSize="20px" Height="150" Background="Transparent" BorderBrush="Transparent"/>
+                        <Label Content="Varighed" HorizontalAlignment="Left" Margin="10,250,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="TreatmentDurationLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,250,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Pris" HorizontalAlignment="Left" Margin="10,290,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="TreatmentPriceLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,290,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                    </Grid>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Medarbejder" Padding="5,5,5,5">
@@ -28,23 +41,35 @@
                     <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewEmployee_Click"/>
                     <Label Content="Medarbejder ID:" HorizontalAlignment="Left" Margin="39,130,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
                     <Label Name="EmployeeIDLbl" Content="Unknown" HorizontalAlignment="Left" Margin="39,160,0,0" VerticalAlignment="Top" FontSize="20"/>
-                    <DataGrid Name = "dataGrid" AlternatingRowBackground = "LightBlue" Margin="370,40,0,0" AlternationCount = "2" AutoGenerateColumns = "False" Width="500" Height="400" FontSize="15px" CanUserResizeColumns="False" ColumnWidth="125">
-                        <DataGrid.Columns >
-                            <DataGridTextColumn Header = "Tidspunkt" Binding = "{Binding StartTime}" Width="auto"/>
-                            <DataGridTextColumn Header = "Behandling" Binding = "{Binding TreatmentID}" Width="auto"/>
-                            <DataGridTextColumn Header = "Kunde" Binding = "{Binding CustomerID}" Width="auto"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Label Content="Reservationer:" HorizontalAlignment="Left" Margin="420,90,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" />
+                    <Grid Margin="300,70,0,0" Width="600" Height="500">
+                        <DataGrid Name = "dataGrid" AlternatingRowBackground = "LightBlue" Margin="50,40,0,0" AlternationCount = "2" AutoGenerateColumns = "False" Width="500" Height="400" FontSize="15px" CanUserResizeColumns="False" ColumnWidth="125">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Header = "Tidspunkt" Binding = "{Binding StartTime, StringFormat={}{0:dd/MM/yyyy HH:mm}}" Width="auto" />
+                                <DataGridTextColumn Header = "Behandling" Binding = "{Binding TreatmentID}" Width="auto"/>
+                                <DataGridTextColumn Header = "Kunde" Binding = "{Binding CustomerID}" Width="auto"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Label Content="Reservationer:" HorizontalAlignment="Left" Margin="75,20,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" />
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Reservation" Padding="5,5,5,5">
                 <Grid Background="#919191">
                     <Grid.ColumnDefinitions>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9"/>
+                    <Button Content="Søg" HorizontalAlignment="Left" Margin="330,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="FunctionNotImplemented_Click"/>
                     <TextBox Name="SearchReservation" HorizontalAlignment="Left" Height="25" Margin="20,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
                     <Button Content="Opret ny" HorizontalAlignment="Left" Margin="415,20,0,0" VerticalAlignment="Top" Width="75" Height="25" Background="#d9d9d9" Click="NewReservation_Click"/>
+                    <Grid Name="InformationGridReservation" HorizontalAlignment="Left" Height="468" Margin="20,96,0,0" VerticalAlignment="Top" Width="480">
+                        <Label Content="Tidspunkt" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="ReservationDateLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,10,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Behandling" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="ReservationTreatmentLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,50,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Medarbejder" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="ReservationEmployeeLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,90,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                        <Label Content="Kunde" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="170" FontSize="20px" FontWeight="Bold"/>
+                        <Label Name="ReservationCustomerLbl" Content="Unknown" HorizontalAlignment="Left" Margin="180,130,0,0" VerticalAlignment="Top" Width="300" FontSize="20px"/>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>

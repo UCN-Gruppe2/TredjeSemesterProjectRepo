@@ -1,4 +1,5 @@
-﻿using System;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -30,6 +31,7 @@ namespace Model
         }
 
         // to create object of Treatment which already exists in database.
+        [JsonConstructor]
         public Treatment(int id, int companyID, string name, string description, int duration, decimal price, List<Employee> employees, List<int> treatmentCategoryID) : base (companyID, name, description, duration, price, treatmentCategoryID)
         {
             ID = id;
