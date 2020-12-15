@@ -52,12 +52,18 @@ namespace RESTfulService.Controllers
             }
             catch (SqlException sqlE)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not add the data to the datebase.", sqlE));
+                var exceptionToThrow = new SqlException("Could not add the data to the datebase.");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, exceptionToThrow));
             }
             catch (NullReferenceException)
             {
-                var exceptionToThrow = new ArgumentException($"The Treatment with the ID ({reservation_DTO.TreatmentID}) was not found.");
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, exceptionToThrow.Message, exceptionToThrow));
+                var exceptionToThrow = new NullReferenceException($"The Treatment with the ID ({reservation_DTO.TreatmentID}) was not found.");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, exceptionToThrow));
+            }
+            catch (ArgumentException)
+            {
+                var exceptionToThrow = new ArgumentException("There occurrred a conflict with the selected time.");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow));
             }
         }
 
