@@ -51,32 +51,36 @@ namespace WebBookingInterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(int treatmentID, int customerID, int employeeID, DateTime appointment_date, DateTime appointment_time)
+        public ActionResult Create(int treatmentID, int customerID, int employeeID, DateTime appointment_date, string appointment_time)
         {
-            DateTime appointment_dateTime = new DateTime(appointment_date.Year, appointment_date.Month, appointment_date.Day, appointment_time.Hour, appointment_time.Minute, 00);
-            bool result;
-            Exception exception;
-            try
-            {
-                RestRequest reservationRequest = new RestRequest("/api/Reservation", Method.POST);
-                var reservation_DTO = new Reservation_DTO(
-                    employeeID: employeeID,
-                    customerID: customerID,
-                    treatmentID: treatmentID,
-                    startTime: appointment_dateTime
-                );
+            DateTime appointment_timeObj = DateTime.Parse(appointment_time);
+            if (appointment_timeObj.Minute % 30 == 0) throw new Exception("Illegal minute... How did You get here??");
 
-                reservationRequest.AddJsonBody(reservation_DTO);
-                var response = _client.Execute(reservationRequest);
+            DateTime appointment_dateTime = new DateTime(appointment_date.Year, appointment_date.Month, appointment_date.Day, appointment_timeObj.Hour, appointment_timeObj.Minute, 00);
 
-                result = response.StatusCode == System.Net.HttpStatusCode.OK;
-            }
-            catch (Exception e)
+            RestRequest reservationRequest = new RestRequest("/api/Reservation", Method.POST);
+            var reservation_DTO = new Reservation_DTO(
+                employeeID: employeeID,
+                customerID: customerID,
+                treatmentID: treatmentID,
+                startTime: appointment_dateTime
+            );
+
+            reservationRequest.AddJsonBody(reservation_DTO);
+            var response = _client.Execute(reservationRequest);
+
+            string viewNameToReturn;
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                exception = e; // exception skulle logges, det kommer senere :))
-                result = false;
+                ViewBag.Reservation = JsonConvert.DeserializeObject<Reservation>(response.Content);
+                viewNameToReturn = "SuccessView";
             }
-            return Json(result);
+            else
+            {
+                viewNameToReturn = "FailView";
+            }
+
+            return View(viewNameToReturn);
         }
     }
 }

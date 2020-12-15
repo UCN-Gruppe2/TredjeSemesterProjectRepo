@@ -30,18 +30,25 @@ namespace RESTfulService.Controllers
         [HttpGet]
         public List<Reservation> Reservations(int employeeID)
         {
-            List<Reservation> reservations = new List<Reservation>();
-            reservations = _dbReservation.GetReservationsByEmployeeID(employeeID);
-            return reservations;
+            try
+            {
+                List<Reservation> reservations = new List<Reservation>();
+                reservations = _dbReservation.GetReservationsByEmployeeID(employeeID);
+                return reservations;
+            }
+            catch (ArgumentException ae)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, ae));
+            }
         }
 
         // POST: api/Employee
-        public void Post([FromBody]string value)
+        public void Post([FromBody] string value)
         {
         }
 
         // PUT: api/Employee/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 

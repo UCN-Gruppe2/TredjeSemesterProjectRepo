@@ -98,7 +98,7 @@ namespace DataAccess.DatabaseAccess
                     }
                     else
                     {
-                        throw new ArgumentException("A treatment with the specified values already exists in the database.");
+                        throw new AlreadyExistsException("A treatment with the specified values already exists in the database.");
                     }
                 }
             }

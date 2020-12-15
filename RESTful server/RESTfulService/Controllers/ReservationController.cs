@@ -16,51 +16,39 @@ namespace RESTfulService.Controllers
         private DbReservation _dbReservation = new DbReservation();
         private DbTreatment _dbTreatment = new DbTreatment();
 
-        // GET: api/Reservation
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //GET: api/Reservation/5
-        public Reservation Get(int id)
-        {
-            Reservation found = _dbReservation.GetReservationByID(id);
-            return found;
-        }
-
-        public List<Reservation> GetReservationsByCustomerID(int id)
-        {
-            List<Reservation> reservations = new List<Reservation>();
-            reservations = _dbReservation.GetReservationsByCustomerID(id);
-            return reservations;
-        }
-
         // POST: api/Reservation
         [Authorize]
         [HttpPost]
-        public Reservation Post([FromBody]Reservation_DTO reservation_DTO)
+        public Reservation Post([FromBody] Reservation_DTO reservation_DTO)
         {
             //try
             //{
             if (reservation_DTO.CustomerID < 0)
             {
-                throw new ArgumentException("The CustomerID doesn't  exist.");
+                var exceptionToThrow = new ArgumentException("The CustomerID is not valid.");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, exceptionToThrow));
             }
             else if (reservation_DTO.EmployeeID < 0)
             {
-                throw new ArgumentException("The EmployeeID doesn't  exist.");
+                var exceptionToThrow = new ArgumentException("The EmployeeID is not valid.");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, exceptionToThrow));
             }
             else if (reservation_DTO.TreatmentID < 0)
             {
-                throw new ArgumentException("The TreatmentID doesn't  exist.");
+                var exceptionToThrow = new ArgumentException("The Treatment is not valid.");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, exceptionToThrow));
             }
-
-            Treatment treatmentToUse = _dbTreatment.GetTreatmentByID(reservation_DTO.TreatmentID);
-            Reservation reservationToAdd = new Reservation(treatmentToUse, reservation_DTO.CustomerID, reservation_DTO.EmployeeID, reservation_DTO.StartTime);
-            Reservation reservationAdded = _dbReservation.InsertReservationToDatabase(reservationToAdd);
-
-            return reservationAdded;
+            try
+            {
+                Treatment treatmentToUse = _dbTreatment.GetTreatmentByID(reservation_DTO.TreatmentID);
+                Reservation reservationToAdd = new Reservation(treatmentToUse, reservation_DTO.CustomerID, reservation_DTO.EmployeeID, reservation_DTO.StartTime);
+                return _dbReservation.InsertReservationToDatabase(reservationToAdd);
+            }
+            catch (NullReferenceException)
+            {
+                var exceptionToThrow = new ArgumentException($"The Treatment with the ID ({reservation_DTO.TreatmentID}) was not found.");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, exceptionToThrow));
+            }
         }
 
         // PUT: api/Reservation/5

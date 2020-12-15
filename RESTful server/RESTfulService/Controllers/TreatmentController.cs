@@ -32,33 +32,39 @@ namespace RESTfulService.Controllers
         // POST: api/Treatment
         public Treatment Post([FromBody] Treatment_DTO value)
         {
-            Treatment treatmentAdded = null;
-            if (value.Duration > 0 && value.Price > 0)
+            try
             {
-                try
+                Treatment treatmentAdded = null;
+                if (value.Duration > 0 && value.Price >= 0)
                 {
                     var treatmentToAddObj = new Treatment(value.CompanyID, value.Name, value.Description, value.Duration, value.Price, value.TreatmentCategoryID);
                     treatmentAdded = _dbTreatment.InsertTreatmentToDatabase(treatmentToAddObj);
                 }
-                catch (ArgumentException e)
+                else
                 {
-                    throw e;
+                    throw new ArgumentException("The Arguments provided were invalid.");
                 }
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
 
-            if (treatmentAdded != null && value.TreatmentCategoryID != null)
-            {
-                foreach (int categoryID in value.TreatmentCategoryID)
+                if (treatmentAdded != null && value.TreatmentCategoryID != null)
                 {
-                    _dbTreatmentCategory.AddCategoryToTreatment(treatmentAdded.ID, categoryID);
+                    foreach (int categoryID in value.TreatmentCategoryID)
+                    {
+                        _dbTreatmentCategory.AddCategoryToTreatment(treatmentAdded.ID, categoryID);
+                    }
+                    treatmentAdded.TreatmentCategoryID = value.TreatmentCategoryID;
                 }
-                treatmentAdded.TreatmentCategoryID = value.TreatmentCategoryID;
+                return treatmentAdded;
             }
-            return treatmentAdded;
+            catch (ArgumentException ae)
+            {
+                //Invalid arguments
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ae));
+            }
+            catch (AlreadyExistsException alreadyExistsException)
+            {
+                //Already exists
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, alreadyExistsException));
+            }
         }
 
         // PUT: api/Treatment/5

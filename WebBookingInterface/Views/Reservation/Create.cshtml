@@ -23,8 +23,17 @@
 
     <label>Starttidspunkt:</label>
     <input type="date" name="appointment_date" />
+    <select name="appointment_time">
+        @for (int i = 6; i <= 19; i++)
+        {
+            <option value="@i:00">@i:00</option>
+            <option value="@i:30">@i:30</option>
+        }
+    </select>
+
+    <!--
     <input type="time" name="appointment_time" />
     <br />
-
+    -->
     <input type="submit" />
 </form>

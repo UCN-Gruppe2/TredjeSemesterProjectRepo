@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Succes View";
+    Reservation reservation = ViewBag.Reservation;
+}
+
+<h2>Her er din reservation:</h2>
+
+<h3>ID: @reservation.ID</h3>
+<p>Treatment ID: @reservation.TreatmentID</p>
+<p>Customer ID: @reservation.CustomerID</p>
+<p>Employee ID: @reservation.EmployeeID</p>
+<p>Start time: @reservation.StartTime.ToLocalTime().ToString()</p>
+<p>End time: @reservation.EndTime.ToLocalTime().ToString()</p>
