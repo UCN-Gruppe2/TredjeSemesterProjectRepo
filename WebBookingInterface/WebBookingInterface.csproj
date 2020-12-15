@@ -259,7 +259,8 @@
     <Content Include="Views\Treatment\Index.cshtml" />
     <Content Include="Views\Treatment\Create.cshtml" />
     <Content Include="Views\Reservation\EmployeeReservationsResult.cshtml" />
-    <Content Include="Views\Reservation\SuccesView.cshtml" />
+    <Content Include="Views\Reservation\SuccessView.cshtml" />
+    <Content Include="Views\Reservation\FailView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
