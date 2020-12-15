@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Model;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestClientManagerNamespace;
 using RestSharp;
 
@@ -12,7 +14,6 @@ namespace WebBookingInterface.Controllers
     public class TreatmentController : Controller
     {
         RestClient _client;
-
 
         public TreatmentController()
         {
@@ -57,7 +58,19 @@ namespace WebBookingInterface.Controllers
             treatmentRequest.AddJsonBody(treatmentTransferObj);
             var response = _client.Execute(treatmentRequest);
 
-            return Json(response.StatusCode == System.Net.HttpStatusCode.OK);
+            ActionResult viewToReturn; //Jagten på det evige liv og single-exit-point.
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                ViewBag.treatment =  JsonConvert.DeserializeObject<Treatment>(response.Content);
+                viewToReturn = View("SuccessView");
+            }
+            else
+            {
+                ViewBag.ExceptionAsJsonObject = JObject.Parse(response.Content);
+                viewToReturn = View("FailView");
+            }
+
+            return viewToReturn;
         }
     }
 }

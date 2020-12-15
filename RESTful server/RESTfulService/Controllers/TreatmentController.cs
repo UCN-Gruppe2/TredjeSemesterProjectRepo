@@ -3,6 +3,7 @@ using Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -54,6 +55,11 @@ namespace RESTfulService.Controllers
                     treatmentAdded.TreatmentCategoryID = value.TreatmentCategoryID;
                 }
                 return treatmentAdded;
+            }
+            catch (SqlException sqlE)
+            {
+                //Company does not exist
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "The data could not be added to the Database.", sqlE));
             }
             catch (ArgumentException ae)
             {

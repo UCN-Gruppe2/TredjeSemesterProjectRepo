@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-//using System.Net.Http;
 using System.Web.Http;
 
 namespace RESTfulService.Controllers
@@ -13,18 +12,6 @@ namespace RESTfulService.Controllers
     public class EmployeeController : ApiController
     {
         private DbReservation _dbReservation = new DbReservation();
-
-        //// GET: api/Employee
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET: api/Employee/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
 
         // GET: api/Employee/5
         [Authorize]
