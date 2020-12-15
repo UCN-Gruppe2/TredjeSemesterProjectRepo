@@ -1,0 +1,38 @@
+﻿
+@{
+    List<Reservation> reservations = ViewBag.Reservations;
+    ViewBag.Title = "Employee Reservations Result";
+}
+
+<h2>Employee (#@ViewBag.EmployeeID) Reservations Result</h2>
+
+<table style="width:100%">
+    <tr>
+        <th>ID</th>
+        <th>Behandling ID</th>
+        <th>Kunde ID</th>
+        <th>Starttidspunkt</th>
+        <th>Sluttidspunkt</th>
+    </tr>
+
+    @foreach (Reservation reservation in reservations)
+    {
+        <tr>
+            <td>
+                @reservation.ID
+            </td>
+            <td>
+                @reservation.TreatmentID
+            </td>
+            <td>
+                @reservation.CustomerID
+            </td>
+            <td>
+                @reservation.StartTime.ToString()
+            </td>
+            <td>
+                @reservation.EndTime.ToString()
+            </td>
+        </tr>
+    }
+</table>
