@@ -71,6 +71,13 @@ namespace DesktopClient
                 CreateButton.BorderBrush = Brushes.Red;
                 CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
             }
+            if (response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.ErrorException.Message;
+                FailLbl.Opacity = 100;
+                CreateButton.BorderBrush = Brushes.Red;
+                CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
+            }
 
 
             string theJson = response.Content;

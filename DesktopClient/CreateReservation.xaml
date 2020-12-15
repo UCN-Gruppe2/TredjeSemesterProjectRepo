@@ -28,7 +28,7 @@
         </DatePicker>
         <Label FontWeight="Bold" Content="Tid:" HorizontalAlignment="Left" Margin="40,205,0,0" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.439,2.735" FontSize="15px"/>
         <ComboBox Name="TimeCombo" HorizontalAlignment="Left" Margin="150,205,0,0" VerticalAlignment="Top" Width="250" Height="30"/>
-        <Button Content="Opret" HorizontalAlignment="Left" Margin="175,304,0,0" VerticalAlignment="Top" Width="100" FontSize="20px" Height="45" Click="CreateBtn_Click"/>
+        <Button Name="CreateButton" Content="Opret" HorizontalAlignment="Left" Margin="175,304,0,0" VerticalAlignment="Top" Width="100" FontSize="20px" Height="45" Click="CreateBtn_Click"/>
         <Label Name="FailLbl" Content="Der skete en fejl." HorizontalContentAlignment="Center" Margin="50,240,45,0" VerticalAlignment="Top" Width="350"/>
     </Grid>
 </Window>

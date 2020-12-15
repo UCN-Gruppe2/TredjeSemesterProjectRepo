@@ -59,17 +59,12 @@ namespace DesktopClient
             addRequest.AddJsonBody(reservationToAdd);
 
             var response = _client.Execute(addRequest);
-            if (response.StatusCode == HttpStatusCode.NotFound)
+            if (response.StatusCode == HttpStatusCode.Conflict)
             {
                 FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.ErrorException.Message;
                 FailLbl.Opacity = 100;
                 string message = response.ErrorException.Message;
                 if (message.Contains("TreatmentID"))
-                {
-                    TreatmentIDBox.BorderBrush = Brushes.Red;
-                    TreatmentIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
-                }
-                if (message.Contains("Treatment with the ID"))
                 {
                     TreatmentIDBox.BorderBrush = Brushes.Red;
                     TreatmentIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
@@ -84,13 +79,23 @@ namespace DesktopClient
                     EmployeeIDBox.BorderBrush = Brushes.Red;
                     EmployeeIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
                 }
+                if(message.Contains("occurrred a conflict"))
+                {
+                    FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.ErrorException.Message;
+                    FailLbl.Opacity = 100;
+                    TimeCombo.BorderBrush = Brushes.Red;
+                    TimeCombo.BorderThickness = new Thickness(1, 1, 1, 1);
+                }
             }
-            else if(response.StatusCode == HttpStatusCode.Conflict)
+            else if(response.StatusCode == HttpStatusCode.NotFound)
             {
-                FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.ErrorException.Message;
-                FailLbl.Opacity = 100;
-                TimeCombo.BorderBrush = Brushes.Red;
-                TimeCombo.BorderThickness = new Thickness(1, 1, 1, 1);
+                TreatmentIDBox.BorderBrush = Brushes.Red;
+                TreatmentIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
+            }
+            else if (response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                CreateButton.BorderBrush = Brushes.Red;
+                CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
             }
             else
             {
