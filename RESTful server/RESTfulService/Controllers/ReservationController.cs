@@ -39,7 +39,7 @@ namespace RESTfulService.Controllers
                 var exceptionToThrow = new ArgumentException("The Treatment is not valid.");
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow.Message, exceptionToThrow));
             }
-            else if (reservation_DTO.StartTime.CompareTo(DateTime.Now) < 0)
+            else if (reservation_DTO.StartTime.ToLocalTime().CompareTo(DateTime.Now) < 0)
             {
                 var exceptionToThrow = new ArgumentException("The start-time is not valid.");
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow.Message, exceptionToThrow));
