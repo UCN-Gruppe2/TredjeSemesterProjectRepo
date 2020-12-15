@@ -117,18 +117,20 @@ namespace DesktopClient
             addRequest.AddParameter("employeeID", Int32.Parse(SearchEmployee.Text.Trim()));
 
             var response = _client.Execute(addRequest);
-            if(response.StatusCode == HttpStatusCode.NotFound)
+            string theJson = response.Content;
+            if (response.StatusCode == HttpStatusCode.NotFound)
             {
-                FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + response.ErrorException.Message;
+                JObject exceptionAsJsonObj = JObject.Parse(theJson);
+                FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + exceptionAsJsonObj["Message"].ToString();
             }
 
-            string theJson = response.Content;
+
             List<Reservation> reservations = JsonConvert.DeserializeObject<List<Reservation>>(theJson);
 
             return reservations;
         }
 
-        
+
         //Reservation Tab
         private void NewReservation_Click(object sender, RoutedEventArgs e)
         {
