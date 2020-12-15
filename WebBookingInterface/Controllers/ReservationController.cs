@@ -54,7 +54,7 @@ namespace WebBookingInterface.Controllers
         public ActionResult Create(int treatmentID, int customerID, int employeeID, DateTime appointment_date, string appointment_time)
         {
             DateTime appointment_timeObj = DateTime.Parse(appointment_time);
-            if (appointment_timeObj.Minute % 30 == 0) throw new Exception("Illegal minute... How did You get here??");
+            if (appointment_timeObj.Minute % 30 != 0) throw new Exception("Illegal minute... How did You get here?? Begone, hacker! callPoliceOn(this.User);");
 
             DateTime appointment_dateTime = new DateTime(appointment_date.Year, appointment_date.Month, appointment_date.Day, appointment_timeObj.Hour, appointment_timeObj.Minute, 00);
 
@@ -69,18 +69,20 @@ namespace WebBookingInterface.Controllers
             reservationRequest.AddJsonBody(reservation_DTO);
             var response = _client.Execute(reservationRequest);
 
-            string viewNameToReturn;
+            ActionResult viewToReturn;
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ViewBag.Reservation = JsonConvert.DeserializeObject<Reservation>(response.Content);
-                viewNameToReturn = "SuccessView";
+                viewToReturn = View("SuccessView");
             }
             else
             {
-                viewNameToReturn = "FailView";
+                ViewBag.ExceptionAsJsonObject = JObject.Parse(response.Content);
+                viewToReturn = View("FailView");
             }
 
-            return View(viewNameToReturn);
+            return viewToReturn;
         }
     }
 }

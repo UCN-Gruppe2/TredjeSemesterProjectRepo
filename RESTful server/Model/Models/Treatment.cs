@@ -48,7 +48,7 @@ namespace Model
             _employees.Add(employee);
         }
 
-        public List<Employee> getAllEmployees()
+        public List<Employee> GetAllEmployees()
         {
             return _employees;
         }

@@ -261,6 +261,8 @@
     <Content Include="Views\Reservation\EmployeeReservationsResult.cshtml" />
     <Content Include="Views\Reservation\SuccessView.cshtml" />
     <Content Include="Views\Reservation\FailView.cshtml" />
+    <Content Include="Views\Treatment\SuccessView.cshtml" />
+    <Content Include="Views\Treatment\FailView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

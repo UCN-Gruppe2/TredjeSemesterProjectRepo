@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "SuccessView";
+    Treatment treatment = ViewBag.treatment;
+}
+
+<h2>Succes!</h2>
+<h3>ID: @treatment.ID</h3>
+<p>Name: @treatment.Name</p>
+<p>Description: @treatment.Description</p>
+<p>Duration: @treatment.Duration min.</p>
+<p>Price: @treatment.Price</p>
+<p>Categories: @string.Join("," ,treatment.TreatmentCategoryID)</p>
