@@ -35,7 +35,7 @@ namespace RESTfulService.Controllers
             }
             else if (reservation_DTO.TreatmentID < 0)
             {
-                var exceptionToThrow = new ArgumentException("The Treatment is not valid.");
+                var exceptionToThrow = new ArgumentException("The TreatmentID is not valid.");
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, exceptionToThrow));
             }
             try
@@ -48,6 +48,11 @@ namespace RESTfulService.Controllers
             {
                 var exceptionToThrow = new ArgumentException($"The Treatment with the ID ({reservation_DTO.TreatmentID}) was not found.");
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, exceptionToThrow));
+            }
+            catch (ArgumentException)
+            {
+                var exceptionToThrow = new ArgumentException("There occurred to be a conflict with the selected time.");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow));
             }
         }
 
