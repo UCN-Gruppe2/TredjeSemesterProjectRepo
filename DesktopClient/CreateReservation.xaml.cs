@@ -61,6 +61,7 @@ namespace DesktopClient
             var response = _client.Execute(addRequest);
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
+                FailLbl.Visibility = Visibility.Visible;
                 FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.ErrorException.Message;
                 FailLbl.Opacity = 100;
                 string message = response.ErrorException.Message;
@@ -87,6 +88,7 @@ namespace DesktopClient
             }
             else if(response.StatusCode == HttpStatusCode.Conflict)
             {
+                FailLbl.Visibility = Visibility.Visible;
                 FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.ErrorException.Message;
                 FailLbl.Opacity = 100;
                 TimeCombo.BorderBrush = Brushes.Red;
