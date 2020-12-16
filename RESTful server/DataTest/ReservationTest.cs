@@ -20,10 +20,7 @@ namespace DataTest
         public TreatmentController TreatmentCtrl;
         public EmployeeController EmployeeCtrl;
         public Stopwatch Watch;
-        public Customer Customer;
-        public Customer Customer2;
         public Treatment_DTO Treatment;
-        public Employee Employee;
         public List<int> Categories;
 
         [TestInitialize]
@@ -31,6 +28,7 @@ namespace DataTest
         {
             ReservationCtrl = new ReservationController();
             TreatmentCtrl = new TreatmentController();
+            EmployeeCtrl = new EmployeeController();
             Watch = new Stopwatch();
             DbCleanUp.CleanDB();
             InsertTestData.InsertData();

@@ -131,54 +131,54 @@ namespace DataTest
             Assert.IsNull(found);
         }
 
-        [TestMethod]
-        public void TestFindEmployeesOfTreatment1_Valid()
-        {
-            //Arrange
+        //[TestMethod]
+        //public void TestFindEmployeesOfTreatment1_Valid()
+        //{
+        //    //Arrange
 
-            //Act
+        //    //Act
 
-            //Assert
-        }
+        //    //Assert
+        //}
 
-        [TestMethod]
-        public void TestFindEmployeesOfTreatment2_NoEmployees()
-        {
-            //Arrange
+        //[TestMethod]
+        //public void TestFindEmployeesOfTreatment2_NoEmployees()
+        //{
+        //    //Arrange
 
-            //Act
+        //    //Act
 
-            //Assert
-        }
+        //    //Assert
+        //}
 
-        [TestMethod]
-        public void TestFindEmployeesOfTreatment3_UnknownID()
-        {
-            //Arrange
+        //[TestMethod]
+        //public void TestFindEmployeesOfTreatment3_UnknownID()
+        //{
+        //    //Arrange
 
-            //Act
+        //    //Act
 
-            //Assert
-        }
+        //    //Assert
+        //}
 
-        [TestMethod]
-        public void TestFindAvailableTreatments1_Valid()
-        {
-            //Arrange
+        //[TestMethod]
+        //public void TestFindAvailableTreatments1_Valid()
+        //{
+        //    //Arrange
 
-            //Act
+        //    //Act
 
-            //Assert
-        }
+        //    //Assert
+        //}
 
-        [TestMethod]
-        public void TestFindAvailableTreatments2_NonIsValid()
-        {
-            //Arrange
+        //[TestMethod]
+        //public void TestFindAvailableTreatments2_NonIsValid()
+        //{
+        //    //Arrange
 
-            //Act
+        //    //Act
 
-            //Assert
-        }
+        //    //Assert
+        //}
     }
 }
