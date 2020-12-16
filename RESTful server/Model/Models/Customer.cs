@@ -11,13 +11,13 @@ namespace Model
         public int CustomerID { get; set; }
         public List<Reservation> Reservations { get; set; }
         //New Customer
-        public Customer(string firstName, string lastName, string phone, string address, int postalCode, string city) : base(firstName, lastName, phone, address, postalCode, city)
+        public Customer(string firstName, string lastName, string phone, string email, string address, int postalCode, string city) : base(firstName, lastName, phone, email, address, postalCode, city)
         {
 
         }
 
         //Existing customer
-        public Customer(int customerID, string firstName, string lastName, string phone, string address, int postalCode, string city) : base(firstName, lastName, phone, address, postalCode, city)
+        public Customer(int customerID, string firstName, string lastName, string phone, string email, string address, int postalCode, string city) : base(firstName, lastName, phone, email, address, postalCode, city)
         {
             CustomerID = customerID;
         }

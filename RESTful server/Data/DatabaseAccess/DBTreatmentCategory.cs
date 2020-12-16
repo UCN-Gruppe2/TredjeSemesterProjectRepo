@@ -53,6 +53,14 @@ namespace DataAccess.DatabaseAccess
             return result;
         }
 
+        public List<int> GetCategoryIDByTreatmentID(int treatmentID, SqlConnection connection)
+        {
+            string selectStatement = "SELECT categoryID FROM CategoryOfTreatments INNER JOIN Treatment ON CategoryOfTreatments.treatmentID = Treatment.id";
+            List<int> listOfIDs = (List<int>)connection.Query<int>(selectStatement);
+
+            return listOfIDs;
+        }
+
         public List<int> GetCategoryIDByTreatmentID(int treatmentID)
         {
             var options = new TransactionOptions
@@ -65,10 +73,7 @@ namespace DataAccess.DatabaseAccess
             {
                 using (var conn = new SqlConnection(_connectionString))
                 {
-                    string selectStatement = "SELECT categoryID FROM CategoryOfTreatments INNER JOIN Treatment ON CategoryOfTreatments.treatmentID = Treatment.id";
-                    List<int> listOfIDs = (List<int>)conn.Query<int>(selectStatement);
-
-                    return listOfIDs;
+                    return GetCategoryIDByTreatmentID(treatmentID, conn);
                 }
             }
         }
