@@ -20,60 +20,98 @@ namespace RESTfulService.Controllers
         // POST: api/Reservation
         [Authorize]
         [HttpPost]
-        public Reservation Post([FromBody] Reservation_DTO reservation_DTO)
+        public IHttpActionResult Post([FromBody] Reservation_DTO reservation_DTO)
         {
+            IHttpActionResult result;
+
             //try
             //{
             if (reservation_DTO.CustomerID < 0)
             {
-                var exceptionToThrow = new ArgumentException("The CustomerID is not valid.");
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow.Message, exceptionToThrow));
+                //   var exceptionToThrow = new ArgumentException("The CustomerID is not valid.");
+                // throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow.Message, exceptionToThrow));
+                result = Content(HttpStatusCode.Conflict, "The CustomerID is not valid.");
             }
             else if (reservation_DTO.EmployeeID < 0)
             {
-                var exceptionToThrow = new ArgumentException("The EmployeeID is not valid.");
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow.Message, exceptionToThrow));
+                // var exceptionToThrow = new ArgumentException("The EmployeeID is not valid.");
+                // throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow.Message, exceptionToThrow));
+                result = Content(HttpStatusCode.Conflict, "The EmployeeID is not valid.");
             }
             else if (reservation_DTO.TreatmentID < 0)
             {
-                var exceptionToThrow = new ArgumentException("The Treatment is not valid.");
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow.Message, exceptionToThrow));
+                //   var exceptionToThrow = new ArgumentException("The Treatment is not valid.");
+                //  throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow.Message, exceptionToThrow));
+                result = Content(HttpStatusCode.Conflict, "The Treatment is not valid.");
             }
             else if (reservation_DTO.StartTime.ToLocalTime().CompareTo(DateTime.Now) < 0)
             {
-                var exceptionToThrow = new ArgumentException("The start-time is not valid.");
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow.Message, exceptionToThrow));
+                //var exceptionToThrow = new ArgumentException("The start-time is not valid.");
+                //throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow.Message, exceptionToThrow));
+                result = Content(HttpStatusCode.Conflict, "The start-time is not valid.");
             }
+            else
+            {
+                result = _submitToDatabase(reservation_DTO);
+            }
+
+            return result;
+
+            //try
+            //{
+            //    Treatment treatmentToUse = _dbTreatment.GetTreatmentByID(reservation_DTO.TreatmentID);
+            //    Reservation reservationToAdd = new Reservation(treatmentToUse, reservation_DTO.CustomerID, reservation_DTO.EmployeeID, reservation_DTO.StartTime);
+            //    result = Ok(_dbReservation.InsertReservationToDatabase(reservationToAdd));
+            //}
+            //catch (SqlException sqlE)
+            //{
+            //    //throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not insert data into database.", sqlE));
+            //    result = Content(HttpStatusCode.InternalServerError, "Could not insert data into database.");
+            //}
+            //catch (NullReferenceException)
+            //{
+            //    //var exceptionToThrow = new NullReferenceException($"The Treatment with the ID ({reservation_DTO.TreatmentID}) was not found.");
+            //    //throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, exceptionToThrow));
+            //    result = Content(HttpStatusCode.NotFound, $"The Treatment with the ID ({reservation_DTO.TreatmentID}) was not found.");
+            //}
+            //catch (ArgumentException)
+            //{
+            //    //var exceptionToThrow = new ArgumentException("There occurred a conflict with the selected time.");
+            //    //throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow));
+            //    result = Content(HttpStatusCode.Conflict, "There occurred a conflict with the selected time.");
+            //}
+
+
+        }
+
+        private IHttpActionResult _submitToDatabase(Reservation_DTO reservation_DTO)
+        {
+            IHttpActionResult result;
             try
             {
                 Treatment treatmentToUse = _dbTreatment.GetTreatmentByID(reservation_DTO.TreatmentID);
                 Reservation reservationToAdd = new Reservation(treatmentToUse, reservation_DTO.CustomerID, reservation_DTO.EmployeeID, reservation_DTO.StartTime);
-                return _dbReservation.InsertReservationToDatabase(reservationToAdd);
+                result = Ok(_dbReservation.InsertReservationToDatabase(reservationToAdd));
             }
             catch (SqlException sqlE)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not insert data into database.", sqlE));
+                //throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not insert data into database.", sqlE));
+                result = Content(HttpStatusCode.InternalServerError, "Could not insert data into database.");
             }
             catch (NullReferenceException)
             {
-                var exceptionToThrow = new NullReferenceException($"The Treatment with the ID ({reservation_DTO.TreatmentID}) was not found.");
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, exceptionToThrow));
+                //var exceptionToThrow = new NullReferenceException($"The Treatment with the ID ({reservation_DTO.TreatmentID}) was not found.");
+                //throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, exceptionToThrow));
+                result = Content(HttpStatusCode.NotFound, $"The Treatment with the ID ({reservation_DTO.TreatmentID}) was not found.");
             }
             catch (ArgumentException)
             {
-                var exceptionToThrow = new ArgumentException("There occurred a conflict with the selected time.");
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow));
+                //var exceptionToThrow = new ArgumentException("There occurred a conflict with the selected time.");
+                //throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow));
+                result = Content(HttpStatusCode.Conflict, "There occurred a conflict with the selected time.");
             }
+
+            return result;
         }
-
-        //// PUT: api/Reservation/5
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/Reservation/5
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

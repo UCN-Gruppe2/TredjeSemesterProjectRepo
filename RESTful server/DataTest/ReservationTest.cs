@@ -7,6 +7,8 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace DataTest
 {
@@ -31,6 +33,7 @@ namespace DataTest
         {
             ReservationCtrl = new ReservationController();
             TreatmentCtrl = new TreatmentController();
+            EmployeeCtrl = new EmployeeController();
             Watch = new Stopwatch();
             DbCleanUp.CleanDB();
             InsertTestData.InsertData();
@@ -48,24 +51,31 @@ namespace DataTest
         {
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
-            Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
             Watch.Start();
-            Reservation addedReservation = ReservationCtrl.Post(newReservation);
+            IHttpActionResult addedReservationResult = ReservationCtrl.Post(newReservation);
             Watch.Stop();
 
             //Assert
-            Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
-            Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
-            Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
-            Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
-            //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
+
+
+            Assert.IsInstanceOfType(addedReservationResult, typeof(OkNegotiatedContentResult<Reservation>));
+            Reservation addedReservationObj = ((OkNegotiatedContentResult<Reservation>)addedReservationResult).Content;
+
+
+
+            Assert.AreEqual(newReservation.TreatmentID, addedReservationObj.TreatmentID);
+            Assert.AreEqual(newReservation.CustomerID, addedReservationObj.CustomerID);
+            Assert.AreEqual(newReservation.EmployeeID, addedReservationObj.EmployeeID);
+            Assert.AreEqual(newReservation.StartTime, addedReservationObj.StartTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
+            //Assert.AreEqual(newReservation.EndTime, addedReservationObj.EndTime);
+
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestCreateReservation2_TimeAlreadyBooked()
         {
             //Arrange
@@ -74,26 +84,28 @@ namespace DataTest
             Treatment_DTO treatment2 = new Treatment_DTO(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 30, 399.95m, Categories);
             Treatment addedTreatment2 = TreatmentCtrl.Post(treatment2);
 
-            Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2020 13:30"));
-            Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2025 13:30"));
+            Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
             Watch.Start();
-            Reservation addedReservation = ReservationCtrl.Post(newReservation);
-            Reservation addedReservationDouble = ReservationCtrl.Post(doubleReservation);
+            IHttpActionResult addedReservation = ReservationCtrl.Post(newReservation);
+            IHttpActionResult addedReservationDouble = ReservationCtrl.Post(doubleReservation);
             Watch.Stop();
 
             //Assert
-            Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
-            Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
-            Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
-            Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
+            Assert.IsInstanceOfType(addedReservationDouble, typeof(NegotiatedContentResult<string>));
+            Assert.IsTrue(((NegotiatedContentResult<string>)addedReservationDouble).StatusCode == System.Net.HttpStatusCode.Conflict);
+
+            //Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
+            //Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
+            //Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
+            //Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
             //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestCreateReservation3_TimeOverlap()
         {
             //Arrange
@@ -102,163 +114,101 @@ namespace DataTest
             Treatment_DTO treatment2 = new Treatment_DTO(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 60, 399.95m);
             Treatment addedTreatment2 = TreatmentCtrl.Post(treatment2);
 
-            Reservation_DTO newReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2021 13:30"));
-            Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2021 14:00"));
+            Reservation_DTO newReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2025 13:30"));
+            Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2025 14:00"));
 
             //Act
             Watch.Start();
-            Reservation addedReservation = ReservationCtrl.Post(newReservation);
-            Reservation addedReservationDouble = ReservationCtrl.Post(doubleReservation);
+            IHttpActionResult addedReservationResult = ReservationCtrl.Post(newReservation);
+            IHttpActionResult addedReservationDoubleResult = ReservationCtrl.Post(doubleReservation);
             Watch.Stop();
 
             //Assert
-            Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
-            Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
-            Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
-            Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
-            //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
+            Assert.IsInstanceOfType(addedReservationDoubleResult, typeof(NegotiatedContentResult<string>));
+            Assert.IsTrue(((NegotiatedContentResult<string>)addedReservationDoubleResult).StatusCode == System.Net.HttpStatusCode.Conflict);
+
+            //Reservation addedReservation = ((NegotiatedContentResult<Reservation>)addedReservation).Content;
+            //Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
+            //Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
+            //Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
+            //Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
+            ////Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestCreateReservation4_IllegalEmployeeID()
         {
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
-            Reservation_DTO newReservation = new Reservation_DTO(1, 1, -1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation_DTO newReservation = new Reservation_DTO(1, 1, -1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
 
             Watch.Start();
-            Reservation addedReservation = ReservationCtrl.Post(newReservation);
+            IHttpActionResult addedReservationResult = ReservationCtrl.Post(newReservation);
             Watch.Stop();
 
+
             //Assert
-            Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
-            Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
-            Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
-            Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
+            Assert.IsInstanceOfType(addedReservationResult, typeof(NegotiatedContentResult<string>));
+            Assert.IsTrue(((NegotiatedContentResult<string>)addedReservationResult).StatusCode == System.Net.HttpStatusCode.Conflict);
+
+            //Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
+            //Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
+            //Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
+            //Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
             //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
-            Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
+            //Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestCreateReservation5_IllegalTreatmentID()
         {
             //Arrange
-            Reservation_DTO newReservation = new Reservation_DTO(-1, 1, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation_DTO newReservation = new Reservation_DTO(-1, 1, 1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
-
             Watch.Start();
-            Reservation addedReservation = ReservationCtrl.Post(newReservation);
+            IHttpActionResult addedReservationResult = ReservationCtrl.Post(newReservation);
             Watch.Stop();
 
             //Assert
-            Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
-            Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
-            Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
-            Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
+            Assert.IsInstanceOfType(addedReservationResult, typeof(NegotiatedContentResult<string>));
+            Assert.IsTrue(((NegotiatedContentResult<string>)addedReservationResult).StatusCode == System.Net.HttpStatusCode.Conflict);
+
+            //Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
+            //Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
+            //Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
+            //Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
             //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestCreateReservation6_IllegalCustomerID()
         {
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
-            Reservation_DTO newReservation = new Reservation_DTO(1, -1, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation_DTO newReservation = new Reservation_DTO(1, -1, 1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
 
             Watch.Start();
-            Reservation addedReservation = ReservationCtrl.Post(newReservation);
+            IHttpActionResult addedReservationResult = ReservationCtrl.Post(newReservation);
             Watch.Stop();
 
             //Assert
-            Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
-            Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
-            Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
-            Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
+            Assert.IsInstanceOfType(addedReservationResult, typeof(NegotiatedContentResult<string>));
+            Assert.IsTrue(((NegotiatedContentResult<string>)addedReservationResult).StatusCode == System.Net.HttpStatusCode.Conflict);
+
+            //Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
+            //Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
+            //Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
+            //Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
             //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
-
-        //[TestMethod]
-        //public void TestFindReservationByID1_Valid()
-        //{
-        //    //Arrange
-        //    int id = 1;
-
-        //    //Act
-        //    List<Reservation> found = EmployeeCtrl.Reservations(id);
-
-        //    //Assert
-        //    Assert.IsTrue(found.Count > 0);
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void TestFindReservationByID2_NonExists()
-        //{
-        //    //Arrange
-        //    int id = 35;
-
-        //    //Act
-        //    List<Reservation> found = EmployeeCtrl.Reservations(id);
-
-        //    //Assert
-        //    Assert.IsTrue(found.Count == 0);
-        //}
-
-        //Udarbejdet med TDD
-        //Test fuldt skrevet først, dernæst controller, så DbReservation
-        //[TestMethod]
-        //public void TestFindReservationByCustomerID1_Valid()
-        //{
-        //    //Arrange
-        //    int id = 1;
-
-        //    //Act
-        //    List<Reservation> founds = EmployeeCtrl.Reservations(id);
-
-        //    //Assert
-        //    foreach (Reservation element in founds)
-        //    {
-        //        Assert.AreEqual(id, element.CustomerID);
-        //    }
-        //}
-
-        //[TestMethod]
-        //public void TestFindReservationByCustomerID2_NonFound()
-        //{
-        //    //Arrange
-        //    int id = 2;
-
-        //    //Act
-        //    List<Reservation> founds = ReservationCtrl.GetReservationsByCustomerID(id);
-
-        //    //Assert
-        //    Assert.IsTrue(founds.Count == 0);
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void TestFindReservationByCustomerID3_UnknownCustomer()
-        //{
-        //    //Arrange
-        //    int id = 35;
-
-        //    //Act
-        //    List<Reservation> founds = ReservationCtrl.GetReservationsByCustomerID(id);
-
-        //    //Assert
-        //    Assert.IsTrue(founds.Count == 0);
-        //}
 
         [TestMethod]
         public void TestFindReservationByEmployeeID1_Valid()
@@ -267,10 +217,14 @@ namespace DataTest
             int id = 1;
 
             //Act
-            List<Reservation> founds = EmployeeCtrl.Reservations(id);
+            IHttpActionResult httpActionResult = EmployeeCtrl.Reservations(id);
+
 
             //Assert
-            foreach (Reservation element in founds)
+            Assert.IsInstanceOfType(httpActionResult, typeof(OkNegotiatedContentResult<List<Reservation>>));
+            List<Reservation> reservations = ((OkNegotiatedContentResult<List<Reservation>>)httpActionResult).Content;
+
+            foreach (Reservation element in reservations)
             {
                 Assert.AreEqual(id, element.EmployeeID);
             }
@@ -280,27 +234,26 @@ namespace DataTest
         public void TestFindReservationByEmployeeID2_NonFound()
         {
             //Arrange
-            int id = 2;
+            int id = 10;
 
             //Act
-            List<Reservation> founds = EmployeeCtrl.Reservations(id);
+            IHttpActionResult httpActionResult = EmployeeCtrl.Reservations(id);
 
             //Assert
-            Assert.IsTrue(founds.Count == 0);
+            Assert.IsInstanceOfType(httpActionResult, typeof(NotFoundResult));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestFindReservationByEmployeeID3_UnknownEmployee()
         {
             //Arrange
             int id = 35;
 
             //Act
-            List<Reservation> founds = EmployeeCtrl.Reservations(id);
+            IHttpActionResult httpActionResult = EmployeeCtrl.Reservations(id);
 
             //Assert
-            Assert.IsTrue(founds.Count == 0);
+            Assert.IsInstanceOfType(httpActionResult, typeof(NotFoundResult));
         }
     }
 }
