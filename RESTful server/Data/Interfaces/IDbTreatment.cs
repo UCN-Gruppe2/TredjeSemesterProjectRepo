@@ -11,10 +11,10 @@ namespace DataAccess.Interfaces
     {
         //void InsertTreatmentToDatabase(Treatment treatment);
         Treatment GetTreatmentByID(int id);
-        void SaveTreatment();
-        bool DeleteTreatment();
-        bool UpdateTreatment();
-        List<Employee> GetCapableEmployees();
+        //void SaveTreatment();
+        //bool DeleteTreatment();
+        //bool UpdateTreatment();
+        //List<Employee> GetCapableEmployees();
         Treatment InsertTreatmentToDatabase(Treatment treatment);
     }
 }

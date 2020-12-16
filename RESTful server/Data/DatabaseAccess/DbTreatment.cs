@@ -15,36 +15,51 @@ namespace DataAccess.DatabaseAccess
     public class DbTreatment : IDbTreatment
     {
         private string _connectionString;
-        private DBTreatmentCategory _dBTreatmentCategory;
+        private DBTreatmentCategory _dbTreatmentCategory;
 
         public DbTreatment()
         {
             _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
-            _dBTreatmentCategory = new DBTreatmentCategory();
+            _dbTreatmentCategory = new DBTreatmentCategory();
         }
 
-        public bool DeleteTreatment()
-        {
-            throw new NotImplementedException();
-        }
+        //public bool DeleteTreatment()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public List<Employee> GetCapableEmployees()
-        {
-            throw new NotImplementedException();
-        }
+        //public List<Employee> GetCapableEmployees()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Treatment GetTreatmentByID(int id)
+        //{
+        //    using (var conn = new SqlConnection(_connectionString))
+        //    {
+        //        return GetTreatmentByID(id, conn);
+        //    }
+        //}
 
         public Treatment GetTreatmentByID(int id)
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                return GetTreatmentByID(id, conn);
+                string sqlString = "SELECT * FROM Treatment WHERE id = @id";
+                List<int> categoryIDs = _dbTreatmentCategory.GetCategoryIDByTreatmentID(id, conn);
+                Treatment result = conn.Query<Treatment>(sqlString, new { id = id }).FirstOrDefault();
+                if (result != null)
+                {
+                    result.TreatmentCategoryID = categoryIDs;
+                }
+                return result;
             }
         }
 
         public Treatment GetTreatmentByID(int id, SqlConnection connection)
         {
             string sqlString = "SELECT * FROM Treatment WHERE id = @id";
-            List<int> categoryIDs = _dBTreatmentCategory.GetCategoryIDByTreatmentID(id, connection);
+            List<int> categoryIDs = _dbTreatmentCategory.GetCategoryIDByTreatmentID(id, connection);
             Treatment result = connection.Query<Treatment>(sqlString, new { id = id }).FirstOrDefault();
             if (result != null)
             {
@@ -104,25 +119,25 @@ namespace DataAccess.DatabaseAccess
             }
         }
 
-        public void SaveTreatment()
-        {
-            throw new NotImplementedException();
-        }
+        //public void SaveTreatment()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public bool UpdateTreatment()
-        {
-            throw new NotImplementedException();
-        }
+        //public bool UpdateTreatment()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        List<Employee> IDbTreatment.GetCapableEmployees()
-        {
-            throw new NotImplementedException();
-        }
+        //List<Employee> IDbTreatment.GetCapableEmployees()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        Treatment IDbTreatment.GetTreatmentByID(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //Treatment IDbTreatment.GetTreatmentByID(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void UpdateTreatmentsInCategory(TreatmentCategory category)
         {

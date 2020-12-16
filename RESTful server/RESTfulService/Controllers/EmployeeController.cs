@@ -30,19 +30,19 @@ namespace RESTfulService.Controllers
             }
         }
 
-        // POST: api/Employee
-        public void Post([FromBody] string value)
-        {
-        }
+        //// POST: api/Employee
+        //public void Post([FromBody] string value)
+        //{
+        //}
 
-        // PUT: api/Employee/5
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT: api/Employee/5
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        // DELETE: api/Employee/5
-        public void Delete(int id)
-        {
-        }
+        //// DELETE: api/Employee/5
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

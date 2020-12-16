@@ -21,37 +21,37 @@ namespace DataAccess.DatabaseAccess
             _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
         }
 
-        public Reservation GetReservationByID(int id)
-        {
-            using (var conn = new SqlConnection(_connectionString))
-            {
-                string sqlString = "SELECT * FROM Reservation WHERE id = @id";
-                Reservation result = conn.Query<Reservation>(sqlString, new { id = id }).FirstOrDefault();
-                return result;
-            }
-        }
+        //public Reservation GetReservationByID(int id)
+        //{
+        //    using (var conn = new SqlConnection(_connectionString))
+        //    {
+        //        string sqlString = "SELECT * FROM Reservation WHERE id = @id";
+        //        Reservation result = conn.Query<Reservation>(sqlString, new { id = id }).FirstOrDefault();
+        //        return result;
+        //    }
+        //}
 
-        public List<Reservation> GetReservationsByCustomerID(int id)
-        {
+        //public List<Reservation> GetReservationsByCustomerID(int id)
+        //{
 
-            using (var conn = new SqlConnection(_connectionString))
-            {
-                string customerCheck = "SELECT * FROM Customer WHERE id = @id";
-                var queryResult = conn.Query<int>(customerCheck, new { id });
-                bool hasExisting = queryResult.Any();
+        //    using (var conn = new SqlConnection(_connectionString))
+        //    {
+        //        string customerCheck = "SELECT * FROM Customer WHERE id = @id";
+        //        var queryResult = conn.Query<int>(customerCheck, new { id });
+        //        bool hasExisting = queryResult.Any();
 
-                if (hasExisting)
-                {
-                    string sqlString = "SELECT * FROM Reservation WHERE customerID = @id";
-                    List<Reservation> results = (List<Reservation>)conn.Query<Reservation>(sqlString, new { id = id });
-                    return results;
-                }
-                else
-                {
-                    throw new ArgumentException("Customer not found.");
-                }
-            }
-        }
+        //        if (hasExisting)
+        //        {
+        //            string sqlString = "SELECT * FROM Reservation WHERE customerID = @id";
+        //            List<Reservation> results = (List<Reservation>)conn.Query<Reservation>(sqlString, new { id = id });
+        //            return results;
+        //        }
+        //        else
+        //        {
+        //            throw new ArgumentException("Customer not found.");
+        //        }
+        //    }
+        //}
 
 
         public List<Reservation> GetReservationsByEmployeeID(int id)
@@ -77,35 +77,35 @@ namespace DataAccess.DatabaseAccess
             }
         }
 
-        public void SaveReservation()
-        {
-            throw new NotImplementedException();
-        }
+        //public void SaveReservation()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public bool DeleteReservation()
-        {
-            throw new NotImplementedException();
-        }
+        //public bool DeleteReservation()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public bool UpdateReservation()
-        {
-            throw new NotImplementedException();
-        }
+        //public bool UpdateReservation()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Employee GetEmployee()
-        {
-            throw new NotImplementedException();
-        }
+        //public Employee GetEmployee()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Customer GetCustomer()
-        {
-            throw new NotImplementedException();
-        }
+        //public Customer GetCustomer()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Treatment GetTreatment()
-        {
-            throw new NotImplementedException();
-        }
+        //public Treatment GetTreatment()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public Reservation InsertReservationToDatabase(Reservation reservation)
         {

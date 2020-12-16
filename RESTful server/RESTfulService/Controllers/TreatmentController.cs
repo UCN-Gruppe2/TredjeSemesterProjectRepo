@@ -17,11 +17,11 @@ namespace RESTfulService.Controllers
         private DbTreatment _dbTreatment = new DbTreatment();
         private DBTreatmentCategory _dbTreatmentCategory = new DBTreatmentCategory();
 
-        // GET: api/Treatment
-        public IEnumerable<string> GetAll()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //// GET: api/Treatment
+        //public IEnumerable<string> GetAll()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET: api/Treatment/5
         public Treatment Get(int id)
@@ -74,14 +74,14 @@ namespace RESTfulService.Controllers
         }
 
         // PUT: api/Treatment/5
-        public void Put(int id, [FromBody] string value)
-        {
+        //public void Put(int id, [FromBody] string value)
+        //{
 
-        }
+        //}
 
-        // DELETE: api/Treatment/5
-        public void Delete(int id)
-        {
-        }
+        //// DELETE: api/Treatment/5
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

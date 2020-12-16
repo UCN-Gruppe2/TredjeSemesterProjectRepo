@@ -66,14 +66,14 @@ namespace RESTfulService.Controllers
             }
         }
 
-        // PUT: api/Reservation/5
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT: api/Reservation/5
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        // DELETE: api/Reservation/5
-        public void Delete(int id)
-        {
-        }
+        //// DELETE: api/Reservation/5
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
