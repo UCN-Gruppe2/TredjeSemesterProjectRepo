@@ -132,7 +132,7 @@ namespace DataTest
         }
 
         [TestMethod]
-        public void TestFindEmployeesOfTreatment_Valid()
+        public void TestFindEmployeesOfTreatment1_Valid()
         {
             //Arrange
 
@@ -142,7 +142,7 @@ namespace DataTest
         }
 
         [TestMethod]
-        public void TestFindEmployeesOfTreatment_NoEmployees()
+        public void TestFindEmployeesOfTreatment2_NoEmployees()
         {
             //Arrange
 
@@ -152,7 +152,7 @@ namespace DataTest
         }
 
         [TestMethod]
-        public void TestFindEmployeesOfTreatment_UnknownID()
+        public void TestFindEmployeesOfTreatment3_UnknownID()
         {
             //Arrange
 
@@ -162,7 +162,7 @@ namespace DataTest
         }
 
         [TestMethod]
-        public void TestFindAvailableTreatments_Valid()
+        public void TestFindAvailableTreatments1_Valid()
         {
             //Arrange
 
@@ -172,7 +172,7 @@ namespace DataTest
         }
 
         [TestMethod]
-        public void TestFindAvailableTreatments_NonIsValid()
+        public void TestFindAvailableTreatments2_NonIsValid()
         {
             //Arrange
 
