@@ -61,7 +61,7 @@ namespace RESTfulService.Controllers
             }
             catch (ArgumentException)
             {
-                var exceptionToThrow = new ArgumentException("There occurrred a conflict with the selected time.");
+                var exceptionToThrow = new ArgumentException("There occurred a conflict with the selected time.");
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, exceptionToThrow));
             }
         }

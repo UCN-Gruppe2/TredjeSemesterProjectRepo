@@ -1,5 +1,6 @@
 ﻿using Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,18 @@ namespace DesktopClient
 
         private void CreateBtn_Click(object sender, RoutedEventArgs e)
         {
+            if(TreatmentIDBox.Text.Trim().Length == 0 && CustomerIDBox.Text.Trim().Length == 0 && EmployeeIDBox.Text.Trim().Length == 0)
+            {
+                TreatmentIDBox.Text = "0";
+                CustomerIDBox.Text = "0";
+                EmployeeIDBox.Text = "0";
+                DateSelector.SelectedDate = DateTime.Now;
+                TimeCombo.Text = "19:30";
+            }
+
             string time = TimeCombo.Text;
+            FailLbl.Content = "Der skete en fejl!";
+            FailLbl.Opacity = 0;
 
             string[] clock = time.Split(':');
             int hour = Int32.Parse(clock[0]);
@@ -59,11 +71,14 @@ namespace DesktopClient
             addRequest.AddJsonBody(reservationToAdd);
 
             var response = _client.Execute(addRequest);
+            
             if (response.StatusCode == HttpStatusCode.Conflict)
             {
-                FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.ErrorException.Message;
+                JObject jsonObject = JObject.Parse(response.Content);
+                string message = jsonObject["ExceptionMessage"].ToString();
+                FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ": " + message;
                 FailLbl.Opacity = 100;
-                string message = response.ErrorException.Message;
+                
                 if (message.Contains("TreatmentID"))
                 {
                     TreatmentIDBox.BorderBrush = Brushes.Red;
@@ -79,21 +94,27 @@ namespace DesktopClient
                     EmployeeIDBox.BorderBrush = Brushes.Red;
                     EmployeeIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
                 }
-                if(message.Contains("occurrred a conflict"))
+                if(message.Contains("occurred a conflict"))
                 {
-                    FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.ErrorException.Message;
-                    FailLbl.Opacity = 100;
                     TimeCombo.BorderBrush = Brushes.Red;
                     TimeCombo.BorderThickness = new Thickness(1, 1, 1, 1);
                 }
             }
             else if(response.StatusCode == HttpStatusCode.NotFound)
             {
+                JObject jsonObject = JObject.Parse(response.Content);
+                string message = jsonObject["Message"].ToString();
+                FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ": " + message;
+                FailLbl.Opacity = 100;
                 TreatmentIDBox.BorderBrush = Brushes.Red;
                 TreatmentIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
             }
             else if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
+                JObject jsonObject = JObject.Parse(response.Content);
+                string message = jsonObject["Message"].ToString();
+                FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ": " + message;
+                FailLbl.Opacity = 100;
                 CreateButton.BorderBrush = Brushes.Red;
                 CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
             }
