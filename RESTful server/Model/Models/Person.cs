@@ -26,9 +26,9 @@ namespace Model
             City = city;
         }
 
-        public override string ToString()
-        {
-            return $"{FirstName} {LastName}, Tlf.: {Phone}, Address: {Address}, {PostalCode} {City}";
-        }
+        //public override string ToString()
+        //{
+        //    return $"{FirstName} {LastName}, Tlf.: {Phone}, Address: {Address}, {PostalCode} {City}";
+        //}
     }
 }
