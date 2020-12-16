@@ -16,19 +16,20 @@ namespace Model
         public int PostalCode { get; set; }
         public string City { get; set; }
 
-        public Person(string firstName, string lastName, string phone, string address, int postalCode, string city)
+        public Person(string firstName, string lastName, string phone, string email, string address, int postalCode, string city)
         {
             FirstName = firstName;
             LastName = lastName;
             Phone = phone;
+            Email = email;
             Address = address;
             PostalCode = postalCode;
             City = city;
         }
 
-        public override string ToString()
-        {
-            return $"{FirstName} {LastName}, Tlf.: {Phone}, Address: {Address}, {PostalCode} {City}";
-        }
+        //public override string ToString()
+        //{
+        //    return $"{FirstName} {LastName}, Tlf.: {Phone}, Address: {Address}, {PostalCode} {City}";
+        //}
     }
 }

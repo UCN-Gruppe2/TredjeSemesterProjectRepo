@@ -30,11 +30,11 @@ namespace DataTest
         {
             foreach (string command in cleanupCommands)
             {
-                ExecuteCommand(command);
+                _executeCommand(command);
             }
         }
 
-        private static void ExecuteCommand(string commandString)
+        private static void _executeCommand(string commandString)
         {
             string _connString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
             Console.Write($"Running command: '{commandString}'... ");

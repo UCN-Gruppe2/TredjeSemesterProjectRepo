@@ -22,9 +22,9 @@ namespace Model
             CustomerID = customerID;
         }
 
-        private List<Reservation> _getReservations()
-        {
-            return null;
-        }
+        //private List<Reservation> _getReservations()
+        //{
+        //    return null;
+        //}
     }
 }

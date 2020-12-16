@@ -16,15 +16,15 @@ namespace DataTest
 
         public static void InsertData()
         {
-            InsertCompany();
-            InsertCategory();
-            InsertTreatment();
-            InsertCustomer();
-            InsertEmployee();
-            InsertReservation();
+            _insertCompany();
+            _insertCategory();
+            _insertTreatment();
+            _insertCustomer();
+            _insertEmployee();
+            _insertReservation();
         }
 
-        private static void InsertCompany()
+        private static void _insertCompany()
         {
             string companySQL = "INSERT INTO COMPANY (CVR, name, phone, address, postalCode, city, openingTime, closingTime) VALUES (123, 'Buthlers Service', 88888888, 'Danmarksgade 50', 9000, 'Aalborg', '08:00', '17:30');";
             using (SqlConnection connection = new SqlConnection(_connString))
@@ -39,7 +39,7 @@ namespace DataTest
             }
         }
 
-        private static void InsertCategory()
+        private static void _insertCategory()
         {
             string categorySQL = "INSERT INTO TreatmentCategory (name) VALUES ('haveservice')";
             using (SqlConnection connection = new SqlConnection(_connString))
@@ -54,7 +54,7 @@ namespace DataTest
             }
         }
 
-        private static void InsertTreatment()
+        private static void _insertTreatment()
         {
             TreatmentController treatmentCtrl = new TreatmentController();
             //List<int> Categories = new List<TreatmentCategory>();
@@ -65,7 +65,7 @@ namespace DataTest
             treatmentCtrl.Post(treatment);
         }
 
-        private static void InsertCustomer()
+        private static void _insertCustomer()
         {
             string customerSQL = "INSERT INTO Customer (firstName, lastName, phone, email, address, postalCode, city) VALUES ('Hans', 'Larsen', '12345678', 'yo@ucn.dk', 'Banegårdsgade 3', 9000, 'Aalborg');";
             string customerSQL2 = "INSERT INTO Customer (firstName, lastName, phone, email, address, postalCode, city) VALUES ('William', 'Jensen', '43215678', 'whatis@updog.com', 'Banegårdsgade 12', 9000, 'Aalborg');";
@@ -83,7 +83,7 @@ namespace DataTest
             }
         }
 
-        private static void InsertEmployee()
+        private static void _insertEmployee()
         {
             string employeeSQL = "INSERT INTO Employee (companyID, firstName, lastName, phone, email, address, postalCode, city) VALUES (1, 'Sanne', 'Liane', '87654321', 'hej@ucn.dk', 'Bygade 32', 9000, 'Aalborg');";
             string employeeSQL2 = "INSERT INTO Employee (companyID, firstName, lastName, phone, email, address, postalCode, city) VALUES (1, 'Lene', 'Sorensen', '87651234', 'dav@ucn.dk', 'Bygade 32', 9000, 'Aalborg');";
@@ -100,7 +100,7 @@ namespace DataTest
             }
         }
 
-        private static void InsertReservation()
+        private static void _insertReservation()
         {
             ReservationController reservationCtrl = new ReservationController();
             TreatmentController treatmentCtrl = new TreatmentController();

@@ -46,7 +46,7 @@ namespace DataAccess.DatabaseAccess
             using (var conn = new SqlConnection(_connectionString))
             {
                 string sqlString = "SELECT * FROM Treatment WHERE id = @id";
-                List<int> categoryIDs = _dbTreatmentCategory.GetCategoryIDByTreatmentID(id, conn);
+                List<int> categoryIDs = _dbTreatmentCategory.GetCategoryIDByTreatmentID(id);
                 Treatment result = conn.Query<Treatment>(sqlString, new { id = id }).FirstOrDefault();
                 if (result != null)
                 {
@@ -54,18 +54,6 @@ namespace DataAccess.DatabaseAccess
                 }
                 return result;
             }
-        }
-
-        public Treatment GetTreatmentByID(int id, SqlConnection connection)
-        {
-            string sqlString = "SELECT * FROM Treatment WHERE id = @id";
-            List<int> categoryIDs = _dbTreatmentCategory.GetCategoryIDByTreatmentID(id, connection);
-            Treatment result = connection.Query<Treatment>(sqlString, new { id = id }).FirstOrDefault();
-            if (result != null)
-            {
-                result.TreatmentCategoryID = categoryIDs;
-            }
-            return result;
         }
 
         public Treatment InsertTreatmentToDatabase(Treatment treatment)
@@ -107,7 +95,7 @@ namespace DataAccess.DatabaseAccess
                         });
 
                         //scope.Complete();
-                        var result = this.GetTreatmentByID(id, conn);//conn.Query<Treatment>("SELECT * FROM Treatment WHERE id = @id", new { id = id }).FirstOrDefault();
+                        var result = this.GetTreatmentByID(id);//conn.Query<Treatment>("SELECT * FROM Treatment WHERE id = @id", new { id = id }).FirstOrDefault();
                         scope.Complete();
                         return result;
                     }

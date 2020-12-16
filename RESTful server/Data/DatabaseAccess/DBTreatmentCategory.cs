@@ -13,7 +13,7 @@ namespace DataAccess.DatabaseAccess
 {
     public class DBTreatmentCategory : IDbTreatmentCategory
     {
-        private string _connectionString;
+        private readonly string _connectionString;
         public DBTreatmentCategory()
         {
             _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
@@ -53,14 +53,6 @@ namespace DataAccess.DatabaseAccess
             return result;
         }
 
-        public List<int> GetCategoryIDByTreatmentID(int treatmentID, SqlConnection connection)
-        {
-            string selectStatement = "SELECT categoryID FROM CategoryOfTreatments INNER JOIN Treatment ON CategoryOfTreatments.treatmentID = Treatment.id";
-            List<int> listOfIDs = (List<int>)connection.Query<int>(selectStatement);
-
-            return listOfIDs;
-        }
-
         public List<int> GetCategoryIDByTreatmentID(int treatmentID)
         {
             var options = new TransactionOptions
@@ -73,7 +65,10 @@ namespace DataAccess.DatabaseAccess
             {
                 using (var conn = new SqlConnection(_connectionString))
                 {
-                    return GetCategoryIDByTreatmentID(treatmentID, conn);
+                    string selectStatement = "SELECT categoryID FROM CategoryOfTreatments INNER JOIN Treatment ON CategoryOfTreatments.treatmentID = Treatment.id";
+                    List<int> listOfIDs = (List<int>)conn.Query<int>(selectStatement);
+
+                    return listOfIDs;
                 }
             }
         }
