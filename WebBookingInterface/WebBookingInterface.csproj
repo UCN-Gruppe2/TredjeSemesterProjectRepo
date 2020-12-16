@@ -184,6 +184,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
@@ -255,14 +256,15 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Reservation\Index.cshtml" />
     <Content Include="Views\Reservation\Create.cshtml" />
-    <Content Include="Views\Reservation\FindReservationsForEmployee.cshtml" />
+    <Content Include="Views\Employee\index.cshtml" />
     <Content Include="Views\Treatment\Index.cshtml" />
     <Content Include="Views\Treatment\Create.cshtml" />
-    <Content Include="Views\Reservation\EmployeeReservationsResult.cshtml" />
+    <Content Include="Views\Employee\EmployeeReservationsResult.cshtml" />
     <Content Include="Views\Reservation\SuccessView.cshtml" />
     <Content Include="Views\Reservation\FailView.cshtml" />
     <Content Include="Views\Treatment\SuccessView.cshtml" />
     <Content Include="Views\Treatment\FailView.cshtml" />
+    <Content Include="Views\Employee\FailView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
