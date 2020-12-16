@@ -1,12 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model;
+using Newtonsoft.Json.Linq;
 using RESTfulService.Controllers;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using System.Web.Http;
 
 namespace DataTest
 {
@@ -16,6 +19,7 @@ namespace DataTest
     [TestClass]
     public class ReservationTest
     {
+        private RestClient _client;
         public ReservationController ReservationCtrl;
         public TreatmentController TreatmentCtrl;
         public EmployeeController EmployeeCtrl;
@@ -29,6 +33,16 @@ namespace DataTest
         [TestInitialize]
         public void SetUp()
         {
+            //_client = new RestClient("https://localhost:44388");
+            //RestRequest request = new RestRequest("/Token", Method.POST);
+            //request.AddParameter("grant_type", "password");
+            //request.AddParameter("userName", "mail@marcuslc.com");
+            //request.AddParameter("password", "Password1!");
+            //var response = _client.Execute(request);
+
+            //string accessToken = JObject.Parse(response.Content)["access_token"].ToString();
+            //_client.AddDefaultHeader("Authorization", $"Bearer { accessToken }");
+
             ReservationCtrl = new ReservationController();
             TreatmentCtrl = new TreatmentController();
             Watch = new Stopwatch();
@@ -48,7 +62,7 @@ namespace DataTest
         {
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
-            Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2435 13:30"));
 
             //Act
             Watch.Start();
@@ -60,40 +74,47 @@ namespace DataTest
             Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
             Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
             Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
-            //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(HttpResponseException))]
         public void TestCreateReservation2_TimeAlreadyBooked()
         {
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
 
             Treatment_DTO treatment2 = new Treatment_DTO(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 30, 399.95m, Categories);
-            Treatment addedTreatment2 = TreatmentCtrl.Post(treatment2);
+            RestRequest requestTreatment = new RestRequest("api/Treatment", Method.POST);
+            requestTreatment.AddJsonBody(requestTreatment);
+            _client.Execute(requestTreatment);
+            //Treatment addedTreatment2 = TreatmentCtrl.Post(treatment2);
 
-            Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2020 13:30"));
-            Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2435 13:30"));
+            Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-11-2435 13:30"));
 
             //Act
             Watch.Start();
-            Reservation addedReservation = ReservationCtrl.Post(newReservation);
-            Reservation addedReservationDouble = ReservationCtrl.Post(doubleReservation);
+            //Reservation addedReservation = ReservationCtrl.Post(newReservation);
+            //Reservation addedReservationDouble = ReservationCtrl.Post(doubleReservation);
+            RestRequest addReservationRequest = new RestRequest("api/Reservation", Method.POST);
+            addReservationRequest.AddJsonBody(newReservation);
+            _client.Execute(addReservationRequest);
+            RestRequest addReservationDoubleRequest = new RestRequest("api/Reservation", Method.POST);
+            addReservationDoubleRequest.AddJsonBody(doubleReservation);
+            _client.Execute(addReservationDoubleRequest);
             Watch.Stop();
 
             //Assert
-            Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
-            Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
-            Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
-            Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
-            //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
+            //Assert.AreEqual(newReservation.TreatmentID, addedReservation.TreatmentID);
+            //Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
+            //Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
+            //Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(HttpResponseException))]
         public void TestCreateReservation3_TimeOverlap()
         {
             //Arrange
@@ -102,8 +123,8 @@ namespace DataTest
             Treatment_DTO treatment2 = new Treatment_DTO(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 60, 399.95m);
             Treatment addedTreatment2 = TreatmentCtrl.Post(treatment2);
 
-            Reservation_DTO newReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2021 13:30"));
-            Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2021 14:00"));
+            Reservation_DTO newReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2435 13:30"));
+            Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2435 14:00"));
 
             //Act
             Watch.Start();
@@ -116,17 +137,16 @@ namespace DataTest
             Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
             Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
             Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
-            //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(HttpResponseException))]
         public void TestCreateReservation4_IllegalEmployeeID()
         {
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
-            Reservation_DTO newReservation = new Reservation_DTO(1, 1, -1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation_DTO newReservation = new Reservation_DTO(1, 1, -1, DateTime.Parse("26-11-2435 13:30"));
 
             //Act
 
@@ -139,16 +159,15 @@ namespace DataTest
             Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
             Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
             Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
-            //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(HttpResponseException))]
         public void TestCreateReservation5_IllegalTreatmentID()
         {
             //Arrange
-            Reservation_DTO newReservation = new Reservation_DTO(-1, 1, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation_DTO newReservation = new Reservation_DTO(-1, 1, 1, DateTime.Parse("26-11-2435 13:30"));
 
             //Act
 
@@ -161,17 +180,16 @@ namespace DataTest
             Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
             Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
             Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
-            //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(HttpResponseException))]
         public void TestCreateReservation6_IllegalCustomerID()
         {
             //Arrange
             Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
-            Reservation_DTO newReservation = new Reservation_DTO(1, -1, 1, DateTime.Parse("26-11-2020 13:30"));
+            Reservation_DTO newReservation = new Reservation_DTO(1, -1, 1, DateTime.Parse("26-11-2435 13:30"));
 
             //Act
 
@@ -184,7 +202,6 @@ namespace DataTest
             Assert.AreEqual(newReservation.CustomerID, addedReservation.CustomerID);
             Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
             Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
-            //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
             Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
         }
 
@@ -290,7 +307,7 @@ namespace DataTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(HttpResponseException))]
         public void TestFindReservationByEmployeeID3_UnknownEmployee()
         {
             //Arrange

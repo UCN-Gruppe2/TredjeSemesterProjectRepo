@@ -125,8 +125,8 @@ namespace DesktopClient
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
                 JObject exceptionAsJsonObj = JObject.Parse(theJson);
-                //FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + exceptionAsJsonObj["Message"].ToString();
-                FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + response.ErrorException.Message;
+                FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + exceptionAsJsonObj["Message"].ToString();
+                //FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + response.ErrorException.Message;
             }
             else
             {
