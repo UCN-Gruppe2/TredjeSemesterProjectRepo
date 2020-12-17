@@ -57,8 +57,8 @@ namespace DataAccess.DatabaseAccess
         public Treatment InsertTreatmentToDatabase(Treatment treatment)
         {
             int companyID = treatment.CompanyID;
-            string name = treatment.Name;
-            string description = treatment.Description;
+            string name = treatment.Name.Trim();
+            string description = treatment.Description.Trim();
             int duration = treatment.Duration;
             decimal price = treatment.Price;
 

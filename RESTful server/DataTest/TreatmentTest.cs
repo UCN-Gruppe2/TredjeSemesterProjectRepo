@@ -62,7 +62,7 @@ namespace DataTest
         {
             //Arrange
             Treatment_DTO treatment = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m, categories);
-            //Treatment_DTO treatmentDouble = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
+         //   Treatment_DTO treatmentDouble = new Treatment_DTO(2, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
 
             //Act
             watch.Start();
