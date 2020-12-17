@@ -2,34 +2,34 @@
     ViewBag.Title = "Create treatment";
 }
 
-<h2>Create treatment</h2>
+<h2>Opret behandling</h2>
 
 <form method="post">
     <label>Virksomhed ID:</label>
-    <input type="number" placeholder="Virksomhed ID" min="0" name="companyID" />
+    <input type="number" placeholder="Virksomhed ID" min="0" name="companyID" required/>
     <br />
 
     <label>Navn:</label>
-    <input type="text" placeholder="Navn" min="0" name="name" />
+    <input type="text" placeholder="Navn" min="0" name="name" required/>
     <br />
 
     <label>Beskrivelse:</label>
-    <input type="text" placeholder="Beskrivelse" min="0" name="description" />
+    <input type="text" placeholder="Beskrivelse" min="0" name="description"/>
     <br />
 
     <label>Behandlingsvarighed:</label>
-    <input type="number" placeholder="Varighed" min="0" name="duration" />
+    <input type="number" placeholder="Varighed" min="0" name="duration" required/>
     <br />
 
     <label>Behandlingspris:</label>
-    <input type="number" placeholder="Pris" min="0" name="price" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" />
+    <input type="number" placeholder="Pris" min="0" name="price" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" required/>
     <br />
 
     <label>Behandlingskategori ID:</label>
-    <input type="text" placeholder="Kategori ID" min="0" name="treatmentCategoryID" />
+    <input type="text" placeholder="Kategori ID" min="0" name="treatmentCategoryID" required/>
     <br />
 
 
-    <input type="submit" />
+    <input type="submit" value="Opret"/>
 </form>
 

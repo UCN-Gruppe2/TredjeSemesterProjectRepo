@@ -28,7 +28,7 @@ namespace RESTfulService.Controllers
             }
             else
             {
-                result = NotFound();
+                result = Content(HttpStatusCode.NotFound, $"The id #{id} was not found!");
             }
 
             return result;
@@ -63,15 +63,15 @@ namespace RESTfulService.Controllers
             }
             catch (SqlException)
             {
-                result = InternalServerError();
+                result = result = Content(HttpStatusCode.InternalServerError, $"Data could not be inserted.");
             }
             catch (ArgumentException)
             {
-                result = BadRequest();
+                result = result = Content(HttpStatusCode.BadRequest, $"Invalid arguments provided.");
             }
             catch (AlreadyExistsException)
             {
-                result = Conflict();
+                result = result = Content(HttpStatusCode.Conflict, $"The dataset already exists.");
             }
 
             return result;

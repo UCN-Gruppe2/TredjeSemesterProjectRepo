@@ -6,23 +6,23 @@
     var dbTreatmentInstance = new DbTreatment();
 }
 
-<h2>Create reservation</h2>
+<h2>Opret reservation</h2>
 
 <form method="post">
     <label>Behandling ID:</label>
-    <input type="number" placeholder="Behandling ID" min="0" name="treatmentID" />
+    <input type="number" placeholder="Behandling ID" min="0" name="treatmentID" required/>
     <br />
 
     <label>Kunde ID:</label>
-    <input type="number" placeholder="Kunde ID" min="0" name="customerID" />
+    <input type="number" placeholder="Kunde ID" min="0" name="customerID" required/>
     <br />
 
     <label>Medarbejder ID:</label>
-    <input type="number" placeholder="Medarbejder ID" min="0" name="employeeID" />
+    <input type="number" placeholder="Medarbejder ID" min="0" name="employeeID" required/>
     <br />
 
     <label>Starttidspunkt:</label>
-    <input type="date" name="appointment_date" />
+    <input type="date" name="appointment_date" required/>
     <select name="appointment_time">
         @for (int i = 6; i <= 19; i++)
         {
@@ -35,5 +35,5 @@
     <input type="time" name="appointment_time" />
     <br />
     -->
-    <input type="submit" />
+    <input type="submit" value="Opret"/>
 </form>
