@@ -44,6 +44,10 @@ namespace DataTest
             watch.Stop();
 
             //Assert
+            Assert.IsInstanceOfType(addedTreatmentResult, typeof(OkNegotiatedContentResult<Treatment>));
+            Treatment addedTreatmentObj = ((OkNegotiatedContentResult<Treatment>)addedTreatmentResult).Content;
+
+
             Assert.AreEqual(treatment.Name, addedTreatment.Name);
             Assert.AreEqual(treatment.Description, addedTreatment.Description);
             Assert.AreEqual(treatment.Duration, addedTreatment.Duration);

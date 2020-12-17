@@ -18,45 +18,45 @@ namespace DataTest
     [TestClass]
     public class ReservationTest
     {
-        public ReservationController ReservationCtrl;
-        public TreatmentController TreatmentCtrl;
-        public EmployeeController EmployeeCtrl;
-        public Stopwatch Watch;
-        public Customer Customer;
-        public Customer Customer2;
-        public Treatment_DTO Treatment;
-        public Employee Employee;
-        public List<int> Categories;
+        private ReservationController reservationCtrl;
+        private TreatmentController treatmentCtrl;
+        private EmployeeController employeeCtrl;
+        private Stopwatch watch;
+        private Customer customer;
+        private Customer customer2;
+        private Treatment_DTO treatment;
+        private Employee employee;
+        private List<int> categories;
 
         [TestInitialize]
         public void SetUp()
         {
-            ReservationCtrl = new ReservationController();
-            TreatmentCtrl = new TreatmentController();
-            EmployeeCtrl = new EmployeeController();
-            Watch = new Stopwatch();
+            reservationCtrl = new ReservationController();
+            treatmentCtrl = new TreatmentController();
+            employeeCtrl = new EmployeeController();
+            watch = new Stopwatch();
             DbCleanUp.CleanDB();
             InsertTestData.InsertData();
 
-            Categories = new List<int>() { 1 };
+            categories = new List<int>() { 1 };
             //Categories.Add(new TreatmentCategory(1, "Klip"));
 
             //Not for database
             //Just for not repeating to often
-            Treatment = new Treatment_DTO(1, "Voks af ryg", "Vi benytter enten almindelig varm voks eller sugaring", 60, 699.95m, Categories);
+            treatment = new Treatment_DTO(1, "Voks af ryg", "Vi benytter enten almindelig varm voks eller sugaring", 60, 699.95m, Categories);
         }
 
         [TestMethod]
         public void TestCreateReservation1_Valid()
         {
             //Arrange
-            Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
+            Treatment addedTreatment = TreatmentCtrl.Post(treatment);
             Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
-            Watch.Start();
+            watch.Start();
             IHttpActionResult addedReservationResult = ReservationCtrl.Post(newReservation);
-            Watch.Stop();
+            watch.Stop();
 
             //Assert
 
@@ -70,7 +70,7 @@ namespace DataTest
             Assert.AreEqual(newReservation.CustomerID, addedReservationObj.CustomerID);
             Assert.AreEqual(newReservation.EmployeeID, addedReservationObj.EmployeeID);
             Assert.AreEqual(newReservation.StartTime, addedReservationObj.StartTime);
-            Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
+            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
             //Assert.AreEqual(newReservation.EndTime, addedReservationObj.EndTime);
 
         }
@@ -79,19 +79,19 @@ namespace DataTest
         public void TestCreateReservation2_TimeAlreadyBooked()
         {
             //Arrange
-            Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
+            Treatment addedTreatment = treatmentCtrl.Post(treatment);
 
             Treatment_DTO treatment2 = new Treatment_DTO(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 30, 399.95m, Categories);
-            Treatment addedTreatment2 = TreatmentCtrl.Post(treatment2);
+            Treatment addedTreatment2 = treatmentCtrl.Post(treatment2);
 
             Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2025 13:30"));
             Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
-            Watch.Start();
-            IHttpActionResult addedReservation = ReservationCtrl.Post(newReservation);
-            IHttpActionResult addedReservationDouble = ReservationCtrl.Post(doubleReservation);
-            Watch.Stop();
+            watch.Start();
+            IHttpActionResult addedReservation =reservationCtrl.Post(newReservation);
+            IHttpActionResult addedReservationDouble = reservationCtrl.Post(doubleReservation);
+            watch.Stop();
 
             //Assert
             Assert.IsInstanceOfType(addedReservationDouble, typeof(NegotiatedContentResult<string>));
@@ -102,26 +102,26 @@ namespace DataTest
             //Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
             //Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
             //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
-            Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
+            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
         public void TestCreateReservation3_TimeOverlap()
         {
             //Arrange
-            Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
+            Treatment addedTreatment = treatmentCtrl.Post(treatment);
 
             Treatment_DTO treatment2 = new Treatment_DTO(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 60, 399.95m);
-            Treatment addedTreatment2 = TreatmentCtrl.Post(treatment2);
+            Treatment addedTreatment2 = treatmentCtrl.Post(treatment2);
 
             Reservation_DTO newReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2025 13:30"));
             Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2025 14:00"));
 
             //Act
-            Watch.Start();
-            IHttpActionResult addedReservationResult = ReservationCtrl.Post(newReservation);
-            IHttpActionResult addedReservationDoubleResult = ReservationCtrl.Post(doubleReservation);
-            Watch.Stop();
+            watch.Start();
+            IHttpActionResult addedReservationResult = reservationCtrl.Post(newReservation);
+            IHttpActionResult addedReservationDoubleResult = reservationCtrl.Post(doubleReservation);
+            watch.Stop();
 
             //Assert
             Assert.IsInstanceOfType(addedReservationDoubleResult, typeof(NegotiatedContentResult<string>));
@@ -133,21 +133,21 @@ namespace DataTest
             //Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
             //Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
             ////Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
-            Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
+            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
         public void TestCreateReservation4_IllegalEmployeeID()
         {
             //Arrange
-            Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
+            Treatment addedTreatment = treatmentCtrl.Post(treatment);
             Reservation_DTO newReservation = new Reservation_DTO(1, 1, -1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
 
-            Watch.Start();
-            IHttpActionResult addedReservationResult = ReservationCtrl.Post(newReservation);
-            Watch.Stop();
+            watch.Start();
+            IHttpActionResult addedReservationResult = reservationCtrl.Post(newReservation);
+            watch.Stop();
 
 
             //Assert
@@ -169,9 +169,9 @@ namespace DataTest
             Reservation_DTO newReservation = new Reservation_DTO(-1, 1, 1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
-            Watch.Start();
-            IHttpActionResult addedReservationResult = ReservationCtrl.Post(newReservation);
-            Watch.Stop();
+            watch.Start();
+            IHttpActionResult addedReservationResult = reservationCtrl.Post(newReservation);
+            watch.Stop();
 
             //Assert
             Assert.IsInstanceOfType(addedReservationResult, typeof(NegotiatedContentResult<string>));
@@ -182,21 +182,21 @@ namespace DataTest
             //Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
             //Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
             //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
-            Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
+            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
         public void TestCreateReservation6_IllegalCustomerID()
         {
             //Arrange
-            Treatment addedTreatment = TreatmentCtrl.Post(Treatment);
+            Treatment addedTreatment = treatmentCtrl.Post(treatment);
             Reservation_DTO newReservation = new Reservation_DTO(1, -1, 1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
 
-            Watch.Start();
-            IHttpActionResult addedReservationResult = ReservationCtrl.Post(newReservation);
-            Watch.Stop();
+            watch.Start();
+            IHttpActionResult addedReservationResult = reservationCtrl.Post(newReservation);
+            watch.Stop();
 
             //Assert
             Assert.IsInstanceOfType(addedReservationResult, typeof(NegotiatedContentResult<string>));
@@ -207,7 +207,7 @@ namespace DataTest
             //Assert.AreEqual(newReservation.EmployeeID, addedReservation.EmployeeID);
             //Assert.AreEqual(newReservation.StartTime, addedReservation.StartTime);
             //Assert.AreEqual(newReservation.EndTime, addedReservation.EndTime);
-            Assert.IsTrue(Watch.ElapsedMilliseconds < 2500);
+            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
@@ -217,7 +217,7 @@ namespace DataTest
             int id = 1;
 
             //Act
-            IHttpActionResult httpActionResult = EmployeeCtrl.Reservations(id);
+            IHttpActionResult httpActionResult = employeeCtrl.Reservations(id);
 
 
             //Assert
@@ -237,7 +237,7 @@ namespace DataTest
             int id = 10;
 
             //Act
-            IHttpActionResult httpActionResult = EmployeeCtrl.Reservations(id);
+            IHttpActionResult httpActionResult = employeeCtrl.Reservations(id);
 
             //Assert
             Assert.IsInstanceOfType(httpActionResult, typeof(NotFoundResult));
@@ -250,7 +250,7 @@ namespace DataTest
             int id = 35;
 
             //Act
-            IHttpActionResult httpActionResult = EmployeeCtrl.Reservations(id);
+            IHttpActionResult httpActionResult = employeeCtrl.Reservations(id);
 
             //Assert
             Assert.IsInstanceOfType(httpActionResult, typeof(NotFoundResult));
