@@ -34,6 +34,7 @@ namespace DesktopClient
             this.main = main;
             InitializeComponent();
             FailLbl.Opacity = 0;
+
             //Making a list of possible starttimes
             Times = new List<string> { "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00",
                 "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
@@ -74,8 +75,6 @@ namespace DesktopClient
             
             if (response.StatusCode == HttpStatusCode.Conflict)
             {
-                //JObject jsonObject = JObject.Parse(response.Content);
-                //string message = jsonObject["ExceptionMessage"].ToString();
                 string message = response.Content;
                 FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ": " + message;
                 FailLbl.Opacity = 100;
@@ -103,8 +102,6 @@ namespace DesktopClient
             }
             else if(response.StatusCode == HttpStatusCode.NotFound)
             {
-                //JObject jsonObject = JObject.Parse(response.Content);
-                //string message = jsonObject["Message"].ToString();
                 string message = response.Content;
                 FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ": " + message;
                 FailLbl.Opacity = 100;
@@ -113,8 +110,6 @@ namespace DesktopClient
             }
             else if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
-                //JObject jsonObject = JObject.Parse(response.Content);
-                //string message = jsonObject["Message"].ToString();
                 string message = response.Content;
                 FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ": " + message;
                 FailLbl.Opacity = 100;

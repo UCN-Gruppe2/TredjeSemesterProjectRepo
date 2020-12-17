@@ -37,8 +37,6 @@ namespace DesktopClient
             Thread.CurrentThread.CurrentCulture = new CultureInfo("da-DK");
             InitializeComponent();
             StartUp();
-
-            //dataGrid.Columns[0].CellStyle
         }
 
         private void StartUp()
@@ -124,9 +122,7 @@ namespace DesktopClient
                     
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                //JObject exceptionAsJsonObj = JObject.Parse(theJson);
                 FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + response.Content;
-                //FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + response.ErrorException.Message;
             }
             else
             {
