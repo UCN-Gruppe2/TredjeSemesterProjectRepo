@@ -21,7 +21,7 @@ namespace RESTfulService.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DbConnection", throwIfV1Schema: false)
+            : base("LoginConnection", throwIfV1Schema: false)
         {
         }
         

@@ -16,33 +16,21 @@ namespace RESTfulService.Controllers
         // GET: api/Employee/5
         [Authorize]
         [HttpGet]
-        public List<Reservation> Reservations(int employeeID)
+        public IHttpActionResult Reservations(int employeeID)
         {
+            IHttpActionResult result;
             try
             {
-                List<Reservation> reservations = new List<Reservation>();
-                reservations = _dbReservation.GetReservationsByEmployeeID(employeeID);
-                return reservations;
+                List<Reservation> reservations = _dbReservation.GetReservationsByEmployeeID(employeeID);
+                result = Ok(reservations);
             }
-            catch (ArgumentException ae)
+            catch (ArgumentException)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, ae));
+                // throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, ae));
+                result = NotFound();
             }
+
+            return result;
         }
-
-        //// POST: api/Employee
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT: api/Employee/5
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/Employee/5
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

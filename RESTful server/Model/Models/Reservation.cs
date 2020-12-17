@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Model
 {
-    public class Reservation
+    public class Reservation : IComparable<Reservation>
     {
         public int ID { get; set; }
 
@@ -57,6 +57,11 @@ namespace Model
         {
             DateTime endTimeCalc = StartTime.AddMinutes(duration);
             return endTimeCalc;
+        }
+
+        public int CompareTo(Reservation other)
+        {
+            return StartTime.CompareTo(other.StartTime);
         }
     }
 }

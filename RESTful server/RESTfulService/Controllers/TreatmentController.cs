@@ -17,71 +17,71 @@ namespace RESTfulService.Controllers
         private DbTreatment _dbTreatment = new DbTreatment();
         private DBTreatmentCategory _dbTreatmentCategory = new DBTreatmentCategory();
 
-        //// GET: api/Treatment
-        //public IEnumerable<string> GetAll()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
         // GET: api/Treatment/5
-        public Treatment Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            Treatment found = _dbTreatment.GetTreatmentByID(id);
-            return found;
+            IHttpActionResult result;
+            Treatment treatmentFound = _dbTreatment.GetTreatmentByID(id);
+            if (treatmentFound != null)
+            {
+                result = Ok(treatmentFound);
+            }
+            else
+            {
+                result = NotFound();
+            }
+
+            return result;
         }
 
         // POST: api/Treatment
-        public Treatment Post([FromBody] Treatment_DTO value)
+        public IHttpActionResult Post([FromBody] Treatment_DTO value)
         {
+            IHttpActionResult result;
+
             try
             {
-                Treatment treatmentAdded = null;
                 if (value.Duration > 0 && value.Price >= 0)
                 {
                     var treatmentToAddObj = new Treatment(value.CompanyID, value.Name, value.Description, value.Duration, value.Price, value.TreatmentCategoryID);
-                    treatmentAdded = _dbTreatment.InsertTreatmentToDatabase(treatmentToAddObj);
+                    Treatment treatmentAdded = _dbTreatment.InsertTreatmentToDatabase(treatmentToAddObj);
+
+                    if (treatmentAdded != null)
+                    {
+                        foreach (int categoryID in value.TreatmentCategoryID)
+                        {
+                            _dbTreatmentCategory.AddCategoryToTreatment(treatmentAdded.ID, categoryID);
+                        }
+                        treatmentAdded.TreatmentCategoryID = value.TreatmentCategoryID;
+                    }
+                    result = Ok(treatmentAdded);
                 }
                 else
                 {
-                    throw new ArgumentException("The Arguments provided were invalid.");
+                    //throw new ArgumentException("The Arguments provided were invalid.");
+                    result = Content(HttpStatusCode.Conflict, "The Arguments provided were invalid.");
                 }
-
-                if (treatmentAdded != null && value.TreatmentCategoryID != null)
-                {
-                    foreach (int categoryID in value.TreatmentCategoryID)
-                    {
-                        _dbTreatmentCategory.AddCategoryToTreatment(treatmentAdded.ID, categoryID);
-                    }
-                    treatmentAdded.TreatmentCategoryID = value.TreatmentCategoryID;
-                }
-                return treatmentAdded;
             }
-            catch (SqlException sqlE)
+            catch (SqlException)
             {
                 //Company does not exist
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not insert data to database.", sqlE));
+                //  throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not insert data to database.", sqlE));
+                result = InternalServerError();
             }
-            catch (ArgumentException ae)
+            catch (ArgumentException)
             {
                 //Invalid arguments
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ae));
+                //    throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ae));
+                result = BadRequest();
             }
-            catch (AlreadyExistsException alreadyExistsException)
+            catch (AlreadyExistsException)
             {
                 //Already exists
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, alreadyExistsException));
+                //    throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, alreadyExistsException));
+                result = Conflict();
             }
+
+            return result;
         }
-
-        // PUT: api/Treatment/5
-        //public void Put(int id, [FromBody] string value)
-        //{
-
-        //}
-
-        //// DELETE: api/Treatment/5
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
