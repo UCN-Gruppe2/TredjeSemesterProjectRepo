@@ -93,7 +93,7 @@ namespace RESTfulService.Controllers
                 Reservation reservationToAdd = new Reservation(treatmentToUse, reservation_DTO.CustomerID, reservation_DTO.EmployeeID, reservation_DTO.StartTime);
                 result = Ok(_dbReservation.InsertReservationToDatabase(reservationToAdd));
             }
-            catch (SqlException sqlE)
+            catch (SqlException)
             {
                 //throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not insert data into database.", sqlE));
                 result = Content(HttpStatusCode.InternalServerError, "Could not insert data into database.");
