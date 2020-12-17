@@ -66,7 +66,7 @@ namespace WebBookingInterface.Controllers
             }
             else
             {
-                ViewBag.ExceptionAsJsonObject = JObject.Parse(response.Content);
+                ViewBag.ExceptionAsString = response.Content;
                 viewToReturn = View("FailView");
             }
 

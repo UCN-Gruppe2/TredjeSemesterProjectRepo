@@ -43,7 +43,7 @@ namespace WebBookingInterface.Controllers
             }
             else
             {
-
+                ViewBag.ExceptionAsString = response.Content;
                 viewToReturn = View("FailView");
             }
             return viewToReturn;

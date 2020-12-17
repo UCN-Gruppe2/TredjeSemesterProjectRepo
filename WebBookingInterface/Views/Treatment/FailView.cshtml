@@ -1,9 +1,9 @@
 ﻿@using Newtonsoft.Json.Linq;
 @{
     ViewBag.Title = "FailView";
-    JObject exception = ViewBag.ExceptionAsJsonObject;
+    string exception = ViewBag.ExceptionAsString;
 }
 
 <h2>Treatment creation failed!</h2>
 
-<p>@exception["Message"].ToString()</p>
+<p>@exception</p>
