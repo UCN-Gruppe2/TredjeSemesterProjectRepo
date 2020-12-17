@@ -46,7 +46,7 @@ namespace RESTfulService.Controllers
                     var treatmentToAddObj = new Treatment(value.CompanyID, value.Name, value.Description, value.Duration, value.Price, value.TreatmentCategoryID);
                     Treatment treatmentAdded = _dbTreatment.InsertTreatmentToDatabase(treatmentToAddObj);
 
-                    if (treatmentAdded != null)
+                    if (treatmentAdded != null && value.TreatmentCategoryID != null)
                     {
                         foreach (int categoryID in value.TreatmentCategoryID)
                         {

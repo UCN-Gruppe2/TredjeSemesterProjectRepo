@@ -22,10 +22,7 @@ namespace DataTest
         private TreatmentController treatmentCtrl;
         private EmployeeController employeeCtrl;
         private Stopwatch watch;
-        private Customer customer;
-        private Customer customer2;
         private Treatment_DTO treatment;
-        private Employee employee;
         private List<int> categories;
 
         [TestInitialize]
@@ -43,19 +40,19 @@ namespace DataTest
 
             //Not for database
             //Just for not repeating to often
-            treatment = new Treatment_DTO(1, "Voks af ryg", "Vi benytter enten almindelig varm voks eller sugaring", 60, 699.95m, Categories);
+            treatment = new Treatment_DTO(1, "Voks af ryg", "Vi benytter enten almindelig varm voks eller sugaring", 60, 699.95m, categories);
+            treatmentCtrl.Post(treatment);
         }
 
         [TestMethod]
         public void TestCreateReservation1_Valid()
         {
             //Arrange
-            Treatment addedTreatment = TreatmentCtrl.Post(treatment);
             Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
             watch.Start();
-            IHttpActionResult addedReservationResult = ReservationCtrl.Post(newReservation);
+            IHttpActionResult addedReservationResult = reservationCtrl.Post(newReservation);
             watch.Stop();
 
             //Assert
@@ -79,17 +76,17 @@ namespace DataTest
         public void TestCreateReservation2_TimeAlreadyBooked()
         {
             //Arrange
-            Treatment addedTreatment = treatmentCtrl.Post(treatment);
+            //Treatment addedTreatment = treatmentCtrl.Post(treatment);
 
-            Treatment_DTO treatment2 = new Treatment_DTO(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 30, 399.95m, Categories);
-            Treatment addedTreatment2 = treatmentCtrl.Post(treatment2);
+            //Treatment_DTO treatment2 = new Treatment_DTO(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 30, 399.95m, Categories);
+            //Treatment addedTreatment2 = treatmentCtrl.Post(treatment2);
 
             Reservation_DTO newReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2025 13:30"));
-            Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-11-2025 13:30"));
+            Reservation_DTO doubleReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
             watch.Start();
-            IHttpActionResult addedReservation =reservationCtrl.Post(newReservation);
+            IHttpActionResult addedReservation = reservationCtrl.Post(newReservation);
             IHttpActionResult addedReservationDouble = reservationCtrl.Post(doubleReservation);
             watch.Stop();
 
@@ -109,13 +106,13 @@ namespace DataTest
         public void TestCreateReservation3_TimeOverlap()
         {
             //Arrange
-            Treatment addedTreatment = treatmentCtrl.Post(treatment);
+            //Treatment addedTreatment = treatmentCtrl.Post(treatment);
 
-            Treatment_DTO treatment2 = new Treatment_DTO(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 60, 399.95m);
-            Treatment addedTreatment2 = treatmentCtrl.Post(treatment2);
+            Treatment_DTO treatment2 = new Treatment_DTO(1, "Voks af bryst", "Vi benytter enten almindelig varm voks eller sugaring", 60, 399.95m, categories);
+            treatmentCtrl.Post(treatment2);
 
             Reservation_DTO newReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2025 13:30"));
-            Reservation_DTO doubleReservation = new Reservation_DTO(2, 1, 1, DateTime.Parse("26-02-2025 14:00"));
+            Reservation_DTO doubleReservation = new Reservation_DTO(1, 1, 1, DateTime.Parse("26-02-2025 14:00"));
 
             //Act
             watch.Start();
@@ -140,7 +137,7 @@ namespace DataTest
         public void TestCreateReservation4_IllegalEmployeeID()
         {
             //Arrange
-            Treatment addedTreatment = treatmentCtrl.Post(treatment);
+            //Treatment addedTreatment = treatmentCtrl.Post(treatment);
             Reservation_DTO newReservation = new Reservation_DTO(1, 1, -1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act
@@ -189,7 +186,7 @@ namespace DataTest
         public void TestCreateReservation6_IllegalCustomerID()
         {
             //Arrange
-            Treatment addedTreatment = treatmentCtrl.Post(treatment);
+            //Treatment addedTreatment = treatmentCtrl.Post(treatment);
             Reservation_DTO newReservation = new Reservation_DTO(1, -1, 1, DateTime.Parse("26-11-2025 13:30"));
 
             //Act

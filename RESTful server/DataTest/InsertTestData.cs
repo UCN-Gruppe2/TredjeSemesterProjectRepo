@@ -7,6 +7,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace DataTest
 {
@@ -105,7 +107,8 @@ namespace DataTest
             ReservationController reservationCtrl = new ReservationController();
             TreatmentController treatmentCtrl = new TreatmentController();
 
-            Treatment treatment = treatmentCtrl.Get(1);
+            IHttpActionResult treatmentResult = treatmentCtrl.Get(1);
+            Treatment treatment = ((OkNegotiatedContentResult<Treatment>)treatmentResult).Content;
             Reservation_DTO reservation1 = new Reservation_DTO(
                 startTime: DateTime.Parse("31-12-2025 23:59"),
                 employeeID: 1,
