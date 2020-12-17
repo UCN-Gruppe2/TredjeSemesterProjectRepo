@@ -15,9 +15,6 @@ namespace Model
         public decimal Price;
         public List<int> TreatmentCategoryID;
 
-        //Vi skal bruge categoryID fra CategoryOfTreatments, hvor treatmentID (CategoryOfTreatments) = @id (Treatment)
-        //SELECT categoryID FROM CategoryOfTreatments INNER JOIN Treatment ON CategoryOfTreatments.treatmentID = Treatment.id;
-
         public Treatment_DTO(int companyID, string name, string description, int duration, decimal price, List<int> treatmentCategoryID = null)
         {
             CompanyID = companyID;

@@ -21,10 +21,5 @@ namespace Model
         {
             CustomerID = customerID;
         }
-
-        //private List<Reservation> _getReservations()
-        //{
-        //    return null;
-        //}
     }
 }

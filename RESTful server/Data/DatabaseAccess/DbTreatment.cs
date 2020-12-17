@@ -23,16 +23,6 @@ namespace DataAccess.DatabaseAccess
             _dbTreatmentCategory = new DBTreatmentCategory();
         }
 
-        //public bool DeleteTreatment()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public List<Employee> GetCapableEmployees()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public Treatment GetTreatmentByID(int id)
         {
             using (var conn = new SqlConnection(_connectionString))
@@ -92,8 +82,7 @@ namespace DataAccess.DatabaseAccess
                             price
                         });
 
-                        //scope.Complete();
-                        var result = this.GetTreatmentByID(id, conn);//conn.Query<Treatment>("SELECT * FROM Treatment WHERE id = @id", new { id = id }).FirstOrDefault();
+                        var result = this.GetTreatmentByID(id, conn);
                         scope.Complete();
                         return result;
                     }
@@ -104,26 +93,6 @@ namespace DataAccess.DatabaseAccess
                 }
             }
         }
-
-        //public void SaveTreatment()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public bool UpdateTreatment()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //List<Employee> IDbTreatment.GetCapableEmployees()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //Treatment IDbTreatment.GetTreatmentByID(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public void UpdateTreatmentsInCategory(TreatmentCategory category)
         {
@@ -144,7 +113,6 @@ namespace DataAccess.DatabaseAccess
                     {
                         sqlSelectReader.Close();
                         string queryString = "INSERT INTO CategoryOfTreatments (treatmentID, categoryID) VALUES (@treatmentID, @categoryID);";
-                        //Console.WriteLine("INSERT INTO CategoryOfTreatments (treatmentID, categoryID) VALUES ({0}, {1})", treatmentID, categoryID);
                         conn.ExecuteReader(queryString, new
                         {
                             treatmentID,

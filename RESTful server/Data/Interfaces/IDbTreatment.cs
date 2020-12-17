@@ -9,12 +9,7 @@ namespace DataAccess.Interfaces
 {
     public interface IDbTreatment
     {
-        //void InsertTreatmentToDatabase(Treatment treatment);
         Treatment GetTreatmentByID(int id);
-        //void SaveTreatment();
-        //bool DeleteTreatment();
-        //bool UpdateTreatment();
-        //List<Employee> GetCapableEmployees();
         Treatment InsertTreatmentToDatabase(Treatment treatment);
     }
 }

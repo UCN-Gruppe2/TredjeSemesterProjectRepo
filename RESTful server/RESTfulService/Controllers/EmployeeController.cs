@@ -26,7 +26,6 @@ namespace RESTfulService.Controllers
             }
             catch (ArgumentException)
             {
-                // throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, ae));
                 result = NotFound();
             }
 

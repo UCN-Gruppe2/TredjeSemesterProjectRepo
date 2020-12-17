@@ -25,7 +25,6 @@ namespace DataTest
             watch = new Stopwatch();
 
             categories = new List<int>() { 1 };
-            //Categories.Add(new TreatmentCategory(1, "Klip"));
         }
 
         [TestCleanup]
@@ -49,7 +48,6 @@ namespace DataTest
             Assert.IsInstanceOfType(addedTreatmentResult, typeof(OkNegotiatedContentResult<Treatment>));
             Treatment addedTreatmentObj = ((OkNegotiatedContentResult<Treatment>)addedTreatmentResult).Content;
 
-
             Assert.AreEqual(treatment.Name, addedTreatmentObj.Name);
             Assert.AreEqual(treatment.Description, addedTreatmentObj.Description);
             Assert.AreEqual(treatment.Duration, addedTreatmentObj.Duration);
@@ -62,7 +60,6 @@ namespace DataTest
         {
             //Arrange
             Treatment_DTO treatment = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m, categories);
-         //   Treatment_DTO treatmentDouble = new Treatment_DTO(2, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m);
 
             //Act
             watch.Start();
@@ -73,11 +70,6 @@ namespace DataTest
             //Assert
             Assert.IsInstanceOfType(addedTreatmentResult, typeof(OkNegotiatedContentResult<Treatment>));
             Assert.IsInstanceOfType(addedTreatmentDoubleResult, typeof(ConflictResult));
-
-            //Assert.AreEqual(treatment.Name, addedTreatment.Name);
-            //Assert.AreEqual(treatment.Description, addedTreatment.Description);
-            //Assert.AreEqual(treatment.Duration, addedTreatment.Duration);
-            //Assert.AreEqual(treatment.Price, addedTreatment.Price);
             Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
         }
 
@@ -141,8 +133,6 @@ namespace DataTest
 
             //Assert
             Assert.IsInstanceOfType(found, typeof(NotFoundResult));
-
-           // Assert.IsNull(found);
         }
     }
 }

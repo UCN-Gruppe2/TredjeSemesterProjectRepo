@@ -22,11 +22,6 @@ namespace Model
         public Treatment(int id, int companyID, string name, string description, int duration, decimal price) : base ( companyID, name, description, duration, price, null) 
         {
             ID = id;
-            //CompanyID = companyID;
-            //Name = name;
-            //Description = description;
-            //Duration = duration;
-            //Price = Math.Round(price, 2);
             _employees = new List<Employee>();
         }
 
@@ -35,11 +30,6 @@ namespace Model
         public Treatment(int id, int companyID, string name, string description, int duration, decimal price, List<Employee> employees, List<int> treatmentCategoryID) : base (companyID, name, description, duration, price, treatmentCategoryID)
         {
             ID = id;
-            //CompanyID = companyID;
-            //Name = name;
-            //Description = description;
-            //Duration = duration;
-            //Price = price;
             _employees = employees;
         }
 

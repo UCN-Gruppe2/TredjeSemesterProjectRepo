@@ -41,13 +41,13 @@ namespace DataAccess.DatabaseAccess
                             categoryID = treatmentCategoryID
                         });
 
-                        result = numberOfRowsAffected >= 1; //Den skulle gerne være 1... 
+                        result = numberOfRowsAffected >= 1;
                     }
                 }
             }
             catch (SqlException)
             {
-                result = false; //Der kom en fejl, hvilket kan betyde at den allerede eksisterer.
+                result = false;
             }
 
             return result;

@@ -59,8 +59,6 @@ namespace DataTest
         private static void _insertTreatment()
         {
             TreatmentController treatmentCtrl = new TreatmentController();
-            //List<int> Categories = new List<TreatmentCategory>();
-            //Categories.Add(new TreatmentCategory(1));
             Treatment_DTO treatment = new Treatment_DTO(1, "Stor fed klip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m, new List<int> { 1 });
 
 
@@ -114,7 +112,6 @@ namespace DataTest
                 employeeID: 1,
                 customerID: 1,
                 treatmentID: treatment.ID
-            //(treatment, 1, 1, DateTime.Parse("26-11-2010 13:30")
             );
 
             Reservation_DTO reservation2 = new Reservation_DTO(
@@ -124,9 +121,6 @@ namespace DataTest
                 treatmentID: treatment.ID
             );
 
-            //Reservation reservation2 = new Reservation(treatment, 1, 1, DateTime.Parse("25-10-2021 17:30"));
-
-            //reservationCtrl.Post((Reservation_DTO)reservation1);
             reservationCtrl.Post(reservation1);
             reservationCtrl.Post(reservation2);
         }

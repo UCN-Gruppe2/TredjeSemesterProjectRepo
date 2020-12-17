@@ -58,26 +58,19 @@ namespace RESTfulService.Controllers
                 }
                 else
                 {
-                    //throw new ArgumentException("The Arguments provided were invalid.");
                     result = Content(HttpStatusCode.Conflict, "The Arguments provided were invalid.");
                 }
             }
             catch (SqlException)
             {
-                //Company does not exist
-                //  throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not insert data to database.", sqlE));
                 result = InternalServerError();
             }
             catch (ArgumentException)
             {
-                //Invalid arguments
-                //    throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ae));
                 result = BadRequest();
             }
             catch (AlreadyExistsException)
             {
-                //Already exists
-                //    throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Conflict, alreadyExistsException));
                 result = Conflict();
             }
 
