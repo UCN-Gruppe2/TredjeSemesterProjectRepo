@@ -9,7 +9,7 @@ namespace DataAccess.Interfaces
 {
     interface IDbTreatmentCategory
     {
-        bool AddCategoryToTreatment(int treatmentID, int treatmentCategoryID);
+        void AddCategoryToTreatment(int treatmentID, int treatmentCategoryID);
         List<int> GetCategoryIDByTreatmentID(int treatmentID, SqlConnection connection);
     }
 }

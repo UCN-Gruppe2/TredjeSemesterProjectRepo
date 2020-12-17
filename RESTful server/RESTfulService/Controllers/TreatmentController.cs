@@ -41,7 +41,7 @@ namespace RESTfulService.Controllers
 
             try
             {
-                if (value.Duration > 0 && value.Price >= 0)
+                if (value.Duration > 0 && value.Price >= 0 && value.Name.Trim().Length > 0)
                 {
                     var treatmentToAddObj = new Treatment(value.CompanyID, value.Name, value.Description, value.Duration, value.Price, value.TreatmentCategoryID);
                     Treatment treatmentAdded = _dbTreatment.InsertTreatmentToDatabase(treatmentToAddObj);

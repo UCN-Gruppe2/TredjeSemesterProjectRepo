@@ -31,61 +31,72 @@ namespace DesktopClient
             _client = client;
             this.main = main;
             InitializeComponent();
-            FailLbl.Opacity = 0;
+            FailLbl.Content = "";
             durations = new List<int> { 30, 60, 90, 120, 150, 180 };
             DurationCombo.ItemsSource = durations;
         }
 
         private void CreateBtn_Click(object sender, RoutedEventArgs e)
         {
-            Int32 duration = (int)DurationCombo.SelectedItem;
-            string treatmentCategories = TreatmentCategoryBox.Text;
-            string[] tempTreatmentCategory = treatmentCategories.Split(',');
-            int index = 0;
-            List<int> treatmentCategoryList = new List<int>();
-            while(index < tempTreatmentCategory.Length)
+            FailLbl.Content = "";
+            CreateButton.BorderBrush = Brushes.Gray;
+            CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
+            if (CompanyIDBox.Text.Trim().Length > 0 && TreatmentCategoryBox.Text.Trim().Length > 0 && NameBox.Text.Trim().Length > 0 && TreatmentCategoryBox.Text.Trim().Length > 0 && DurationCombo.Text.Trim().Length > 0 && PriceBox.Text.Trim().Length > 0)
             {
-                treatmentCategoryList.Add(Int32.Parse(tempTreatmentCategory[index].Trim()));
-                index++;
+
+                Int32 duration = (int)DurationCombo.SelectedItem;
+                string treatmentCategories = TreatmentCategoryBox.Text;
+                string[] tempTreatmentCategory = treatmentCategories.Split(',');
+                int index = 0;
+                List<int> treatmentCategoryList = new List<int>();
+                while (index < tempTreatmentCategory.Length)
+                {
+                    treatmentCategoryList.Add(Int32.Parse(tempTreatmentCategory[index].Trim()));
+                    index++;
+                }
+
+                Treatment_DTO treatmentToAdd = new Treatment_DTO(Int32.Parse(CompanyIDBox.Text),
+                    NameBox.Text, DescriptionBox.Text, duration, Decimal.Parse(PriceBox.Text));
+                treatmentToAdd.TreatmentCategoryID = treatmentCategoryList;
+
+                RestRequest addRequest = new RestRequest("api/Treatment", Method.POST);
+                addRequest.AddJsonBody(treatmentToAdd);
+
+                var response = _client.Execute(addRequest);
+                if (response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    FailLbl.Content = "Der skete en fejl! \n" + response.StatusCode + ", " + response.Content;
+                    CreateButton.BorderBrush = Brushes.Red;
+                    CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
+                }
+                else if (response.StatusCode == HttpStatusCode.Conflict)
+                {
+                    FailLbl.Content = "Der skete en fejl! \n" + response.StatusCode + ", " + response.Content;
+                    CreateButton.BorderBrush = Brushes.Red;
+                    CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
+                }
+                else if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    FailLbl.Content = "Der skete en fejl! \n" + response.StatusCode + ", " + response.Content;
+                    CreateButton.BorderBrush = Brushes.Red;
+                    CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
+                }
+                else
+                {
+                    string theJson = response.Content;
+                    Treatment treatment = JsonConvert.DeserializeObject<Treatment>(theJson);
+
+                    main.ShowCreatedTreatment(treatment);
+
+                    this.Close();
+                }
             }
-
-            Treatment_DTO treatmentToAdd = new Treatment_DTO(Int32.Parse(CompanyIDBox.Text),
-                NameBox.Text, DescriptionBox.Text, duration, Decimal.Parse(PriceBox.Text));
-            treatmentToAdd.TreatmentCategoryID = treatmentCategoryList;
-
-            RestRequest addRequest = new RestRequest("api/Treatment", Method.POST);
-            addRequest.AddJsonBody(treatmentToAdd);
-
-            var response = _client.Execute(addRequest);
-            if(response.StatusCode == HttpStatusCode.BadRequest)
+            else
             {
-                FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ", " + response.Content;
-                FailLbl.Opacity = 100;
+                FailLbl.Content = "Skriv noget i alle felter";
                 CreateButton.BorderBrush = Brushes.Red;
                 CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
             }
-            if (response.StatusCode == HttpStatusCode.Conflict)
-            {
-                FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ", " + response.Content;
-                FailLbl.Opacity = 100;
-                CreateButton.BorderBrush = Brushes.Red;
-                CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
-            }
-            if (response.StatusCode == HttpStatusCode.InternalServerError)
-            {
-                FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ", " + response.Content;
-                FailLbl.Opacity = 100;
-                CreateButton.BorderBrush = Brushes.Red;
-                CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
-            }
-
-
-            string theJson = response.Content;
-            Treatment treatment = JsonConvert.DeserializeObject<Treatment>(theJson);
-
-            main.ShowCreatedTreatment(treatment);
-
-            this.Close();
         }
     }
 }

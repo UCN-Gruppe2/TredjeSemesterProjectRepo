@@ -19,20 +19,22 @@ namespace DataAccess.DatabaseAccess
             _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
         }
 
-        public bool AddCategoryToTreatment(int treatmentID, int treatmentCategoryID)
+        public void AddCategoryToTreatment(int treatmentID, int treatmentCategoryID)
         {
-            bool result;
-            try
+            var options = new TransactionOptions
             {
-                var options = new TransactionOptions
-                {
-                    IsolationLevel = IsolationLevel.RepeatableRead,
-                    Timeout = TimeSpan.FromSeconds(15) //<-- Timeout to prevent gridlocks, or any other type of blockage.
-                };
+                IsolationLevel = IsolationLevel.RepeatableRead,
+                Timeout = TimeSpan.FromSeconds(15) //<-- Timeout to prevent gridlocks, or any other type of blockage.
+            };
 
-                using (var scope = new TransactionScope(TransactionScopeOption.Required, options))
+            using (var scope = new TransactionScope(TransactionScopeOption.Required, options))
+            {
+                using (var conn = new SqlConnection(_connectionString))
                 {
-                    using (var conn = new SqlConnection(_connectionString))
+                    string checkString = "SELECT * FROM TreatmentCategory WHERE id = @id";
+                    IEnumerable<int> rows = conn.Query<int>(checkString, new { id = treatmentCategoryID });
+
+                    if (rows.Any())
                     {
                         string insertStatement = "INSERT INTO CategoryOfTreatments (treatmentID, categoryID) VALUES (@treatmentID, @categoryID)";
                         int numberOfRowsAffected = conn.Execute(insertStatement, new
@@ -40,17 +42,15 @@ namespace DataAccess.DatabaseAccess
                             treatmentID = treatmentID,
                             categoryID = treatmentCategoryID
                         });
-
-                        result = numberOfRowsAffected >= 1;
                     }
+                    else
+                    {
+                        throw new ArgumentException();
+                    }
+
+                    scope.Complete();
                 }
             }
-            catch (SqlException)
-            {
-                result = false;
-            }
-
-            return result;
         }
 
         public List<int> GetCategoryIDByTreatmentID(int treatmentID, SqlConnection connection)

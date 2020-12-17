@@ -56,6 +56,10 @@ namespace DesktopClient
             string time = TimeCombo.Text;
             FailLbl.Content = "Der skete en fejl!";
             FailLbl.Opacity = 0;
+            TreatmentIDBox.BorderBrush = Brushes.Gray;
+            TreatmentIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
+            CreateButton.BorderBrush = Brushes.Gray;
+            CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
 
             string[] clock = time.Split(':');
             int hour = Int32.Parse(clock[0]);

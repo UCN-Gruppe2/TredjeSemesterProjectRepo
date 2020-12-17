@@ -112,23 +112,31 @@ namespace DesktopClient
 
         private List<Reservation> GetReservations()
         {
-            RestRequest addRequest = new RestRequest("/api/Employee/Reservations", Method.GET);
-            addRequest.AddParameter("employeeID", Int32.Parse(SearchEmployee.Text.Trim()));
-
             List<Reservation> reservations = new List<Reservation>();
-            
-            var response = _client.Execute(addRequest);
-            string theJson = response.Content;
-                    
-            if (response.StatusCode != HttpStatusCode.OK)
+            int searchQuery;
+            bool result = Int32.TryParse(SearchEmployee.Text.Trim(), out searchQuery);
+            if (result)
             {
-                FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + response.Content;
+                RestRequest addRequest = new RestRequest("/api/Employee/Reservations", Method.GET);
+                addRequest.AddParameter("employeeID", searchQuery);
+
+                var response = _client.Execute(addRequest);
+                string theJson = response.Content;
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    reservations = JsonConvert.DeserializeObject<List<Reservation>>(theJson);
+                    FailLbl.Content = "";
+                }
+                else
+                {
+                    FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + response.Content;
+                }
             }
             else
             {
-                reservations = JsonConvert.DeserializeObject<List<Reservation>>(theJson);
+                FailLbl.Content = "Indtast venligst kun tal!";
             }
-
             return reservations;
         }
 
