@@ -41,7 +41,7 @@ namespace DesktopClient
             TimeCombo.ItemsSource = Times;
         }
 
-        private void CreateBtn_Click(object sender, RoutedEventArgs e)
+        private async void CreateBtn_Click(object sender, RoutedEventArgs e)
         {
             if(TreatmentIDBox.Text.Trim().Length == 0 && CustomerIDBox.Text.Trim().Length == 0 && EmployeeIDBox.Text.Trim().Length == 0)
             {
@@ -70,7 +70,7 @@ namespace DesktopClient
             RestRequest addRequest = new RestRequest("api/Reservation", Method.POST);
             addRequest.AddJsonBody(reservationToAdd);
 
-            var response = _client.Execute(addRequest);
+            var response = await _client.ExecuteAsync(addRequest);
             
             if (response.StatusCode == HttpStatusCode.Conflict)
             {
