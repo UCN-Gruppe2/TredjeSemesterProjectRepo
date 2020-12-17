@@ -122,10 +122,10 @@ namespace DesktopClient
             var response = _client.Execute(addRequest);
             string theJson = response.Content;
                     
-            if (response.StatusCode == HttpStatusCode.NotFound)
+            if (response.StatusCode != HttpStatusCode.OK)
             {
-                JObject exceptionAsJsonObj = JObject.Parse(theJson);
-                FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + exceptionAsJsonObj["Message"].ToString();
+                //JObject exceptionAsJsonObj = JObject.Parse(theJson);
+                FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + response.Content;
                 //FailLbl.Content = "Der skete en fejl! " + response.StatusCode + ", " + response.ErrorException.Message;
             }
             else
