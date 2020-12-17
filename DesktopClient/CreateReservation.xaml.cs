@@ -74,8 +74,9 @@ namespace DesktopClient
             
             if (response.StatusCode == HttpStatusCode.Conflict)
             {
-                JObject jsonObject = JObject.Parse(response.Content);
-                string message = jsonObject["ExceptionMessage"].ToString();
+                //JObject jsonObject = JObject.Parse(response.Content);
+                //string message = jsonObject["ExceptionMessage"].ToString();
+                string message = response.Content;
                 FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ": " + message;
                 FailLbl.Opacity = 100;
                 
@@ -102,8 +103,9 @@ namespace DesktopClient
             }
             else if(response.StatusCode == HttpStatusCode.NotFound)
             {
-                JObject jsonObject = JObject.Parse(response.Content);
-                string message = jsonObject["Message"].ToString();
+                //JObject jsonObject = JObject.Parse(response.Content);
+                //string message = jsonObject["Message"].ToString();
+                string message = response.Content;
                 FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ": " + message;
                 FailLbl.Opacity = 100;
                 TreatmentIDBox.BorderBrush = Brushes.Red;
@@ -111,8 +113,9 @@ namespace DesktopClient
             }
             else if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
-                JObject jsonObject = JObject.Parse(response.Content);
-                string message = jsonObject["Message"].ToString();
+                //JObject jsonObject = JObject.Parse(response.Content);
+                //string message = jsonObject["Message"].ToString();
+                string message = response.Content;
                 FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ": " + message;
                 FailLbl.Opacity = 100;
                 CreateButton.BorderBrush = Brushes.Red;
