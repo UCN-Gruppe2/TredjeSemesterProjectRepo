@@ -14,17 +14,18 @@ namespace DataTest
     [TestClass]
     public class TreatmentTest
     {
-        private TreatmentController treatmentCtrl;
-        private Stopwatch watch;
-        private List<int> categories;
+        private TreatmentController _treatmentCtrl;
+        private Stopwatch _watch;
+        private Treatment_DTO _treatment;
+        private List<int> _categories;
 
         [TestInitialize]
         public void SetUp()
         {
-            treatmentCtrl = new TreatmentController();
-            watch = new Stopwatch();
-
-            categories = new List<int>() { 1 };
+            _treatmentCtrl = new TreatmentController();
+            _watch = new Stopwatch();
+            _treatment = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m, _categories);
+            _categories = new List<int>() { 1 };
         }
 
         [TestCleanup]
@@ -38,74 +39,75 @@ namespace DataTest
         public void TestCreateTreatment1_Valid()
         {
             //Arrange
-            Treatment_DTO treatment = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m, categories); //m = decimal 
+            
             //Act
-            watch.Start();
-            IHttpActionResult addedTreatmentResult = treatmentCtrl.Post(treatment);
-            watch.Stop();
+            _watch.Start();
+            IHttpActionResult addedTreatmentResult = _treatmentCtrl.Post(_treatment);
+            _watch.Stop();
 
             //Assert
             Assert.IsInstanceOfType(addedTreatmentResult, typeof(OkNegotiatedContentResult<Treatment>));
             Treatment addedTreatmentObj = ((OkNegotiatedContentResult<Treatment>)addedTreatmentResult).Content;
 
-            Assert.AreEqual(treatment.Name, addedTreatmentObj.Name);
-            Assert.AreEqual(treatment.Description, addedTreatmentObj.Description);
-            Assert.AreEqual(treatment.Duration, addedTreatmentObj.Duration);
-            Assert.AreEqual(treatment.Price, addedTreatmentObj.Price);
-            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
+            Assert.AreEqual(_treatment.Name, addedTreatmentObj.Name);
+            Assert.AreEqual(_treatment.Description, addedTreatmentObj.Description);
+            Assert.AreEqual(_treatment.Duration, addedTreatmentObj.Duration);
+            Assert.AreEqual(_treatment.Price, addedTreatmentObj.Price);
+            Assert.IsTrue(_watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
         public void TestCreateTreatment2_AlreadyExists()
         {
             //Arrange
-            Treatment_DTO treatment = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, 499.95m, categories);
 
             //Act
-            watch.Start();
-            IHttpActionResult addedTreatmentResult = treatmentCtrl.Post(treatment);
-            IHttpActionResult addedTreatmentDoubleResult = treatmentCtrl.Post(treatment);
-            watch.Stop();
+            _watch.Start();
+            IHttpActionResult addedTreatmentResult = _treatmentCtrl.Post(_treatment);
+            IHttpActionResult addedTreatmentDoubleResult = _treatmentCtrl.Post(_treatment);
+            _watch.Stop();
 
             //Assert
             Assert.IsInstanceOfType(addedTreatmentResult, typeof(OkNegotiatedContentResult<Treatment>));
             Assert.IsInstanceOfType(addedTreatmentDoubleResult, typeof(ConflictResult));
-            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
+            Assert.IsTrue(_watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
         public void TestCreateTreatment3_IllegalDuration()
         {
             //Arrange
-            Treatment_DTO treatment = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", -30, 499.95m);
+            Treatment_DTO treatment = _treatment;
+            treatment.Duration = -30;
 
             //Act
-            watch.Start();
-            IHttpActionResult addedTreatment = treatmentCtrl.Post(treatment);
+            _watch.Start();
+            IHttpActionResult addedTreatment = _treatmentCtrl.Post(treatment);
 
-            watch.Stop();
+            _watch.Stop();
 
             //Assert
             Assert.IsInstanceOfType(addedTreatment, typeof(NegotiatedContentResult<string>));
             Assert.IsTrue(((NegotiatedContentResult<string>)addedTreatment).StatusCode == System.Net.HttpStatusCode.Conflict);
-            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
+            Assert.IsTrue(_watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
         public void TestCreateTreatment4_IllegalPrice()
         {
             //Arrange
-            Treatment_DTO treatment = new Treatment_DTO(1, "Dameklip, lang hår", "Vi klipper langt hår på damer", 30, -499.95m);
+            Treatment_DTO treatment = _treatment;
+            treatment.Price = -499.95m;
 
             //Act
-            watch.Start();
-            IHttpActionResult addedTreatment = treatmentCtrl.Post(treatment);
-            watch.Stop();
+            _watch.Start();
+            IHttpActionResult addedTreatment = _treatmentCtrl.Post(treatment);
+            _watch.Stop();
 
             //Assert
             Assert.IsInstanceOfType(addedTreatment, typeof(NegotiatedContentResult<string>));
             Assert.IsTrue(((NegotiatedContentResult<string>)addedTreatment).StatusCode == System.Net.HttpStatusCode.Conflict);
-            Assert.IsTrue(watch.ElapsedMilliseconds < 2500);
+            Assert.IsTrue(_watch.ElapsedMilliseconds < 2500);
         }
 
         [TestMethod]
@@ -115,7 +117,7 @@ namespace DataTest
             int id = 1;
 
             //Act
-            IHttpActionResult treatmentFound = treatmentCtrl.Get(id);
+            IHttpActionResult treatmentFound = _treatmentCtrl.Get(id);
 
             //Assert
             Assert.IsInstanceOfType(treatmentFound, typeof(OkNegotiatedContentResult<Treatment>));
@@ -129,7 +131,7 @@ namespace DataTest
             int id = 35;
 
             //Act
-            IHttpActionResult found = treatmentCtrl.Get(id);
+            IHttpActionResult found = _treatmentCtrl.Get(id);
 
             //Assert
             Assert.IsInstanceOfType(found, typeof(NotFoundResult));

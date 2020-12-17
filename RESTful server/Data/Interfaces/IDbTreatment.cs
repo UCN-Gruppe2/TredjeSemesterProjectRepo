@@ -11,5 +11,6 @@ namespace DataAccess.Interfaces
     {
         Treatment GetTreatmentByID(int id);
         Treatment InsertTreatmentToDatabase(Treatment treatment);
+        void UpdateTreatmentsInCategory(TreatmentCategory category);
     }
 }

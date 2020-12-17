@@ -60,22 +60,5 @@ namespace DataAccess.DatabaseAccess
 
             return listOfIDs;
         }
-
-        public List<int> GetCategoryIDByTreatmentID(int treatmentID)
-        {
-            var options = new TransactionOptions
-            {
-                IsolationLevel = IsolationLevel.RepeatableRead,
-                Timeout = TimeSpan.FromSeconds(15) //<-- Timeout to prevent gridlocks, or any other type of blockage.
-            };
-
-            using (var scope = new TransactionScope(TransactionScopeOption.Required, options))
-            {
-                using (var conn = new SqlConnection(_connectionString))
-                {
-                    return GetCategoryIDByTreatmentID(treatmentID, conn);
-                }
-            }
-        }
     }
 }
