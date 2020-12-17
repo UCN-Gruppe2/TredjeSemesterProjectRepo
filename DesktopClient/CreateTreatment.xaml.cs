@@ -59,21 +59,21 @@ namespace DesktopClient
             var response = _client.Execute(addRequest);
             if(response.StatusCode == HttpStatusCode.BadRequest)
             {
-                FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.Content;
+                FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ", " + response.Content;
                 FailLbl.Opacity = 100;
                 CreateButton.BorderBrush = Brushes.Red;
                 CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
             }
             if (response.StatusCode == HttpStatusCode.Conflict)
             {
-                FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.Content;
+                FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ", " + response.Content;
                 FailLbl.Opacity = 100;
                 CreateButton.BorderBrush = Brushes.Red;
                 CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
             }
             if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
-                FailLbl.Content = FailLbl.Content + "//n " + response.StatusCode + ", " + response.Content;
+                FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ", " + response.Content;
                 FailLbl.Opacity = 100;
                 CreateButton.BorderBrush = Brushes.Red;
                 CreateButton.BorderThickness = new Thickness(1, 1, 1, 1);
