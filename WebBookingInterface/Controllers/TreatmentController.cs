@@ -58,7 +58,7 @@ namespace WebBookingInterface.Controllers
             treatmentRequest.AddJsonBody(treatmentTransferObj);
             var response = _client.Execute(treatmentRequest);
 
-            ActionResult viewToReturn; //Jagten på det evige liv og single-exit-point.
+            ActionResult viewToReturn;
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ViewBag.treatment =  JsonConvert.DeserializeObject<Treatment>(response.Content);

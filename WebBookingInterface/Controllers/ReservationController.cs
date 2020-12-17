@@ -47,7 +47,6 @@ namespace WebBookingInterface.Controllers
 
             ActionResult viewToReturn;
 
-            //GUTTER, I SKAL FANDME FÅ FIXET DET HER, VI ER FOR DUMME TIL DET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ViewBag.EmployeeID = employeeID;

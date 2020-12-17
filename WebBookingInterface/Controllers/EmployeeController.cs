@@ -32,8 +32,6 @@ namespace WebBookingInterface.Controllers
             RestResponse response = (RestResponse)_client.Execute(request);
 
             ActionResult viewToReturn;
-
-            //GUTTER, I SKAL FANDME FÅ FIXET DET HER, VI ER FOR DUMME TIL DET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             ViewBag.EmployeeID = employeeID;
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
