@@ -69,7 +69,7 @@ namespace DataTest
 
             //Assert
             Assert.IsInstanceOfType(addedTreatmentResult, typeof(OkNegotiatedContentResult<Treatment>));
-            Assert.IsInstanceOfType(addedTreatmentDoubleResult, typeof(ConflictResult));
+            Assert.IsInstanceOfType(addedTreatmentDoubleResult, typeof(NegotiatedContentResult<string>));
             Assert.IsTrue(_watch.ElapsedMilliseconds < 2500);
         }
 
@@ -134,7 +134,7 @@ namespace DataTest
             IHttpActionResult found = _treatmentCtrl.Get(id);
 
             //Assert
-            Assert.IsInstanceOfType(found, typeof(NotFoundResult));
+            Assert.IsInstanceOfType(found, typeof(NegotiatedContentResult<string>));
         }
     }
 }

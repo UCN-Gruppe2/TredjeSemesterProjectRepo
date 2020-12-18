@@ -13,13 +13,6 @@ namespace WebBookingInterface.Controllers
     [Authorize]
     public class EmployeeController : Controller
     {
-        RestClient _client;
-
-        public EmployeeController()
-        {
-            _client = RestClientManager.GetInstance().RestClient;
-        }
-
         // GET: Employee
         public ActionResult Index()
         {
@@ -30,7 +23,8 @@ namespace WebBookingInterface.Controllers
         {
             RestRequest request = new RestRequest("api/Employee/", Method.GET);
             request.AddParameter("employeeID", employeeID);
-            RestResponse response = (RestResponse)_client.Execute(request);
+            request.AddHeader("Authorization", $"Bearer {Request.Cookies["token"].Value}");
+            RestResponse response = (RestResponse)RestClientManager.Client.Execute(request);
 
             ActionResult viewToReturn;
             ViewBag.EmployeeID = employeeID;

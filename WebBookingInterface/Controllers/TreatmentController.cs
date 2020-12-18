@@ -14,13 +14,6 @@ namespace WebBookingInterface.Controllers
     [Authorize]
     public class TreatmentController : Controller
     {
-        RestClient _client;
-
-        public TreatmentController()
-        {
-            _client = RestClientManager.GetInstance().RestClient;
-        }
-
         // GET: Treatment
         public ActionResult Index()
         {
@@ -49,6 +42,7 @@ namespace WebBookingInterface.Controllers
             }
 
             RestRequest treatmentRequest = new RestRequest("/api/Treatment", Method.POST);
+            treatmentRequest.AddHeader("Authorization", $"Bearer {Request.Cookies["token"].Value}");
 
             Treatment_DTO treatmentTransferObj = new Treatment_DTO(
                 companyID: companyID,
@@ -60,7 +54,7 @@ namespace WebBookingInterface.Controllers
             );
 
             treatmentRequest.AddJsonBody(treatmentTransferObj);
-            var response = _client.Execute(treatmentRequest);
+            var response = RestClientManager.Client.Execute(treatmentRequest);
 
             ActionResult viewToReturn;
             if (response.StatusCode == System.Net.HttpStatusCode.OK)

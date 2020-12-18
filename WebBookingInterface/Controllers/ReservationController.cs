@@ -15,12 +15,6 @@ namespace WebBookingInterface.Controllers
     [Authorize]
     public class ReservationController : Controller
     {
-        private static RestClient _client;
-
-        public ReservationController()
-        {
-            _client = RestClientManager.GetInstance().RestClient;
-        }
 
         // GET: Reservation
         public ActionResult Index()
@@ -43,7 +37,8 @@ namespace WebBookingInterface.Controllers
         {
             RestRequest request = new RestRequest("api/Employee/", Method.GET);
             request.AddParameter("employeeID", employeeID);
-            RestResponse response = (RestResponse)_client.Execute(request);
+            request.AddHeader("Authorization", $"Bearer {Request.Cookies["token"].Value}");
+            RestResponse response = (RestResponse)RestClientManager.Client.Execute(request);
 
             ActionResult viewToReturn;
 
@@ -65,6 +60,7 @@ namespace WebBookingInterface.Controllers
             DateTime appointment_dateTime = new DateTime(appointment_date.Year, appointment_date.Month, appointment_date.Day, appointment_timeObj.Hour, appointment_timeObj.Minute, 00);
 
             RestRequest reservationRequest = new RestRequest("/api/Reservation", Method.POST);
+            reservationRequest.AddHeader("Authorization", $"Bearer {Request.Cookies["token"].Value}");
             var reservation_DTO = new Reservation_DTO(
                 employeeID: employeeID,
                 customerID: customerID,
@@ -73,7 +69,7 @@ namespace WebBookingInterface.Controllers
             );
 
             reservationRequest.AddJsonBody(reservation_DTO);
-            var response = _client.Execute(reservationRequest);
+            var response = RestClientManager.Client.Execute(reservationRequest);
 
             ActionResult viewToReturn;
 

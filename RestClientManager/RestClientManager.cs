@@ -8,41 +8,17 @@ using RestSharp;
 
 namespace RestClientManagerNamespace
 {
-    public class RestClientManager
+    public static class RestClientManager
     {
-        private static RestClientManager s_instance;
-        private RestClient _client;
-        public static string authToken;
+        public static RestClient Client = new RestClient("https://localhost:44388");
 
-        public RestClient RestClient
-        {
-            get => _client;
-        }
-
-        public static RestClientManager GetInstance()
-        {
-            if (s_instance == null)
-            {
-                s_instance = new RestClientManager();
-            }
-
-            return s_instance;
-        }
-
-        private RestClientManager()
-        {
-            _client = new RestClient("https://localhost:44388/");
-            authToken = _getToken();
-            _client.AddDefaultHeader("Authorization", $"Bearer {authToken}");
-        }
-
-        private string _getToken()
+        public static string GetToken(string username, string password)
         {
             var request = new RestRequest("/Token", Method.POST);
             request.AddParameter("grant_type", "password");
-            request.AddParameter("userName", "mail@marcuslc.com"); //Note to self: brug Web.config i stedet for!
-            request.AddParameter("password", "Password1!"); //Samme her
-            var responseAsParsedJSON = JObject.Parse(_client.Execute(request).Content);
+            request.AddParameter("userName", username);
+            request.AddParameter("password", password);
+            var responseAsParsedJSON = JObject.Parse(Client.Execute(request).Content);
 
             return responseAsParsedJSON["access_token"].ToString();
         }
