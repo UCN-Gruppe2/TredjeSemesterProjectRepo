@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace WebBookingInterface.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         RestClient _client;

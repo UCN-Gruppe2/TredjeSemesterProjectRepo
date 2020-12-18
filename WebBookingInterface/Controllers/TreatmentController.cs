@@ -11,6 +11,7 @@ using RestSharp;
 
 namespace WebBookingInterface.Controllers
 {
+    [Authorize]
     public class TreatmentController : Controller
     {
         RestClient _client;
@@ -32,8 +33,11 @@ namespace WebBookingInterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(int companyID, string name, string description, int duration, int price, string treatmentCategoryID)
+        public ActionResult Create(int companyID, string name, string description, string duration, int price, string treatmentCategoryID)
         {
+            int durationAsInt = int.Parse(duration);
+          
+
             List<int> categoriesID = new List<int>();
             foreach (string part in treatmentCategoryID.Trim().Split(','))
             {
@@ -50,7 +54,7 @@ namespace WebBookingInterface.Controllers
                 companyID: companyID,
                 name: name,
                 description: description,
-                duration: duration,
+                duration: durationAsInt,
                 price: price,
                 treatmentCategoryID: categoriesID
             );
@@ -61,7 +65,7 @@ namespace WebBookingInterface.Controllers
             ActionResult viewToReturn;
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                ViewBag.treatment =  JsonConvert.DeserializeObject<Treatment>(response.Content);
+                ViewBag.treatment = JsonConvert.DeserializeObject<Treatment>(response.Content);
                 viewToReturn = View("SuccessView");
             }
             else
