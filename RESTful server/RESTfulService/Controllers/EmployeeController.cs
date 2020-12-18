@@ -9,12 +9,12 @@ using System.Web.Http;
 
 namespace RESTfulService.Controllers
 {
+    [Authorize]
     public class EmployeeController : ApiController
     {
         private DbReservation _dbReservation = new DbReservation();
 
         // GET: api/Employee/5
-        [Authorize]
         [HttpGet]
         public IHttpActionResult Reservations(int employeeID)
         {

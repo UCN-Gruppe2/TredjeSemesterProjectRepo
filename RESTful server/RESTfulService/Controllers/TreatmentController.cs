@@ -12,6 +12,7 @@ using System.Web.Http;
 
 namespace RESTfulService.Controllers
 {
+    [Authorize]
     public class TreatmentController : ApiController
     {
         private DbTreatment _dbTreatment = new DbTreatment();
@@ -41,7 +42,8 @@ namespace RESTfulService.Controllers
 
             try
             {
-                if (value.Duration > 0 && value.Price >= 0 && value.Name.Trim().Length > 0)
+             //   if () throw new ArgumentException("Illegal duration!");
+                if (value.Duration > 0 && value.Price >= 0 && value.Name.Trim().Length > 0 && value.Duration % 30 == 0 && value.Duration <= 120)
                 {
                     var treatmentToAddObj = new Treatment(value.CompanyID, value.Name, value.Description, value.Duration, value.Price, value.TreatmentCategoryID);
                     Treatment treatmentAdded = _dbTreatment.InsertTreatmentToDatabase(treatmentToAddObj);

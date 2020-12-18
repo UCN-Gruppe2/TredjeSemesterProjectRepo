@@ -18,7 +18,6 @@ namespace RESTfulService.Controllers
         private DbTreatment _dbTreatment = new DbTreatment();
 
         // POST: api/Reservation
-        [Authorize]
         [HttpPost]
         public IHttpActionResult Post([FromBody] Reservation_DTO reservation_DTO)
         {
