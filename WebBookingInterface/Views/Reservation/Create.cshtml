@@ -1,9 +1,5 @@
-﻿
-@using DataAccess.DatabaseAccess;
-@{
+﻿@{
     ViewBag.Title = "Create reservation";
-
-    var dbTreatmentInstance = new DbTreatment();
 }
 
 <h2>Opret reservation</h2>
@@ -30,10 +26,5 @@
             <option value="@i:30">@i:30</option>
         }
     </select>
-
-    <!--
-    <input type="time" name="appointment_time" />
-    <br />
-    -->
     <input type="submit" value="Opret"/>
 </form>
