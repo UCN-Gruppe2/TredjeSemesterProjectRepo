@@ -166,6 +166,15 @@ namespace WebBookingInterface.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                    //Get token from service
+                    string bearerToken = RestClientManager.GetToken(model.Email, model.Password);
+                    Response.Cookies.Add(new HttpCookie("token")
+                    {
+                        Value = bearerToken,
+                        Expires = DateTime.Now.AddDays(2d),
+                        Secure = true
+                    });
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
