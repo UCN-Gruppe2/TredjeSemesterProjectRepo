@@ -76,8 +76,7 @@ namespace DesktopClient
 
             string selectedTimeAsString = TimeCombo.Text;
             TimeSpan timeSlotStart = TimeSpan.Parse(selectedTimeAsString);
-            DateTime selectedDate = DateSelector.SelectedDate.Value.Add(timeSlotStart); //Bedre? Eller ny linje?
-            //selectedDate = selectedDate.Add(timeSlotStart); //Adds selected time slot start to the selected day.
+            DateTime selectedDate = DateSelector.SelectedDate.Value.Add(timeSlotStart);
 
             Reservation_DTO reservationToAdd = new Reservation_DTO(
                 treatmentID: int.Parse(TreatmentIDBox.Text),
