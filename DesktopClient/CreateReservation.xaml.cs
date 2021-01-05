@@ -42,9 +42,156 @@ namespace DesktopClient
             TimeCombo.ItemsSource = Times;
         }
 
+        private async void CreateBtn_Click_Improved(object sender, RoutedEventArgs e)
+        {
+            if (TreatmentIDBox.Text.Trim().Length == 0)
+            {
+                setFailText(TreatmentIDBox, "Indtast venligst behandlingsID.");
+                return;
+            }
+
+            if (CustomerIDBox.Text.Trim().Length == 0)
+            {
+                setFailText(CustomerIDBox, "Indtast venligst kunde ID.");
+                return;
+            }
+
+            if (EmployeeIDBox.Text.Trim().Length == 0)
+            {
+                setFailText(EmployeeIDBox, "Indtast venligst medarbejder ID.");
+                return;
+            }
+
+            if (TimeCombo.Text.Trim().Length == 0)
+            {
+                setFailText(TimeCombo, "Indsæt venligst gyldigt tidspunkt.");
+                return;
+            }
+
+            if (!DateSelector.SelectedDate.HasValue) //Hvis der ikke er blevet valgt en dato.
+            {
+                setFailText(DateSelector, "Vælg venligst en dato.");
+                return;
+            }
+
+            string selectedTimeAsString = TimeCombo.Text;
+            TimeSpan timeSlotStart = TimeSpan.Parse(selectedTimeAsString);
+            DateTime selectedDate = DateSelector.SelectedDate.Value.Add(timeSlotStart); //Bedre? Eller ny linje?
+            //selectedDate = selectedDate.Add(timeSlotStart); //Adds selected time slot start to the selected day.
+
+            Reservation_DTO reservationToAdd = new Reservation_DTO(
+                treatmentID: int.Parse(TreatmentIDBox.Text),
+                customerID: int.Parse(CustomerIDBox.Text),
+                employeeID: int.Parse(EmployeeIDBox.Text),
+                startTime: selectedDate
+            );
+
+            RestRequest addRequest = new RestRequest("api/Reservation", Method.POST);
+            addRequest.AddJsonBody(reservationToAdd);
+            var response = await _client.ExecuteAsync(addRequest);
+
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    showResult(response.Content);
+                    break;
+
+                case HttpStatusCode.Conflict:
+                    Control elementToRedBorder = findControlFromMessage(response.Content);
+                    setFailText(elementToRedBorder, response);
+                    break;
+
+                case HttpStatusCode.InternalServerError:
+                    setFailText(CreateButton, response);
+                    break;
+
+                case HttpStatusCode.NotFound:
+                    setFailText(TreatmentIDBox, response);
+                    break;
+            }
+        }
+
+        private void showResult(string jsonResponseAsString)
+        {
+            Reservation reservation = JsonConvert.DeserializeObject<Reservation>(jsonResponseAsString);
+            reservation.StartTime = reservation.StartTime.ToLocalTime();
+            reservation.EndTime = reservation.EndTime.ToLocalTime();
+
+            main.ShowCreatedReservation(reservation);
+
+            this.Close();
+        }
+
+        private Control findControlFromMessage(string message)
+        {
+            Control elementToReturn = null;
+
+            if (message.Contains("TreatmentID"))
+            {
+                elementToReturn = TreatmentIDBox;
+            }
+            else if (message.Contains("CustomerID"))
+            {
+                elementToReturn = CustomerIDBox;
+            }
+            else if (message.Contains("EmployeeID"))
+            {
+                elementToReturn = EmployeeIDBox;
+            }
+            else if (message.Contains("occurred a conflict"))
+            {
+                elementToReturn = TimeCombo;
+            }
+
+            return elementToReturn;
+        }
+
+        private void setCommonFailText(Control elementBehindFail = null)
+        {
+            FailLbl.Content = "Der skete en fejl. Indsæt venligst alle data.";
+            FailLbl.Opacity = 100;
+
+            if (elementBehindFail != null)
+            {
+                giveElementRedBorderResetOthers(elementBehindFail);
+            }
+        }
+
+        private void giveElementRedBorderResetOthers(Control element)
+        {
+            Control[] controlElementsToReset = new Control[]
+            {
+                TreatmentIDBox, CreateButton, CustomerIDBox, EmployeeIDBox, TimeCombo
+            };
+
+            foreach (Control controlElementToReset in controlElementsToReset)
+            {
+                controlElementToReset.BorderBrush = Brushes.Gray;
+                controlElementToReset.BorderThickness = new Thickness(1, 1, 1, 1);
+            }
+
+            element.BorderBrush = Brushes.Red;
+            element.BorderThickness = new Thickness(1, 1, 1, 1);
+        }
+
+        private void setFailText(Control elementBehindFail, string message)
+        {
+            FailLbl.Content = $"Der skete en fejl:\n{message}";
+            FailLbl.Opacity = 100;
+
+            giveElementRedBorderResetOthers(elementBehindFail);
+        }
+
+        private void setFailText(Control elementBehindFail, IRestResponse errorResponse)
+        {
+            FailLbl.Content = $"Der skete en fejl!\n({errorResponse.StatusCode}): {errorResponse.Content}";
+            FailLbl.Opacity = 100;
+            giveElementRedBorderResetOthers(elementBehindFail);
+        }
+
         private async void CreateBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(TreatmentIDBox.Text.Trim().Length == 0 && CustomerIDBox.Text.Trim().Length == 0 && EmployeeIDBox.Text.Trim().Length == 0)
+            if (TreatmentIDBox.Text.Trim().Length == 0 && CustomerIDBox.Text.Trim().Length == 0 && EmployeeIDBox.Text.Trim().Length == 0)
             {
                 TreatmentIDBox.Text = "0";
                 CustomerIDBox.Text = "0";
@@ -76,13 +223,13 @@ namespace DesktopClient
             addRequest.AddJsonBody(reservationToAdd);
 
             var response = await _client.ExecuteAsync(addRequest);
-            
+
             if (response.StatusCode == HttpStatusCode.Conflict)
             {
                 string message = response.Content;
                 FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ": " + message;
                 FailLbl.Opacity = 100;
-                
+
                 if (message.Contains("TreatmentID"))
                 {
                     TreatmentIDBox.BorderBrush = Brushes.Red;
@@ -98,13 +245,13 @@ namespace DesktopClient
                     EmployeeIDBox.BorderBrush = Brushes.Red;
                     EmployeeIDBox.BorderThickness = new Thickness(1, 1, 1, 1);
                 }
-                if(message.Contains("occurred a conflict"))
+                if (message.Contains("occurred a conflict"))
                 {
                     TimeCombo.BorderBrush = Brushes.Red;
                     TimeCombo.BorderThickness = new Thickness(1, 1, 1, 1);
                 }
             }
-            else if(response.StatusCode == HttpStatusCode.NotFound)
+            else if (response.StatusCode == HttpStatusCode.NotFound)
             {
                 string message = response.Content;
                 FailLbl.Content = FailLbl.Content + "\n" + response.StatusCode + ": " + message;
