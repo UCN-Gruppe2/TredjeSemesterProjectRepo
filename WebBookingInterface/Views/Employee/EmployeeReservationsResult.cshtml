@@ -29,10 +29,10 @@
                 @reservation.CustomerID
             </td>
             <td>
-                @reservation.StartTime.ToString()
+                @reservation.StartTime.ToLocalTime().ToString()
             </td>
             <td>
-                @reservation.EndTime.ToString()
+                @reservation.EndTime.ToLocalTime().ToString()
             </td>
         </tr>
     }

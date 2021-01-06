@@ -54,7 +54,7 @@ namespace WebBookingInterface.Controllers
         [HttpPost]
         public ActionResult Create(int treatmentID, int customerID, int employeeID, DateTime appointment_date, string appointment_time)
         {
-            DateTime appointment_timeObj = DateTime.Parse(appointment_time);
+            DateTime appointment_timeObj = DateTime.Parse(appointment_time).ToLocalTime();
             if (appointment_timeObj.Minute % 30 != 0) throw new Exception("Illegal minute... How did You get here?? Begone, hacker! callPoliceOn(this.User);");
 
             DateTime appointment_dateTime = new DateTime(appointment_date.Year, appointment_date.Month, appointment_date.Day, appointment_timeObj.Hour, appointment_timeObj.Minute, 00);
