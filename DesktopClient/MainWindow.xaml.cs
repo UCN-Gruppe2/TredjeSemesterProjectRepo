@@ -106,7 +106,14 @@ namespace DesktopClient
             {
                 state = true;
             }
+
+            foreach (Reservation reservation in reservationsOfEmployee)
+            {
+                reservation.StartTime = reservation.StartTime.ToLocalTime();
+            }
             dataGrid.ItemsSource = reservationsOfEmployee;
+
+
             return state;
         }
 
