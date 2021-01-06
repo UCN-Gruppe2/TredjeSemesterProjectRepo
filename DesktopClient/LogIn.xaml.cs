@@ -42,7 +42,7 @@ namespace DesktopClient
                 MainWindow main = new MainWindow(_client);
                 main.Show();
                 this.Close();
-            } 
+            }
             else
             {
                 mailTextBox.Text = "";

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,7 +43,7 @@ namespace DesktopClient
             TimeCombo.ItemsSource = Times;
         }
 
-        private async void CreateBtn_Click_Improved(object sender, RoutedEventArgs e)
+        private void CreateBtn_Click_Improved(object sender, RoutedEventArgs e)
         {
             if (TreatmentIDBox.Text.Trim().Length == 0)
             {
@@ -87,7 +88,8 @@ namespace DesktopClient
 
             RestRequest addRequest = new RestRequest("api/Reservation", Method.POST);
             addRequest.AddJsonBody(reservationToAdd);
-            var response = await _client.ExecuteAsync(addRequest);
+            var response = _client.Execute(addRequest);
+            Thread.Sleep(10000);
 
             switch (response.StatusCode)
             {
